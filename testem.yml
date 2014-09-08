@@ -1,0 +1,10 @@
+launchers:
+  Node:
+    command: node_modules/.bin/mocha -R tap --compilers js:mocha-traceur test/**/*.spec.js
+    protocol: tap
+launch_in_dev:
+- Node
+src_files:
+  - "lib/**/*.js"
+  - "test/**/*.spec.js"
+  - "index.js"
