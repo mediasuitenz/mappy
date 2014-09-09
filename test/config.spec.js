@@ -4,7 +4,7 @@
 config
 ->read from file, holds values and supplies as needed
 */
-var should = require('chai').should()
+require('chai').should()
 
 var config = require('../lib/config')()
 
