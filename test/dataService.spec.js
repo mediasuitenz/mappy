@@ -13,25 +13,40 @@ var assert = require('assert')
 var dataServiceFactory = require('../lib/dataService')
 
 describe('DataService', () => {
+  var validConfig = {
+    url: '...',
+    type: 'longPoll',
+    refresh: 10000
+  }
 
   describe('Creating a DataService with config', () => {
     it('should require a valid config object', () => {
       //Given
-      var config = {
-        url: '...',
-        type: 'longPoll',
-        refresh: 10000
-      }
+      var config = validConfig
 
       //Then
       assert.doesNotThrow(() => { dataServiceFactory(config) }, 'Invalid config')
+    })
+
+    it('should balk at an invalid config object', () => {
+      //Given
+      var config = {}
+
+      //Then
+      assert.throws(
+        () => { dataServiceFactory(config) },
+        (err) => {
+          return err.message === 'Missing required config key: url'
+        },
+        'DataService did not throw expected error'
+      )
     })
   })
 
   describe('#load', () => {
     it('should load geojson from the server', done => {
       //Given
-      var dataService = dataServiceFactory({})
+      var dataService = dataServiceFactory(validConfig)
 
       //When
       dataService.load( (err, res) => {
