@@ -36,9 +36,31 @@ describe('DataService', () => {
       assert.throws(
         () => { dataServiceFactory(config) },
         (err) => {
-          return err.message === 'Missing required config key: url'
+          return err.message === 'DataService config missing required key: url'
         },
         'DataService did not throw expected error'
+      )
+    })
+
+    it('should freak out at a null config object', () => {
+      //Then
+      assert.throws(
+        () => { dataServiceFactory() },
+        (err) => {
+          return err.message === 'DataService missing config object'
+        },
+        'DataService did not throw expected error'
+      )
+    })
+
+    it('should bail when given a string for a config object', () => {
+      //Then
+      assert.throws(
+        () => { dataServiceFactory('wtf are you thinking?') },
+        (err) => {
+          return !!err.message
+        },
+        'DataService did not throw an error'
       )
     })
   })
