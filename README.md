@@ -56,10 +56,11 @@ TFC MAP
                 "type": "cluster"
             }
         ],
-        "refresh": false || {
-            "type": "longPoll", //could be sse
-            "time": 10000
-        },
+        "dataSource": {
+            "url": "...",
+            "type": "longPoll",
+            "refresh": 10000
+        }
         "postProcess": {
             "laneSplit": true
         }
