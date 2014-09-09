@@ -16,20 +16,23 @@ TFC MAP
 ## Config details
 
 ### Map
+```json
 {
-    tileLayers: [
+    "tileLayers": [
         {
-            name: "Default",
-            url: "http://...",
-            time: {
-                on: "8:00",
-                off: "11:00"
+            "name": "Default",
+            "url": "http://...",
+            "time": {
+                "on": "8:00",
+                "off": "11:00"
             }
         }
     ]
 }
+```
 
 ### Layers
+```json
 [
     {
         "name": "Major Roadworks",
@@ -61,15 +64,5 @@ TFC MAP
             "laneSplit": true
         }
     }
-
 ]
-
-- possiblity to have many maps generated from different geojson based data sets
-- backend should be able to push updates
-- default layer, on by default layers
-
-Backend
-- possibility to send updates to the client
-- adaptors for feeds to node service which can then diff and send sses to connected clients
-
-
+```
