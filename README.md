@@ -1,12 +1,21 @@
 TFC MAP
 =======
 
+## Feature list
+### Client
+* store user preferences (basemap/layers on)
+* make use of config as much as possible
+* possiblity to have many maps generated from different geojson based data sets
+* backend should be able to push updates
+* default layer, on by default layers
+
+### Server
+* possibility to send updates to the client
+* adaptors for feeds to node service which can then diff for changes and send server sent events (sse's) to connected clients
+
 ## Config details
 
-- store user preferences (basemap/layers on)
-- make use of config as much as possible
-
-//map
+### Map
 {
     tileLayers: [
         {
@@ -20,7 +29,7 @@ TFC MAP
     ]
 }
 
-//layers
+### Layers
 [
     {
         "name": "Major Roadworks",
