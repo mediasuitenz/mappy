@@ -6,6 +6,7 @@ data service
 - receives sse for updates
 - notify listeners when data changes
 - add listeners
+- node-event-emitter
  */
 require('chai').should()
 var assert = require('assert')
