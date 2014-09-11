@@ -65,7 +65,7 @@ describe('DataService', () => {
       assert.throws(
         () => { dataServiceFactory(config) },
         (err) => {
-          return err.message === 'DataService config missing required key: url'
+          return err.message === 'DataService config missing required key: type'
         },
         'DataService did not throw expected error'
       )
