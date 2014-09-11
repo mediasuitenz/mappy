@@ -15,27 +15,27 @@ var geojsonIsValid = require('geojson-is-valid')
 var dataServiceFactory = require('../lib/dataService')
 
 var validGeojson = {
-  "type": "FeatureCollection",
-  "features": [
+  type: 'FeatureCollection',
+  features: [
     {
-        "type": "Feature",
-        "id": "way/4243736",
-        "properties": {
-            "highway": "trunk"
-        },
-        "geometry": {
-            "type": "LineString",
-            "coordinates": [
-                [
-                    172.5498622,
-                    -43.4932694
-                ],
-                [
-                    172.5498622,
-                    -43.4932694
-                ]
-            ]
-        }
+      type: 'Feature',
+      id: 'way/4243736',
+      properties: {
+        highway: 'trunk'
+      },
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [
+            172.5498622,
+            -43.4932694
+          ],
+          [
+            172.5498622,
+            -43.4932694
+          ]
+        ]
+      }
     }
   ]
 }
