@@ -93,21 +93,6 @@ describe('DataService', () => {
     })
   })
 
-  describe('#load', () => {
-    it('should load geojson from the server', done => {
-      //Given
-      var dataService = dataServiceFactory(validConfig)
-
-      //When
-      dataService.load( (err, res) => {
-        //Then
-        assert.equal(err, null)
-        res.should.be.an('object')
-        done()
-      })
-    })
-  })
-
   describe('#getData', () => {
     it('should return its latest geojson', () => {
       //Given
