@@ -13,9 +13,11 @@ layer
 require('chai').should()
 
 var layerFactory = require('../lib/layer')
-var geoHint = require('geojsonhint')
+var geojsonIsValid = require('geojson-is-valid')
+var dataServiceFactory = require('./mocks/dataService.mock')
 
 describe('Layer', () => {
+
   //Given
   var config = {
     dataSource: {
@@ -23,7 +25,8 @@ describe('Layer', () => {
       type: 'longPoll'
     }
   }
-  var layer = layerFactory(config)
+  var dataService = dataServiceFactory(config.dataSource)
+  var layer = layerFactory(dataService, config)
 
   describe('#getData', () => {
     it('should return its latest geojson', () => {
@@ -32,8 +35,7 @@ describe('Layer', () => {
 
       //Then
       geojson.should.be.an('object')
-      console.log(geoHint.hint(JSON.stringify(geojson)))
-      geoHint.hint(JSON.stringify(geojson)).length.should.equal(0)
+      geojsonIsValid(geojson).should.equal(true)
     })
   })
 
