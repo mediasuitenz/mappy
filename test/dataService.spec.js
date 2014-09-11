@@ -10,7 +10,7 @@ data service
  */
 require('chai').should()
 var assert = require('assert')
-var geoHint = require('geojsonhint')
+var geojsonIsValid = require('geojson-is-valid')
 
 var dataServiceFactory = require('../lib/dataService')
 
@@ -86,14 +86,38 @@ describe('DataService', () => {
     it('should return its latest geojson', () => {
       //Given
       var dataService = dataServiceFactory(validConfig)
+      dataService.data = {
+        "type": "FeatureCollection",
+        "features": [
+          {
+              "type": "Feature",
+              "id": "way/4243736",
+              "properties": {
+                  "highway": "trunk"
+              },
+              "geometry": {
+                  "type": "LineString",
+                  "coordinates": [
+                      [
+                          172.5498622,
+                          -43.4932694
+                      ],
+                      [
+                          172.5498622,
+                          -43.4932694
+                      ]
+                  ]
+              }
+          }
+        ]
+      }
 
       //When
       var geojson = dataService.getData()
 
       //Then
       geojson.should.be.an('object')
-      console.log(geoHint.hint(JSON.stringify(geojson)))
-      geoHint.hint(JSON.stringify(geojson)).length.should.equal(0)
+      geojsonIsValid(geojson).should.equal(true)
 
     })
   })

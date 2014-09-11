@@ -19,6 +19,7 @@
   "homepage": "",
   "devDependencies": {
     "chai": "^1.9.1",
+    "geojson-is-valid": "0.0.3",
     "geojsonhint": "^0.3.4",
     "mocha": "^1.21.4",
     "mocha-traceur": "^1.0.0",
