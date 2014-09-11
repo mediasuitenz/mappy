@@ -13,6 +13,7 @@ var assert = require('assert')
 var geojsonIsValid = require('geojson-is-valid')
 
 var dataServiceFactory = require('../lib/dataService')
+var dataStrategyMock = require('./mocks/dataStrategy.mock')
 
 var validGeojson = {
   type: 'FeatureCollection',
@@ -109,12 +110,25 @@ describe('DataService', () => {
     })
   })
 
-  describe('#addListener', () => {
+  describe('#start', () => {
+    describe('context -> longPoll', () => {
+      it('should do a single upfront data pull', (done) => {
+        //Given a data service
+        var dataService = dataServiceFactory(validConfig)
+        //Given a listener attached to the data service
+        dataService.on('data', callback)
+        //Given a mock dataStrategy
+        dataService.dataStrategy = dataStrategyMock()
 
-  })
+        //When the service is started
+        dataService.start()
 
-  describe('#notify', () => {
-
+        //Then the callback should receive
+        function callback() {
+          done()
+        }
+      })
+    })
   })
 
 })
