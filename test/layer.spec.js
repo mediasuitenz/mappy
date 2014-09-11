@@ -17,7 +17,13 @@ var geoHint = require('geojsonhint')
 
 describe('Layer', () => {
   //Given
-  var layer = layerFactory({})
+  var config = {
+    dataSource: {
+      url: '',
+      type: 'longPoll'
+    }
+  }
+  var layer = layerFactory(config)
 
   describe('#getData', () => {
     it('should return its latest geojson', () => {
@@ -28,7 +34,6 @@ describe('Layer', () => {
       geojson.should.be.an('object')
       console.log(geoHint.hint(JSON.stringify(geojson)))
       geoHint.hint(JSON.stringify(geojson)).length.should.equal(0)
-
     })
   })
 

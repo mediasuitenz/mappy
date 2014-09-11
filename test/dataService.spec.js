@@ -10,6 +10,7 @@ data service
  */
 require('chai').should()
 var assert = require('assert')
+var geoHint = require('geojsonhint')
 
 var dataServiceFactory = require('../lib/dataService')
 
@@ -78,6 +79,22 @@ describe('DataService', () => {
         res.should.be.an('object')
         done()
       })
+    })
+  })
+
+  describe('#getData', () => {
+    it('should return its latest geojson', () => {
+      //Given
+      var dataService = dataServiceFactory(validConfig)
+
+      //When
+      var geojson = dataService.getData()
+
+      //Then
+      geojson.should.be.an('object')
+      console.log(geoHint.hint(JSON.stringify(geojson)))
+      geoHint.hint(JSON.stringify(geojson)).length.should.equal(0)
+
     })
   })
 
