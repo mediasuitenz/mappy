@@ -13,6 +13,7 @@ layer
 require('chai').should()
 
 var layerFactory = require('../lib/layer')
+var geoHint = require('geojsonhint')
 
 describe('Layer', () => {
   //Given
@@ -25,6 +26,9 @@ describe('Layer', () => {
 
       //Then
       geojson.should.be.an('object')
+      console.log(geoHint.hint(JSON.stringify(geojson)))
+      geoHint.hint(JSON.stringify(geojson)).length.should.equal(0)
+
     })
   })
 
