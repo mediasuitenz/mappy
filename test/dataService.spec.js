@@ -14,6 +14,32 @@ var geojsonIsValid = require('geojson-is-valid')
 
 var dataServiceFactory = require('../lib/dataService')
 
+var validGeojson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+        "type": "Feature",
+        "id": "way/4243736",
+        "properties": {
+            "highway": "trunk"
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [
+                    172.5498622,
+                    -43.4932694
+                ],
+                [
+                    172.5498622,
+                    -43.4932694
+                ]
+            ]
+        }
+    }
+  ]
+}
+
 describe('DataService', () => {
   var validConfig = {
     url: '...',
@@ -86,31 +112,7 @@ describe('DataService', () => {
     it('should return its latest geojson', () => {
       //Given
       var dataService = dataServiceFactory(validConfig)
-      dataService.data = {
-        "type": "FeatureCollection",
-        "features": [
-          {
-              "type": "Feature",
-              "id": "way/4243736",
-              "properties": {
-                  "highway": "trunk"
-              },
-              "geometry": {
-                  "type": "LineString",
-                  "coordinates": [
-                      [
-                          172.5498622,
-                          -43.4932694
-                      ],
-                      [
-                          172.5498622,
-                          -43.4932694
-                      ]
-                  ]
-              }
-          }
-        ]
-      }
+      dataService.data = validGeojson
 
       //When
       var geojson = dataService.getData()
