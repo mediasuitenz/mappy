@@ -6,5 +6,6 @@ launch_in_dev:
 - Node
 src_files:
   - "lib/**/*.js"
+  - "wrappers/**/*.js"
   - "test/**/*.spec.js"
   - "index.js"
