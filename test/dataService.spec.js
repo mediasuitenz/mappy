@@ -64,7 +64,7 @@ describe('DataService', () => {
       assert.throws(
         () => { dataServiceFactory(validConfig.type, config) },
         (err) => {
-          return err.message === 'DataService config missing required key: type'
+          return err.message === 'Config object is missing required key: type'
         },
         'DataService did not throw expected error'
       )
@@ -75,7 +75,7 @@ describe('DataService', () => {
       assert.throws(
         () => { dataServiceFactory(validConfig.type) },
         (err) => {
-          return err.message === 'DataService missing config object'
+          return err.message === 'Required config object is missing'
         },
         'DataService did not throw expected error'
       )
