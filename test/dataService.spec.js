@@ -9,7 +9,6 @@ data service
 - node-event-emitter
  */
 require('chai').should()
-var assert = require('assert')
 var geojsonIsValid = require('geojson-is-valid')
 
 var dataServiceFactory = require('../lib/dataService')
@@ -40,63 +39,20 @@ var validGeojson = {
   ]
 }
 
+var validConfig = {
+  url: '...',
+  type: 'longPoll',
+  refresh: 10000
+}
+
 describe('DataService', () => {
-  var validConfig = {
-    url: '...',
-    type: 'longPoll',
-    refresh: 10000
-  }
-
-  describe('Creating a DataService with config', () => {
-    it('should require a valid config object', () => {
-      //Given
-      var config = validConfig
-
-      //Then
-      assert.doesNotThrow(() => { dataServiceFactory(validConfig.type, config) }, 'Invalid config')
-    })
-
-    it('should balk at an invalid config object', () => {
-      //Given
-      var config = {}
-
-      //Then
-      assert.throws(
-        () => { dataServiceFactory(validConfig.type, config) },
-        (err) => {
-          return err.message === 'Config object is missing required key: type'
-        },
-        'DataService did not throw expected error'
-      )
-    })
-
-    it('should freak out at a null config object', () => {
-      //Then
-      assert.throws(
-        () => { dataServiceFactory(validConfig.type) },
-        (err) => {
-          return err.message === 'Required config object is missing'
-        },
-        'DataService did not throw expected error'
-      )
-    })
-
-    it('should bail when given a string for a config object', () => {
-      //Then
-      assert.throws(
-        () => { dataServiceFactory(validConfig.type, 'wtf are you thinking?') },
-        (err) => {
-          return !!err.message
-        },
-        'DataService did not throw an error'
-      )
-    })
-  })
 
   describe('#getData', () => {
     it('should return its latest geojson', () => {
-      //Given
-      var dataService = dataServiceFactory(validConfig.type, validConfig)
+
+      //Given a dataservice
+      var dataService = dataServiceFactory('longPoll', validConfig)
+      //Given that the dataservice has data
       dataService.data = validGeojson
 
       //When
@@ -112,8 +68,9 @@ describe('DataService', () => {
   describe('#start', () => {
     describe('context -> longPoll', () => {
       it('should do a single upfront data pull', (done) => {
+
         //Given a data service
-        var dataService = dataServiceFactory(validConfig.type, validConfig)
+        var dataService = dataServiceFactory('longPoll', validConfig)
         //Given a listener attached to the data service
         dataService.on('data', callback)
 
