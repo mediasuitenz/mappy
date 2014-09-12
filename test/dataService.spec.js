@@ -13,7 +13,6 @@ var assert = require('assert')
 var geojsonIsValid = require('geojson-is-valid')
 
 var dataServiceFactory = require('../lib/dataService')
-var dataStrategyMock = require('./mocks/dataStrategy.mock')
 
 var validGeojson = {
   type: 'FeatureCollection',
@@ -54,7 +53,7 @@ describe('DataService', () => {
       var config = validConfig
 
       //Then
-      assert.doesNotThrow(() => { dataServiceFactory(config) }, 'Invalid config')
+      assert.doesNotThrow(() => { dataServiceFactory(validConfig.type, config) }, 'Invalid config')
     })
 
     it('should balk at an invalid config object', () => {
@@ -63,7 +62,7 @@ describe('DataService', () => {
 
       //Then
       assert.throws(
-        () => { dataServiceFactory(config) },
+        () => { dataServiceFactory(validConfig.type, config) },
         (err) => {
           return err.message === 'DataService config missing required key: type'
         },
@@ -74,7 +73,7 @@ describe('DataService', () => {
     it('should freak out at a null config object', () => {
       //Then
       assert.throws(
-        () => { dataServiceFactory() },
+        () => { dataServiceFactory(validConfig.type) },
         (err) => {
           return err.message === 'DataService missing config object'
         },
@@ -85,7 +84,7 @@ describe('DataService', () => {
     it('should bail when given a string for a config object', () => {
       //Then
       assert.throws(
-        () => { dataServiceFactory('wtf are you thinking?') },
+        () => { dataServiceFactory(validConfig.type, 'wtf are you thinking?') },
         (err) => {
           return !!err.message
         },
@@ -97,7 +96,7 @@ describe('DataService', () => {
   describe('#getData', () => {
     it('should return its latest geojson', () => {
       //Given
-      var dataService = dataServiceFactory(validConfig)
+      var dataService = dataServiceFactory(validConfig.type, validConfig)
       dataService.data = validGeojson
 
       //When
@@ -114,11 +113,9 @@ describe('DataService', () => {
     describe('context -> longPoll', () => {
       it('should do a single upfront data pull', (done) => {
         //Given a data service
-        var dataService = dataServiceFactory(validConfig)
+        var dataService = dataServiceFactory(validConfig.type, validConfig)
         //Given a listener attached to the data service
         dataService.on('data', callback)
-        //Given a mock dataStrategy
-        dataService.dataStrategy = dataStrategyMock()
 
         //When the service is started
         dataService.start()
