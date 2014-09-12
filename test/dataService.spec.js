@@ -55,11 +55,12 @@ describe('DataService', () => {
       //Given that the dataservice has data
       dataService.data = validGeojson
 
-      //When
+      //When we call getdata on the dataservice
       var geojson = dataService.getData()
 
-      //Then
+      //Then we should expect valid geojson back
       geojson.should.be.an('object')
+      //And
       geojsonIsValid(geojson).should.equal(true)
 
     })
@@ -77,7 +78,7 @@ describe('DataService', () => {
         //When the service is started
         dataService.start()
 
-        //Then the callback should receive
+        //Then the callback should be notified of data
         function callback() {
           done()
         }
