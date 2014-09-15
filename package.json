@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testem"
+    "test": "testem",
+    "build:prod": "./build --es6 --minify ./index.js ./dist/bundle-min.js",
+    "build:dev": "./build --es6 --debug ./index.js ./dist/bundle.js",
+    "build": "npm run build:dev && npm run build:prod"
   },
   "repository": {
     "type": "git",
@@ -28,9 +31,11 @@
   },
   "dependencies": {
     "browserify": "^5.11.2",
+    "commander": "^2.3.0",
     "envoodoo": "^2.0.1",
     "es6ify": "^1.3.0",
     "events": "^1.0.2",
-    "traceur": "^0.0.60"
+    "traceur": "^0.0.60",
+    "uglifyify": "^2.5.0"
   }
 }
