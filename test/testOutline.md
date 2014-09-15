@@ -7,14 +7,22 @@ data service
 - pull geojson data from various endpoints
 - receives sse for updates
 
-layer
+layer (controller)
 - has own data service
 - has config
 - insert item in key
 - style up items
 - inject styled content into popup
 
-map
+layerMapPresenter (viewModel)
+- new geojson layer (layer)
+- provide style callback (layer.config)
+- bind popup for each item (layer.config)
+- map.add(layerMapPresenter)
+
+layerKeyPresenter (viewModel)
+
+map (view)
 - set its base tilelayer
 
 popup
@@ -22,7 +30,7 @@ popup
 - open/close popup
 - click events
 
-key
+key (view)
 - user interactions
   - hide/show layers
   - hide/show key
