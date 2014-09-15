@@ -1,3 +1,14 @@
 {
-  "tileLayers": []
+  "domElementId": "map",
+  "tileLayers": {
+    "base-tiles": {
+      "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": "",
+      "maxZoom": 18
+    }
+  },
+  "bounds": [
+    [-43.577988,172.515934],
+    [-43.461397,172.749529]
+  ]
 }
