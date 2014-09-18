@@ -32,7 +32,7 @@ describe('Config', () => {
 
       //Then
       map.should.be.an('object')
-      map.tileLayers.should.be.an('array')
+      map.tileLayers.should.be.an('object')
     })
   })
 
