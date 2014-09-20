@@ -11,3 +11,6 @@ if (!window) {
 
 //any files included will be compiled using traceur es6 compiler
 // eg. require('lib/app.js')
+require('./lib/main')
+
+

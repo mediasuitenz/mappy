@@ -1,5 +1,10 @@
 [
   {
-    "name": ""
+    "name": "layer1",
+    "dataSource": {
+      "url": "",
+      "type": "longPoll",
+      "refresh": 10000
+    }
   }
 ]
