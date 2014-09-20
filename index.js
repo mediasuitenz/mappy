@@ -1,8 +1,5 @@
 'use strict';
 
-//include env vars from .env file
-require('envoodoo')()
-
 if (!window) {
   //Make Ecmascript 6 features available via transpilation
   var traceur = require('traceur');
