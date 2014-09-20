@@ -3,6 +3,14 @@
 class DataService {
   constructor() {}
 
+  start() {
+
+  }
+
+  on() {
+
+  }
+
   getData() {
     return {
       type: 'FeatureCollection',
@@ -33,6 +41,5 @@ class DataService {
 }
 
 module.exports = function(config) {
-  console.log('mock')
   return new DataService(config)
 }
