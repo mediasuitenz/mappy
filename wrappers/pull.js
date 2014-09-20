@@ -9,5 +9,5 @@ var fs = require('fs')
  */
 module.exports = (url, cb) => {
   //TODO: implement proper server fetching
-  cb(null, fs.readFileSync(__dirname + '/../stubs/geojson1.json', 'utf8'))
+  cb(null, JSON.parse(fs.readFileSync(__dirname + '/../stubs/geojson1.json', 'utf8')))
 }
