@@ -7,6 +7,7 @@ var fs         = require('fs')
   , es6ify     = require('es6ify')
   , uglifyify  = require('uglifyify')
   , program    = require('commander')
+  , brfs       = require('brfs')
 
 function run(source, dest) {
 
@@ -16,6 +17,11 @@ function run(source, dest) {
     bundler = bundler
       .add(es6ify.runtime)
       .transform(es6ify)
+  }
+
+  if (program.brfs) {
+    bundler = bundler
+      .transform(brfs)
   }
 
   if (program.minify) bundler = bundler.transform(uglifyify)
@@ -35,6 +41,7 @@ program
   .option('-e, --es6', 'Transform es6 code to es5 using traceur')
   .option('-d, --debug', 'Include source files')
   .option('-m, --minify', 'Minify the resulting bundle')
+  .option('-b, --brfs', 'Use brfs transform')
 
 program
   .command('*')

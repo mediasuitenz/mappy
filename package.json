@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "testem",
-    "build:prod": "./build --es6 --minify ./index.js ./dist/bundle-min.js",
-    "build:dev": "./build --es6 --debug ./index.js ./dist/bundle.js",
+    "build:prod": "./build --es6 --minify --brfs ./index.js ./dist/bundle-min.js",
+    "build:dev": "./build --es6 --debug --brfs ./index.js ./dist/bundle.js",
     "build": "npm run build:dev && npm run build:prod"
   },
   "repository": {
@@ -21,6 +21,7 @@
   },
   "homepage": "",
   "devDependencies": {
+    "brfs": "^1.2.0",
     "chai": "^1.9.1",
     "geojson-is-valid": "0.0.3",
     "geojsonhint": "^0.3.4",
