@@ -22,7 +22,8 @@ describe('Layer', () => {
   var config = {
     dataSource: {
       url: '',
-      type: 'longPoll'
+      type: 'longPoll',
+      timeout: 10000
     }
   }
   var dataService = dataServiceFactory(config.dataSource)

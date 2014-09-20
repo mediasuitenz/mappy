@@ -51,7 +51,7 @@ describe('DataService', () => {
     it('should return its latest geojson', () => {
 
       //Given a dataservice
-      var dataService = dataServiceFactory('longPoll', validConfig)
+      var dataService = dataServiceFactory(validConfig)
       //Given that the dataservice has data
       dataService.data = validGeojson
 
@@ -71,7 +71,7 @@ describe('DataService', () => {
       it('should do a single upfront data pull', (done) => {
 
         //Given a data service
-        var dataService = dataServiceFactory('longPoll', validConfig)
+        var dataService = dataServiceFactory(validConfig)
         //Given a listener attached to the data service
         dataService.on('data', callback)
 
