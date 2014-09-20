@@ -8,10 +8,41 @@ var fs         = require('fs')
   , uglifyify  = require('uglifyify')
   , program    = require('commander')
   , brfs       = require('brfs')
+  , watchify   = require('watchify')
+  , paperboy   = require('paperboy')
+  , http       = require('http')
+  , chalk      = require('chalk')
+
+var messages = {
+  bundleBuilt: 'bundle file built successfully',
+  bundleRebuilt: 'files changed, bundle file rebuilt',
+  poweredByHeader: 'Build browserify tool',
+  requestReceivedFor: 'Request received for ',
+  contentType: 'text/plain',
+  error404: 'Error 404: File not found',
+  serverListening: 'server listening on port '
+}
+
+function logError(message) {
+  console.error(chalk.red(message))
+}
+
+function logNotice(message) {
+  console.log(chalk.cyan(message))
+}
+
+function logSuccess(message) {
+  console.log(chalk.green(message))
+}
 
 function run(source, dest) {
 
-  var bundler = browserify({ debug: !!program.debug })
+  var bundler = browserify({
+    debug: !!program.debug,
+    cache: {},
+    packageCache: {},
+    fullPaths: true
+  })
 
   if (program.es6) {
     bundler = bundler
@@ -28,12 +59,51 @@ function run(source, dest) {
 
   bundler
     .require(require.resolve(source), { entry: true })
+
+  if (program.watch) {
+    bundler = watchify(bundler)
+      .on('update', function () {
+        bundler.bundle()
+        logSuccess(messages.bundleRebuilt)
+      })
+  }
+
+  bundler
     .bundle()
     .on('error', function (err) { console.error(err) })
     .pipe(fs.createWriteStream(dest))
     .on('finish', function () {
-      console.log('bundle file built successfully')
+      logSuccess(messages.bundleBuilt)
     })
+
+  if (program.serve) {
+    var webroot = __dirname + '/' + program.serve
+    var port = program.port || 8080
+
+    http.createServer(function(req, res) {
+      var ip = req.connection.remoteAddress;
+      paperboy
+        .deliver(webroot, req, res)
+        .addHeader('X-Powered-By', messages.poweredByHeader)
+        .before(function() {
+          logNotice(messages.requestReceivedFor + req.url);
+        })
+        .after(function(statusCode) {
+          logNotice(statusCode + ' - ' + req.url + ' ' + ip);
+        })
+        .error(function(statusCode, msg) {
+          logError([statusCode, msg, req.url, ip].join(' '));
+          res.writeHead(statusCode, { 'Content-Type': messages.contentType });
+          res.end('Error [' + statusCode + ']');
+        })
+        .otherwise(function(err) {
+          logError([404, err, req.url, ip].join(' '));
+          res.writeHead(404, { 'Content-Type': messages.contentType });
+          res.end(messages.error404);
+        });
+    }).listen(port)
+    logNotice(messages.serverListening + port)
+  }
 }
 
 program
@@ -42,6 +112,9 @@ program
   .option('-d, --debug', 'Include source files')
   .option('-m, --minify', 'Minify the resulting bundle')
   .option('-b, --brfs', 'Use brfs transform')
+  .option('-w, --watch', 'Watch files for changes and update bundle')
+  .option('-s, --serve [folder]', 'Serve up files in the given directory')
+  .option('-p, --port [port]', 'Set which port should be used when using the -s, --serve option')
 
 program
   .command('*')
