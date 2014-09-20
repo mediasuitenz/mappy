@@ -18,7 +18,7 @@ class Map {
   /**
    * Adds a tile layer to the map with given config
    */
-  addTileLayer(name, config) {
+  setTileLayer(name, config) {
     var tileLayerOptions = {
       attribution: config.attribution,
       maxZoom: config.maxZoom
@@ -31,12 +31,17 @@ class Map {
   /**
    * Add a geojson layer to the map with given config
    */
-  addGeojsonLayer(name, config) {
+  setGeojsonLayer(name, config) {
     var options = {}
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
     if (config.popup)
       options.onEachFeature = (feature, layer) => layer.bindPopup(config.popup(feature.properties))
+
+    if (this.geojsonLayers[name]) {
+      this.geojsonLayers[name].removeFrom(this.map)
+      delete this.geojsonLayers[name]
+    }
 
     this.geojsonLayers[name] = L.geoJson(config.geojson, options)
     this.geojsonLayers[name].addTo(this.map)
