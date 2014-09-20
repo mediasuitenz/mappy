@@ -79,6 +79,7 @@ describe('DataService', () => {
         dataService.start()
 
         //Then the callback should be notified of data
+        /*jshint latedef:false */
         function callback() {
           done()
         }
