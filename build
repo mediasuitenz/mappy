@@ -9,9 +9,8 @@ var fs         = require('fs')
   , program    = require('commander')
   , brfs       = require('brfs')
   , watchify   = require('watchify')
-  , paperboy   = require('paperboy')
-  , http       = require('http')
   , chalk      = require('chalk')
+  , exec       = require('child_process').exec
 
 var messages = {
   bundleBuilt: 'bundle file built successfully',
@@ -23,10 +22,6 @@ var messages = {
   serverListening: 'server listening on port '
 }
 
-function logError(message) {
-  console.error(chalk.red(message))
-}
-
 function logNotice(message) {
   console.log(chalk.cyan(message))
 }
@@ -35,7 +30,23 @@ function logSuccess(message) {
   console.log(chalk.green(message))
 }
 
+function server(webroot, port) {
+  var child
+  return {
+    start: function () {
+      child = exec(__dirname + '/node_modules/.bin/http-server -p ' + port + ' ' + webroot)
+      child.stdout.pipe(process.stdout)
+      child.stderr.pipe(process.stderr)
+    },
+    stop: function () {
+      child.kill('SIGHUP')
+    }
+  }
+}
+
 function run(source, dest) {
+
+  var httpServer
 
   var bundler = browserify({
     debug: !!program.debug,
@@ -65,6 +76,8 @@ function run(source, dest) {
       .on('update', function () {
         bundler.bundle()
         logSuccess(messages.bundleRebuilt)
+        httpServer.stop()
+        httpServer.start()
       })
   }
 
@@ -79,30 +92,8 @@ function run(source, dest) {
   if (program.serve) {
     var webroot = __dirname + '/' + program.serve
     var port = program.port || 8080
-
-    http.createServer(function(req, res) {
-      var ip = req.connection.remoteAddress;
-      paperboy
-        .deliver(webroot, req, res)
-        .addHeader('X-Powered-By', messages.poweredByHeader)
-        .before(function() {
-          logNotice(messages.requestReceivedFor + req.url);
-        })
-        .after(function(statusCode) {
-          logNotice(statusCode + ' - ' + req.url + ' ' + ip);
-        })
-        .error(function(statusCode, msg) {
-          logError([statusCode, msg, req.url, ip].join(' '));
-          res.writeHead(statusCode, { 'Content-Type': messages.contentType });
-          res.end('Error [' + statusCode + ']');
-        })
-        .otherwise(function(err) {
-          logError([404, err, req.url, ip].join(' '));
-          res.writeHead(404, { 'Content-Type': messages.contentType });
-          res.end(messages.error404);
-        });
-    }).listen(port)
-    logNotice(messages.serverListening + port)
+    httpServer = server(webroot, port)
+    httpServer.start()
   }
 }
 
