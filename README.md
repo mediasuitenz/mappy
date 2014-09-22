@@ -41,17 +41,20 @@ TFC MAP
             //title, description and a table of data?
             "h1": "#f3f3f3"
         },
-        "priority": 1,
-        "icon": "",
-        "visiblebByDefault": true,
+        "priority": 1, // used to order in key and map layer zindex
+        "icon": "",    // icon used for markers
+        "visibleByDefault": true // whether to display the layer on map load
+        "defaultLayerType": false || "default", // false would mean this layer is off if the zoom level is outside
+                                                // the levels defined in the "zoom" config
+                                                // "default", "heatmap", "cluster", etc
         "zoom": [
             {
                 "min": 4,
-                "max": 16,
+                "max": 8,
                 "type": "heatmap"
             },
             {
-                "min": 4,
+                "min": 9,
                 "max": 16,
                 "type": "cluster"
             }
@@ -62,7 +65,8 @@ TFC MAP
             "refresh": 10000
         }
         "postProcess": {
-            "laneSplit": true
+            "laneSplit": true // true happens on load,
+                              // string key or array of keys 'onzoom', ['onzoom', 'onpan']
         }
     }
 ]
