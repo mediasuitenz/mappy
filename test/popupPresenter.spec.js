@@ -7,11 +7,15 @@ var popupPresenter = rewire('../lib/popupPresenter')
 
 popupPresenter.__set__('assetsPath', __dirname + '/mocks')
 
+var injected
+popupPresenter.__set__('cssInjector', (css) => {
+  injected = css
+})
+
 var config = {
-  'css': 'myPopupCssFile.css',
+  'css': 'myCss.css',
   'template': 'myTemplate.html'
 }
-
 
 describe('PopupPresenter', () => {
 
@@ -21,6 +25,10 @@ describe('PopupPresenter', () => {
 // Then generate popup content
 
   var presenter = popupPresenter(config)
+
+  it('should inject css into the dom', () => {
+    injected.should.contain('display')
+  })
 
   it('should return an object', () => {
     presenter.should.be.an('object')
