@@ -37,9 +37,34 @@ TFC MAP
     {
         "name": "Major Roadworks",
         "styles": {
-            //get design inputs, likely design of a popup etc.
-            //title, description and a table of data?
-            "h1": "#f3f3f3"
+            "popup": {
+                "css": "myPopupCssFile.css",
+                "template": "myTemplate.html"
+            },
+            "layer": {
+                "general": { // Roughly following leaflet dsl
+                    "stroke": true,
+                    "weight": 5
+                },
+                "properties": {
+                    "weighting": {
+                        "2": {
+                            "stroke": true
+                        },
+                        "5": {
+                            "stroke": false
+                        }
+                    },
+                    "lane": {
+                        "left": {
+                            "colour": "green"
+                        },
+                        "*": {
+                            "colour": "black"
+                        }
+                    }
+                }
+            }
         },
         "priority": 1, // used to order in key and map layer zindex
         "icon": "",    // icon used for markers
