@@ -1,6 +1,12 @@
 [
   {
     "name": "layer1",
+    "styles": {
+      "popup": {
+        "css": "layer1.css",
+        "template": "layer1.html"
+      }
+    },
     "dataSource": {
       "url": "",
       "type": "longPoll",
