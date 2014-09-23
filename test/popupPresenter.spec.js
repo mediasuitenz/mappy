@@ -2,8 +2,10 @@
 
 require('chai').should()
 
-var popupPresenter = require('../lib/popupPresenter')
+var rewire = require('rewire')
+var popupPresenter = rewire('../lib/popupPresenter')
 
+popupPresenter.__set__('assetsPath', __dirname + '/mocks')
 
 var config = {
   'css': 'myPopupCssFile.css',
@@ -18,17 +20,17 @@ describe('PopupPresenter', () => {
 // And some feature properties
 // Then generate popup content
 
-  var renderer = popupPresenter(config)
+  var presenter = popupPresenter(config)
 
-  it('should return a function', () => {
-    renderer.should.be.a('function')
+  it('should return an object', () => {
+    presenter.should.be.an('object')
   })
 
-  describe('renderer function', () => {
-    var template = renderer({ title: 'hello world' })
-    var template2 = renderer({ title: 'hello mars' })
+  describe('presenter object', () => {
+    var template = presenter.present({ title: 'hello world' })
+    var template2 = presenter.present({ title: 'hello mars' })
     
-    it('should create a template', () => {
+    it('should present a template', () => {
       template.should.be.a('string')
     })
 
