@@ -44,6 +44,8 @@
     "commander": "^2.3.0",
     "es6ify": "^1.3.0",
     "events": "^1.0.2",
+    "handlebars": "^2.0.0",
+    "insert-css": "^0.2.0",
     "traceur": "^0.0.60",
     "uglifyify": "^2.5.0"
   }
