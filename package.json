@@ -35,7 +35,6 @@
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
     "mocha-traceur": "^1.0.0",
-    "paperboy": "0.0.5",
     "rewire": "^2.1.0",
     "testem": "^0.6.19",
     "watchify": "^1.0.2"
