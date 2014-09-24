@@ -3,18 +3,43 @@
 var fs   = require('fs')
 var path = require('path')
 
-var assetBundle = {}
+var assetPath = __dirname
 
-function bundle(type) {
-  var files = fs.readdirSync(path.join(__dirname, type))
+// Defines the valid extensions for the asset types
+var typeExtensions = {
+  css: '.css',
+  templates: '.html'
+}
+
+var assetBundle = {}
+/**
+ * Bundles files with an appropriate extension into an
+ * external object with filename keys and file contents values
+ * @param  {string} assetType The name of a directory within the assets folder
+ */
+function bundle(assetType) {
+  assetBundle[assetType] = {}
+
+  var assetTypePath = path.join(assetPath, assetType)
+  var files = fs.readdirSync(assetTypePath)
+
   files.forEach(function(file) {
-    var contents = fs.readFileSync(file, 'utf-8')
-    var filename = path.basename(file)
-    assetBundle[type][filename] = contents
+    if (path.extname(file) === typeExtensions[assetType]) {
+      var contents = fs.readFileSync(path.join(assetTypePath, file), 'utf-8')
+      var filename = path.basename(file)
+
+      assetBundle[assetType][filename] = contents
+    }
   })
 }
 
-bundle('css')
-bundle('templates')
+// Loop over the asset types and bundle them
+Object.keys(typeExtensions).forEach(function (assetType) {
+  bundle(assetType)
+})
 
-fs.createFileSync(path.join(__dirname, 'assetBundle.json'))
+// Create the bundled json file
+fs.writeFileSync(
+  path.join(__dirname, 'assetBundle.json'),
+  JSON.stringify(assetBundle)
+)
