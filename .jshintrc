@@ -14,10 +14,15 @@
     "__dirname": false,
     "describe": false,
     "it": false,
+    "Given": false,
+    "When": false,
+    "Then": false,
+    "And": false,
     "beforeEach": false
   },
   "asi": true,
   "node": true,
   "indent": 2,
-  "esnext": true
+  "esnext": true,
+  "newcap": false
 }

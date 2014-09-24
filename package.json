@@ -35,6 +35,7 @@
     "http-server": "^0.7.1",
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
+    "mocha-given": "^0.1.3",
     "mocha-traceur": "^1.0.0",
     "rewire": "^2.1.0",
     "testem": "^0.6.19",

@@ -1,6 +1,6 @@
 launchers:
   Node:
-    command: node_modules/.bin/mocha -R tap --compilers js:mocha-traceur test/**/*.spec.js
+    command: node_modules/.bin/mocha -u mocha-given -R tap --compilers js:mocha-traceur test/**/*.spec.js
     protocol: tap
 launch_in_dev:
 - Node
