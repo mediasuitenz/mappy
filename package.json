@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:ci": "mocha -R spec --compilers js:mocha-traceur test/**/*.spec.js",
+    "test:ci": "npm run bundleAssets && mocha -R spec --compilers js:mocha-traceur test/**/*.spec.js",
     "test:dev": "testem -g",
     "test": "npm run bundleAssets && npm run test:dev",
     "build:prod": "npm run bundleAssets && ./build --es6 --minify --brfs ./index.js ./dist/bundle-min.js",
