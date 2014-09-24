@@ -5,6 +5,20 @@
       "popup": {
         "css": "layer1.css",
         "template": "layer1.html"
+      },
+      "layer": {
+        "general": {
+          "stroke": true,
+          "weight": 5
+        },
+        "properties": {
+          "highway": {
+            "trunk": {
+              "color": "green",
+              "opacity": 0.2
+            }
+          }
+        }
       }
     },
     "dataSource": {
