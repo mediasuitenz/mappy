@@ -56,7 +56,7 @@ describe('\'properties configuration\'', () => {
         general: {},
         properties: {
           weighting: {
-            '2': { opactiy: 0.8 },
+            '2': { opacity: 0.8 },
             '5': { opacity: 0.9 }
           }
         }
