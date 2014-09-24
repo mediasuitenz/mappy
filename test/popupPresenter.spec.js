@@ -5,7 +5,16 @@ require('chai').should()
 var rewire = require('rewire')
 var popupPresenter = rewire('../lib/popupPresenter')
 
-popupPresenter.__set__('assetsPath', __dirname + '/mocks')
+popupPresenter.__set__('assetManager', {
+  assets: {
+    templates: {
+      'myTemplate.html': '<h1>{{title}}</h1>'
+    },
+    css: {
+      'myCss.css': 'h1 { display: none; }'
+    }
+  }
+})
 
 var injected
 popupPresenter.__set__('cssInjector', (css) => {
@@ -37,7 +46,7 @@ describe('PopupPresenter', () => {
   describe('presenter object', () => {
     var template = presenter.present({ title: 'hello world' })
     var template2 = presenter.present({ title: 'hello mars' })
-    
+
     it('should present a template', () => {
       template.should.be.a('string')
     })
@@ -49,5 +58,5 @@ describe('PopupPresenter', () => {
       })
     })
   })
-  
+
 })
