@@ -9,13 +9,18 @@
       "layer": {
         "general": {
           "stroke": true,
-          "weight": 5
+          "weight": 15,
+          "opacity": 0.8
         },
         "properties": {
           "highway": {
             "trunk": {
               "color": "green",
+              "weight": 5,
               "opacity": 0.2
+            },
+            "motorway": {
+              "color": "red"
             }
           }
         }
