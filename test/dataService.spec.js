@@ -80,8 +80,8 @@ describe('DataService', () => {
     })
   })
 
-  describe('#start', () => {
-    describe('context -> longPoll', () => {
+  describe('context -> longPoll', () => {
+    describe('#start', () => {
       it('should do a single upfront data pull', (done) => {
 
         //Given a data service
@@ -98,6 +98,19 @@ describe('DataService', () => {
           done()
         }
       })
+    })
+  })
+
+  describe('#stop', () => {
+    it('should stop the dataService', () => {
+      //Given a data service
+      var dataService = dataServiceFactory(validConfig)
+
+      //When the service is stopped after starting
+      dataService.start()
+      dataService.stop()
+
+      dataService.isActive.should.equal(false)
     })
   })
 
