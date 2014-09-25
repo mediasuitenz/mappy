@@ -46,6 +46,20 @@ var validConfig = {
 }
 
 describe('DataService', () => {
+  it('should be inactive after creation', () => {
+    //Given a dataservice
+    var dataService = dataServiceFactory(validConfig)
+
+    dataService.isActive.should.equal(false)
+  })
+
+  it('should be active after being started', () => {
+    //Given a dataservice
+    var dataService = dataServiceFactory(validConfig)
+    dataService.start()
+
+    dataService.isActive.should.equal(true)
+  })
 
   describe('#getData', () => {
     it('should return its latest geojson', () => {
@@ -66,8 +80,8 @@ describe('DataService', () => {
     })
   })
 
-  describe('#start', () => {
-    describe('context -> longPoll', () => {
+  describe('context -> longPoll', () => {
+    describe('#start', () => {
       it('should do a single upfront data pull', (done) => {
 
         //Given a data service
@@ -84,6 +98,19 @@ describe('DataService', () => {
           done()
         }
       })
+    })
+  })
+
+  describe('#stop', () => {
+    it('should stop the dataService', () => {
+      //Given a data service
+      var dataService = dataServiceFactory(validConfig)
+
+      //When the service is stopped after starting
+      dataService.start()
+      dataService.stop()
+
+      dataService.isActive.should.equal(false)
     })
   })
 
