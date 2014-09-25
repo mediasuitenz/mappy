@@ -46,6 +46,20 @@ var validConfig = {
 }
 
 describe('DataService', () => {
+  it('should be inactive after creation', () => {
+    //Given a dataservice
+    var dataService = dataServiceFactory(validConfig)
+
+    dataService.isActive.should.equal(false)
+  })
+
+  it('should be active after being started', () => {
+    //Given a dataservice
+    var dataService = dataServiceFactory(validConfig)
+    dataService.start()
+
+    dataService.isActive.should.equal(true)
+  })
 
   describe('#getData', () => {
     it('should return its latest geojson', () => {
