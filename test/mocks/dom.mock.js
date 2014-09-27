@@ -3,6 +3,7 @@
 var element = {
   appendChild: () => {},
   setAttribute: () => {},
+  removeAttribute: () => {},
   querySelector: () => {
     return {
       appendChild: () => {},
