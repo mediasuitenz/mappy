@@ -39,16 +39,18 @@ describe('the mapKey module', () => {
 
 
   describe('adding and removing items', () => {
-    var item, id, result
+    var text, id, result, checked
 
     Given('an item id', () => id = 'item1')
-    Given('an item', () => item = 'my item')
-    Given('keys item array is empty', () => key.items = [])
-    When('calling `addItem` with id and item', () => result = key.addItem(id, item))
+    Given('an items checked state', () => checked = true)
+    Given('an items text', () => text = 'my item')
+    Given('that the key modules item array is empty', () => key.items = [])
+    When('calling `addItem` with id and text and checked state', () => result = key.addItem(id, text, checked))
 
     describe('#addItem has been called', () => {
       Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
       And('keys.id property should be `item1`', () => key.items[0].key.should.equal('item1'))
+      And('keys.id property should be `item1`', () => key.items[0].checked.should.equal(true))
 
       describe('calling #removeItem', () => {
         When('calling `removeItem` with id', () => result = key.removeItem(id))
