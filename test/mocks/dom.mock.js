@@ -12,7 +12,10 @@ var element = {
   querySelectorAll: () => {
     return [{
       appendChild: () => {},
-      setAttribute: () => {}
+      setAttribute: () => {},
+      querySelector: () => {
+        return {}
+      }
     }]
   }
 }
