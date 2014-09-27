@@ -68,7 +68,7 @@ describe('the mapKey module', () => {
     Given('a key item', () => item = { key: 'item1', text: 'My item', checked: false })
 
     When('the key item is added to the key', () => key.addItem(item.key, item.text, item.checked))
-    And('the callback is attached as a listener to a map key', () => key.on('click', callback))
+    And('the callback is attached as a listener to a map key', () => key.on('layerToggle', callback))
     And('a key item is clicked', () => key.items[0].click())
 
     Then('the attached callback should be called', () => result.should.be.an('object'))
