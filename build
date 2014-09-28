@@ -44,6 +44,15 @@ function server(webroot, port) {
   }
 }
 
+function handleBundling(bundler, dest, message) {
+  bundler.bundle()
+    .pipe(fs.createWriteStream(dest))
+    .on('finish', function () {
+      logSuccess(message)
+    })
+    .on('error', function (err) { console.error(err) })
+}
+
 function run(source, dest) {
 
   var httpServer
@@ -74,20 +83,11 @@ function run(source, dest) {
   if (program.watch) {
     bundler = watchify(bundler)
       .on('update', function () {
-        bundler.bundle()
-        logSuccess(messages.bundleRebuilt)
-        httpServer.stop()
-        httpServer.start()
+        handleBundling(bundler, dest, messages.bundleRebuilt)
       })
   }
 
-  bundler
-    .bundle()
-    .on('error', function (err) { console.error(err) })
-    .pipe(fs.createWriteStream(dest))
-    .on('finish', function () {
-      logSuccess(messages.bundleBuilt)
-    })
+  handleBundling(bundler, dest, messages.bundleBuilt)
 
   if (program.serve) {
     var webroot = __dirname + '/' + program.serve
