@@ -1,6 +1,7 @@
 [
   {
     "name": "layer1",
+    "description": "This is layer 1",
     "styles": {
       "popup": {
         "css": "layer1.css",
