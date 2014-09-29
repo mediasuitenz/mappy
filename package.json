@@ -7,17 +7,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:ci": "npm run jshint && npm run bundleAssets && mocha -u mocha-given -R spec --compilers js:mocha-traceur test/**/*.spec.js",
+    "test:ci": "npm run jshint && npm run build:assets && mocha -u mocha-given -R spec --compilers js:mocha-traceur test/**/*.spec.js",
     "test:dev": "testem -g",
-    "test": "npm run bundleAssets && npm run test:dev",
-    "build:prod": "npm run bundleAssets && ./build --es6 --minify --brfs ./index.js ./dist/bundle-min.js",
-    "build:dev": "npm run bundleAssets && ./build --es6 --debug --brfs ./index.js ./dist/bundle.js",
-    "build:all": "npm run build:dev && npm run build:prod",
+    "test": "npm run build:assets && npm run test:dev",
+    "build:prod": "./build --es6 --minify --brfs --jshint ./index.js ./dist/bundle-min.js",
+    "build:dev": "./build --es6 --debug --brfs --jshint ./index.js ./dist/bundle.js",
+    "build:watch": "./build -w -e -d -b -s dist -p 3000 -j ./index.js ./dist/bundle.js",
+    "build:assets": "node ./config/assets/assetBundler.js",
+    "build:all": "npm run build:assets && npm run build:dev && npm run build:prod",
     "build": "npm run build:all",
-    "bundleAssets": "node ./config/assets/assetBundler.js",
     "jshint": "jshint .",
-    "start": "npm run bundleAssets && ./build -w -e -d -b -s dist -p 3000 ./index.js ./dist/bundle.js",
-    "postinstall": "npm run build:all"
+    "start:dev": "npm run build:assets && npm run build:watch",
+    "start": "supervisor -- node_modules/.bin/http-server -p 5000 dist"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
     "mocha-given": "^0.1.3",
-    "mocha-traceur": "^1.0.0",
+    "mocha-traceur": "mediasuitenz/mocha-traceur",
     "rewire": "^2.1.0",
     "testem": "^0.6.19"
   },
@@ -52,6 +53,7 @@
     "http-server": "^0.7.1",
     "insert-css": "^0.2.0",
     "object-merge": "^2.5.1",
+    "supervisor": "^0.6.0",
     "traceur": "^0.0.60",
     "uglifyify": "^2.5.0",
     "watchify": "^1.0.2",

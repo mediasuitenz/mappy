@@ -44,9 +44,29 @@ function server(webroot, port) {
   }
 }
 
+function handleBundling(bundler, dest, message) {
+  bundler.bundle()
+    .pipe(fs.createWriteStream(dest))
+    .on('finish', function () {
+      logSuccess(message)
+    })
+    .on('error', function (err) { console.error(err) })
+}
+
+function jshint(terminate) {
+  var child = exec(__dirname + '/node_modules/.bin/jshint ' + __dirname + '/.')
+  child.stdout.on('data', function (data) {
+    console.error(chalk.red.bold('JSHINT ERRORS:'))
+    process.stdout.write(chalk.red(data))
+    if (terminate) process.exit(1)
+  })
+}
+
 function run(source, dest) {
 
   var httpServer
+
+  if (program.jshint) jshint(true)
 
   var bundler = browserify({
     debug: !!program.debug,
@@ -74,20 +94,12 @@ function run(source, dest) {
   if (program.watch) {
     bundler = watchify(bundler)
       .on('update', function () {
-        bundler.bundle()
-        logSuccess(messages.bundleRebuilt)
-        httpServer.stop()
-        httpServer.start()
+        if (program.jshint) jshint()
+        handleBundling(bundler, dest, messages.bundleRebuilt)
       })
   }
 
-  bundler
-    .bundle()
-    .on('error', function (err) { console.error(err) })
-    .pipe(fs.createWriteStream(dest))
-    .on('finish', function () {
-      logSuccess(messages.bundleBuilt)
-    })
+  handleBundling(bundler, dest, messages.bundleBuilt)
 
   if (program.serve) {
     var webroot = __dirname + '/' + program.serve
@@ -103,6 +115,7 @@ program
   .option('-d, --debug', 'Include source files')
   .option('-m, --minify', 'Minify the resulting bundle')
   .option('-b, --brfs', 'Use brfs transform')
+  .option('-j, --jshint', 'Run jshint before every build')
   .option('-w, --watch', 'Watch files for changes and update bundle')
   .option('-s, --serve [folder]', 'Serve up files in the given directory')
   .option('-p, --port [port]', 'Set which port should be used when using the -s, --serve option')
