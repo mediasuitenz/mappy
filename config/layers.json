@@ -31,6 +31,7 @@
       "url": "",
       "type": "longPoll",
       "refresh": 10000
-    }
+    },
+    "sort": 1
   }
 ]
