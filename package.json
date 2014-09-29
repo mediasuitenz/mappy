@@ -1,5 +1,8 @@
 {
   "name": "",
+  "engines" : {
+    "node" : "0.10.32"
+  },
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +16,8 @@
     "build": "npm run build:all",
     "bundleAssets": "node ./config/assets/assetBundler.js",
     "jshint": "jshint .",
-    "start": "npm run bundleAssets && ./build -w -e -d -b -s dist -p 3000 ./index.js ./dist/bundle.js"
+    "start": "npm run bundleAssets && ./build -w -e -d -b -s dist -p 3000 ./index.js ./dist/bundle.js",
+    "postinstall": "npm run build:all"
   },
   "repository": {
     "type": "git",
@@ -27,30 +31,30 @@
   },
   "homepage": "",
   "devDependencies": {
-    "brfs": "^1.2.0",
     "chai": "^1.9.1",
-    "chalk": "^0.5.1",
     "geojson-is-valid": "0.0.3",
     "geojsonhint": "^0.3.4",
-    "http-server": "^0.7.1",
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
     "mocha-given": "^0.1.3",
     "mocha-traceur": "^1.0.0",
     "rewire": "^2.1.0",
-    "testem": "^0.6.19",
-    "watchify": "^1.0.2"
+    "testem": "^0.6.19"
   },
   "dependencies": {
+    "brfs": "^1.2.0",
     "browserify": "^5.11.2",
     "commander": "^2.3.0",
     "es6ify": "^1.3.0",
     "events": "^1.0.2",
     "foreach": "^2.0.5",
     "handlebars": "^2.0.0",
+    "http-server": "^0.7.1",
     "insert-css": "^0.2.0",
     "object-merge": "^2.5.1",
     "traceur": "^0.0.60",
-    "uglifyify": "^2.5.0"
+    "uglifyify": "^2.5.0",
+    "watchify": "^1.0.2",
+    "chalk": "^0.5.1"
   }
 }
