@@ -44,7 +44,14 @@ class Map {
     }
 
     this.geojsonLayers[name] = L.geoJson(config.geojson, options)
+  }
+
+  showGeojsonLayer(name) {
     this.geojsonLayers[name].addTo(this.map)
+  }
+
+  hideGeojsonLayer(name) {
+    this.geojsonLayers[name].removeFrom(this.map)
   }
 }
 
