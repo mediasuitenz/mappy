@@ -16,7 +16,7 @@ describe('the geojsonFeatureFilterer', () => {
     point = {
       type: 'Feature',
       id: 'id-1',
-      properties: {},
+      properties: { show: true },
       geometry: {
         type: 'Point',
         coordinates: [172.6325585, -43.4448338]
@@ -27,7 +27,7 @@ describe('the geojsonFeatureFilterer', () => {
     linestring = {
       type: 'Feature',
       id: 'id-2',
-      properties: {},
+      properties: { show: false },
       geometry: {
         type: 'LineString',
         coordinates: [
@@ -55,6 +55,41 @@ describe('the geojsonFeatureFilterer', () => {
         And('filterer.filter is called with a geojson linestring feature', () => result2 = filterer.filter(linestring))
         Then('result1 should be true', () => result1.should.equal(true))
         And('result2 should be false', () => result2.should.equal(false))
+      })
+    })
+
+    describe('properties filtering', () => {
+      scenario('filtering to only features that have property show set to true', () => {
+        var conf, filterer, result1, result2
+
+        Given('config to filter out anything but show=true', () => conf = { properties: { show: [true] } })
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result1 = filterer.filter(point))
+        And('filterer.filter is called with a geojson linestring feature', () => result2 = filterer.filter(linestring))
+        Then('result1 should be true', () => result1.should.equal(true))
+        And('result2 should be false', () => result2.should.equal(false))
+      })
+
+      scenario('filtering to only features that have property show set to maybe', () => {
+        var conf, filterer, result1, result2
+
+        Given('config to filter out anything but show=maybe', () => conf = { properties: { show: ['maybe'] } })
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result1 = filterer.filter(point))
+        And('filterer.filter is called with a geojson linestring feature', () => result2 = filterer.filter(linestring))
+        Then('result1 should be false', () => result1.should.equal(false))
+        And('result2 should be false', () => result2.should.equal(false))
+      })
+
+      scenario('filtering to only features that have property show set to true or false', () => {
+        var conf, filterer, result1, result2
+
+        Given('config to filter out anything but show=true or show=false', () => conf = { properties: { show: [true, false] } })
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result1 = filterer.filter(point))
+        And('filterer.filter is called with a geojson linestring feature', () => result2 = filterer.filter(linestring))
+        Then('result1 should be true', () => result1.should.equal(true))
+        And('result2 should be true', () => result2.should.equal(true))
       })
     })
   })
