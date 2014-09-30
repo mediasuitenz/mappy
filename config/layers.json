@@ -26,6 +26,27 @@
             }
           }
         }
+      },
+      "icon": {
+        "general": {
+          "iconUrl": "/icons/leaf-green.png",
+          "shadowUrl": "/icons/leaf-shadow.png",
+          "iconSize": [38, 95],
+          "shadowSize": [50, 64],
+          "iconAnchor": [22, 94],
+          "shadowAnchor": [4, 62],
+          "popupAnchor": [-3, -76]
+        },
+        "properties": {
+          "highway": {
+            "traffic_signals": {
+              "iconUrl": "/icons/leaf-red.png"
+            },
+            "crossing": {
+              "iconUrl": "/icons/leaf-orange.png"
+            }
+          }
+        }
       }
     },
     "dataSource": {
