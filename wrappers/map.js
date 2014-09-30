@@ -39,6 +39,8 @@ class Map {
       options.onEachFeature = (feature, layer) => layer.bindPopup(config.popup(feature.properties))
     if (config.icon)
       options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.icon(feature.properties)) })
+    if (config.filter)
+      options.filter = (feature) => config.filter(feature)
 
     if (this.geojsonLayers[name]) {
       this.geojsonLayers[name].removeFrom(this.map)

@@ -3,6 +3,12 @@
     "name": "layer1",
     "description": "This is layer 1",
     "startVisible": true,
+    "filter": {
+      "geometry": ["Point"],
+      "properties": {
+        "highway": ["trunk", "motorway", "traffic_signals", "crossing"]
+      }
+    },
     "styles": {
       "popup": {
         "css": "layer1.css",
