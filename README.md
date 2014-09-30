@@ -18,16 +18,26 @@ TFC MAP
 ### Map
 ```json
 {
-    "tileLayers": [
-        {
-            "name": "Default",
-            "url": "http://...",
-            "time": {
-                "on": "8:00",
-                "off": "11:00"
-            }
-        }
-    ]
+  "domElementId": "map",
+  "key": {
+    "domElementId": "key",
+    "title": "My map key"
+  },
+  "tileLayers": {
+    "base-tiles": {
+      "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": "",
+      "maxZoom": 18,
+      "time": {
+        "on": "8:00",
+        "off": "11:00"
+      }
+    }
+  },
+  "bounds": [
+    [-43.577988,172.515934],
+    [-43.461397,172.749529]
+  ]
 }
 ```
 
@@ -36,6 +46,7 @@ TFC MAP
 [
     {
         "name": "Major Roadworks",
+        "description": "This is layer 1",
         "styles": {
             "popup": {
                 "css": "myPopupCssFile.css",
@@ -64,11 +75,31 @@ TFC MAP
                         }
                     }
                 }
+            },
+            "icon": {
+              "general": {
+                "iconUrl": "/icons/leaf-green.png",
+                "shadowUrl": "/icons/leaf-shadow.png",
+                "iconSize": [38, 95],
+                "shadowSize": [50, 64],
+                "iconAnchor": [22, 94],
+                "shadowAnchor": [4, 62],
+                "popupAnchor": [-3, -76]
+              },
+              "properties": {
+                "highway": {
+                  "traffic_signals": {
+                    "iconUrl": "/icons/leaf-red.png"
+                  },
+                  "crossing": {
+                    "iconUrl": "/icons/leaf-orange.png"
+                  }
+                }
+              }
             }
         },
-        "priority": 1, // used to order in key and map layer zindex
-        "icon": "",    // icon used for markers
-        "visibleByDefault": true // whether to display the layer on map load
+        "sortOrder": 1, // used to order in key and map layer zindex
+        "startVisible": true // whether to display the layer on map load
         "defaultLayerType": false || "default", // false would mean this layer is off if the zoom level is outside
                                                 // the levels defined in the "zoom" config
                                                 // "default", "heatmap", "cluster", etc
