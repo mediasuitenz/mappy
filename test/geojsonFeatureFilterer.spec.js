@@ -45,6 +45,35 @@ describe('the geojsonFeatureFilterer', () => {
   })
 
   describe('#filter method', () => {
+    describe('no filtering', () => {
+      scenario('providing an empty config object', () => {
+        var conf, filterer, result
+
+        Given('an empty config object', () => conf = {})
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
+        Then('result should be true', () => result.should.equal(true))
+      })
+
+      scenario('providing an undefined config object', () => {
+        var conf, filterer, result
+
+        Given('an undefined config object', () => conf = undefined)
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
+        Then('result should be true', () => result.should.equal(true))
+      })
+
+      scenario('providing a null config object', () => {
+        var conf, filterer, result
+
+        Given('an empty config object', () => conf = null)
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
+        Then('result should be true', () => result.should.equal(true))
+      })
+    })
+
     describe('geometry filtering', () => {
       scenario('filtering to only points', () => {
         var conf, filterer, result1, result2
