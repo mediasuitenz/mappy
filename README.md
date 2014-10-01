@@ -31,7 +31,10 @@ TFC MAP
       "time": {
         "on": "8:00",
         "off": "11:00"
-      }
+      },
+      //any other leaflet tile layer options eg.
+      "zIndex": 100,
+      "opacity": 0.5
     }
   },
   "bounds": [
