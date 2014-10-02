@@ -9,7 +9,7 @@ var geojsonFeatureFilterer = rewire('../lib/geojsonFeatureFilterer')
 var factory
 
 describe('the geojsonFeatureFilterer', () => {
-  var filterer, point, linestring
+  var filterer, point, linestring, linestring2
 
   Given('the geojsonFeatureFiltererFactory', () => factory = geojsonFeatureFilterer)
   Given('a valid geojson point object', () => {
@@ -28,6 +28,21 @@ describe('the geojsonFeatureFilterer', () => {
       type: 'Feature',
       id: 'id-2',
       properties: { show: false },
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [172.5498622,-43.4932694],
+          [172.5497215,-43.4932446],
+          [172.5496357,-43.493196]
+        ]
+      }
+    }
+  })
+  Given('a valid geojson linestring object', () => {
+    linestring2 = {
+      type: 'Feature',
+      id: 'id-2',
+      properties: { show: true },
       geometry: {
         type: 'LineString',
         coordinates: [
@@ -120,6 +135,25 @@ describe('the geojsonFeatureFilterer', () => {
         Then('result1 should be true', () => result1.should.equal(true))
         And('result2 should be true', () => result2.should.equal(true))
       })
+    })
+
+    describe('feature type and property filtering', () => {
+
+      scenario('filtering by LineString and by property show = true', () => {
+        var conf, filterer, result1, result2, result3
+
+        Given('config to filter out anything but LineStrings with show=true', () => {
+          conf = { geometry: ['LineString'], properties: { show: [true] }}
+        })
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filter is called with a point', () => result1 = filterer.filter(point))
+        And('filter is called with a linestring with show=false', () => result2 = filterer.filter(linestring))
+        And('filter is called with a linestring with show=true', () => result3 = filterer.filter(linestring2))
+        Then('first result should be false', () => result1.should.equal(false))
+        And('second result should be false', () => result2.should.equal(false))
+        And('third result should be true', () => result3.should.equal(true))
+      })
+
     })
   })
 })
