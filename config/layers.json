@@ -4,7 +4,7 @@
     "description": "This is layer 1",
     "startVisible": true,
     "filter": {
-      "geometry": ["Point"],
+      "geometry": ["Point", "LineString"],
       "properties": {
         "highway": ["trunk", "motorway", "traffic_signals", "crossing"]
       }
@@ -12,7 +12,13 @@
     "styles": {
       "popup": {
         "css": "layer1.css",
-        "template": "layer1.html"
+        "template": "layer1.html",
+        "filter": {
+          "geometry": ["LineString"],
+          "properties": {
+            "highway": ["trunk"]
+          }
+        }
       },
       "layer": {
         "general": {

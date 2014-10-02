@@ -34,8 +34,12 @@ class Map {
     var options = {}
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
-    if (config.popup)
-      options.onEachFeature = (feature, layer) => layer.bindPopup(config.popup(feature.properties))
+    if (config.popup) {
+      options.onEachFeature = (feature, layer) => {
+        if (!config.popupFilter || config.popupFilter(feature))
+          layer.bindPopup(config.popup(feature.properties))
+      }
+    }
     if (config.icon)
       options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.icon(feature.properties)) })
     if (config.filter)
