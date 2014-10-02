@@ -102,6 +102,11 @@ function run(source, dest) {
   }
 }
 
+process.on('uncaughtException', function(err) {
+  console.error(chalk.red('Caught exception: ' + err.message));
+  console.trace()
+});
+
 program
   .version('0.0.1')
   .option('-e, --es6', 'Transform es6 code to es5 using traceur')
