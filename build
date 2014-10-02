@@ -75,16 +75,9 @@ function run(source, dest) {
     fullPaths: true
   })
 
-  if (program.es6) {
-    bundler = bundler
-      .add(es6ify.runtime)
-      .transform(es6ify)
-  }
+  if (program.es6) bundler = bundler.transform(es6ify)
 
-  if (program.brfs) {
-    bundler = bundler
-      .transform(brfs)
-  }
+  if (program.brfs) bundler = bundler.transform(brfs)
 
   if (program.minify) bundler = bundler.transform(uglifyify)
 
