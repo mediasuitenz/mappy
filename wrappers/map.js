@@ -19,13 +19,12 @@ class Map {
    * Adds a tile layer to the map with given config
    */
   setTileLayer(name, config) {
-    var tileLayerOptions = {
-      attribution: config.attribution,
-      maxZoom: config.maxZoom
-    }
-
-    this.tileLayers[name] = L.tileLayer(config.url, tileLayerOptions)
+    this.tileLayers[name] = L.tileLayer(config.url, config)
     this.tileLayers[name].addTo(this.map)
+  }
+
+  removeTileLayer(name) {
+    this.tileLayers[name].removeFrom(this.map)
   }
 
   /**

@@ -8,7 +8,22 @@
     "base-tiles": {
       "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       "attribution": "",
-      "maxZoom": 18
+      "maxZoom": 18,
+      "zIndex": 10000,
+      "time": {
+        "on": "00:00",
+        "off": "08:46"
+      }
+    },
+    "aux-tiles": {
+      "url": "http://{s}.tiles.mapbox.com/v3/digitalsadhu.jbf3mhe1/{z}/{x}/{y}.png",
+      "attribution": "",
+      "maxZoom": 18,
+      "zIndex": 1000000,
+      "time": {
+        "on": "08:46",
+        "off": "23:59"
+      }
     }
   },
   "bounds": [
