@@ -31,7 +31,7 @@ describe('The Tile Layer Manager', () => {
     describe('listening for the add event', () => {
 
       scenario('the time is 9:00am', () => {
-        Given('that the time is 9:00am', () => clock = sinon.useFakeTimers(moment('2013-02-08 09Z').valueOf()))
+        Given('that the time is 9:00am', () => clock = sinon.useFakeTimers(moment('2013-02-08 09:00').valueOf()))
         Given('a listener function', () => listener = sinon.spy())
         When('creating a tile manager from config', () => manager = tileLayerManager(config))
         And('listener is attached to the manager', () => manager.on('add', listener))
@@ -41,7 +41,7 @@ describe('The Tile Layer Manager', () => {
       })
 
       scenario('the time is 1:00pm', () => {
-        Given('that the time is 1:00pm', () => clock = sinon.useFakeTimers(moment('2013-02-08 13Z').valueOf()) )
+        Given('that the time is 1:00pm', () => clock = sinon.useFakeTimers(moment('2013-02-08 13:00').valueOf()) )
         Given('a listener function', () => listener = sinon.spy())
         When('creating a tile manager from config', () => manager = tileLayerManager(config))
         And('listener is attached to the manager', () => manager.on('add', listener))
@@ -57,7 +57,7 @@ describe('The Tile Layer Manager', () => {
     describe('listening for the remove event', () => {
 
       scenario('the time is 9:00 initially, but shifts to 1:00pm', () => {
-        Given('that the time is 9:00am', () => clock = sinon.useFakeTimers(moment('2013-02-08 09Z').valueOf()) )
+        Given('that the time is 9:00am', () => clock = sinon.useFakeTimers(moment('2013-02-08 09:00').valueOf()) )
         Given('a listener function', () => listener = sinon.spy())
         Given('a tile manager', () => manager = tileLayerManager(config))
         When('remove listener is attached to the manager', () => manager.on('remove', listener))
