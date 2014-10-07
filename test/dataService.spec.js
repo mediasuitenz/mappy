@@ -9,9 +9,12 @@ data service
 - node-event-emitter
  */
 require('chai').should()
-var geojsonIsValid = require('geojson-is-valid')
+var geojsonIsValid     = require('geojson-is-valid')
+var rewire             = require('rewire')
+var dataServiceFactory = rewire('../lib/dataService')
+var pullMock           = require('./mocks/pull.mock.js')
 
-var dataServiceFactory = require('../lib/dataService')
+dataServiceFactory.__set__('pull', pullMock)
 
 var validGeojson = {
   type: 'FeatureCollection',
