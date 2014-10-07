@@ -1,10 +1,11 @@
 'use strict';
 
-var L = require('../vendor/leaflet.js')
+var L            = require('../vendor/leaflet.js')
+var EventEmitter = require('events').EventEmitter
 
 L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
 
-class Map {
+class Map extends EventEmitter {
 
   /**
    * Creates a map with given config
@@ -13,6 +14,7 @@ class Map {
     this.map           = L.map(config.domElementId).fitBounds(config.bounds)
     this.tileLayers    = {}
     this.geojsonLayers = {}
+    this.map.on('click', (event) => this.emit('click', event))
   }
 
   /**
