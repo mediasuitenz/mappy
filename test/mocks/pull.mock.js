@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (url, cb) => {
   cb(null, {
     type: 'FeatureCollection',
