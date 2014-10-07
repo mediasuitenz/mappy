@@ -9,9 +9,12 @@ data service
 - node-event-emitter
  */
 require('chai').should()
-var geojsonIsValid = require('geojson-is-valid')
+var geojsonIsValid     = require('geojson-is-valid')
+var rewire             = require('rewire')
+var dataServiceFactory = rewire('../lib/dataService')
+var pullMock           = require('./mocks/pull.mock.js')
 
-var dataServiceFactory = require('../lib/dataService')
+dataServiceFactory.__set__('pull', pullMock)
 
 var validGeojson = {
   type: 'FeatureCollection',
@@ -95,6 +98,31 @@ describe('DataService', () => {
         //Then the callback should be notified of data
         /*jshint latedef:false */
         function callback() {
+          done()
+        }
+      })
+    })
+  })
+
+  describe('context -> singlePoll', () => {
+    describe('#start', () => {
+      it('should do a single upfront data pull once', (done) => {
+
+        //Given a data service
+        var dataService = dataServiceFactory({
+          url: '...',
+          type: 'singlePoll'
+        })
+        //Given a listener attached to the data service
+        dataService.on('data', callback)
+
+        //When the service is started
+        dataService.start()
+
+        //Then the callback should be notified of data
+        /*jshint latedef:false */
+        function callback() {
+          dataService.getData().should.not.equal('undefined')
           done()
         }
       })
