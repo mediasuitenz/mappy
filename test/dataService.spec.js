@@ -101,6 +101,31 @@ describe('DataService', () => {
     })
   })
 
+  describe('context -> singlePoll', () => {
+    describe('#start', () => {
+      it('should do a single upfront data pull once', (done) => {
+
+        //Given a data service
+        var dataService = dataServiceFactory({
+          url: '...',
+          type: 'singlePoll'
+        })
+        //Given a listener attached to the data service
+        dataService.on('data', callback)
+
+        //When the service is started
+        dataService.start()
+
+        //Then the callback should be notified of data
+        /*jshint latedef:false */
+        function callback() {
+          dataService.getData().should.not.equal('undefined')
+          done()
+        }
+      })
+    })
+  })
+
   describe('#stop', () => {
     it('should stop the dataService', () => {
       //Given a data service
