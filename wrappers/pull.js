@@ -1,6 +1,7 @@
 'use strict';
 
-var fs = require('fs')
+var fs         = require('fs')
+var hyperquest = require('hyperquest')
 
 /**
  * Wraps server fetching
@@ -8,6 +9,22 @@ var fs = require('fs')
  * @param {function} cb
  */
 module.exports = (url, cb) => {
-  //TODO: implement proper server fetching
-  cb(null, JSON.parse(fs.readFileSync(__dirname + '/../stubs/geojson1.json', 'utf8')))
+
+  var data = ''
+
+  var req = hyperquest.get(url)
+
+  req.on('data', (chunk) => {
+    data += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      cb(null, JSON.parse(data))
+    } catch (err) {
+      cb(null, data)
+    }
+  })
+
+  req.on('error', cb)
 }
