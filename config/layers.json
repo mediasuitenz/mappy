@@ -62,7 +62,7 @@
       }
     },
     "dataSource": {
-      "url": "",
+      "url": "http://localhost:3000/geojson.json",
       "type": "longPoll",
       "refresh": 10000
     },
