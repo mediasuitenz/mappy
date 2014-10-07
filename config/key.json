@@ -1,0 +1,13 @@
+[
+  {
+    "layer": "Layer 1",
+  },
+  {
+    "group": "Group One",
+    "layers": [
+      "Layer 2"
+      "Layer 3"
+      "Layer 4"
+    ]
+  }
+]

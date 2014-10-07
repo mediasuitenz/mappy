@@ -67,7 +67,6 @@
       "type": "longPoll",
       "refresh": 10000
     },
-    "sortOrder": 1,
     "showInKey": true
   },
   {
