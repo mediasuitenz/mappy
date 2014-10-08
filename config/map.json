@@ -9,7 +9,7 @@
       "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       "attribution": "",
       "maxZoom": 18,
-      "zIndex": 10000,
+      "zIndex": 10,
       "time": {
         "on": "00:00",
         "off": "08:46"
@@ -19,11 +19,15 @@
       "url": "http://{s}.tiles.mapbox.com/v3/digitalsadhu.jbf3mhe1/{z}/{x}/{y}.png",
       "attribution": "",
       "maxZoom": 18,
-      "zIndex": 1000000,
+      "zIndex": 10,
       "time": {
         "on": "08:46",
         "off": "23:59"
       }
+    },
+    "linz-land-packets": {
+      "url": "https://tiles-{s}.data-cdn.linz.govt.nz/services;key=2b48020828f04b3cb97822be1d384222/tiles/v4/layer=772,style=auto,color=003399/{z}/{x}/{y}.png",
+      "zIndex": 11
     }
   },
   "bounds": [
