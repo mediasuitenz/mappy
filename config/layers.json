@@ -67,6 +67,29 @@
       "type": "longPoll",
       "refresh": 10000
     },
-    "sortOrder": 1
+    "sortOrder": 1,
+    "showInKey": true
+  },
+  {
+    "name": "click-layer",
+    "type": "click",
+    "description": "This layer defines clicks",
+    "startVisible": true,
+    "sortOrder": 2,
+    "showInKey": false,
+    "styles": {
+      "layer": {
+        "general": {
+          "stroke": true,
+          "weight": 1,
+          "opacity": 0.8,
+          "color": "#000000"
+        }
+      }
+    },
+    "dataSource": {
+      "type": "singlePoll",
+      "url": "http://parsnip.msapp.co.nz/{x}/{y}"
+    }
   }
 ]
