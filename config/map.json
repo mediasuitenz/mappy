@@ -1,9 +1,5 @@
 {
   "domElementId": "map",
-  "key": {
-    "domElementId": "key",
-    "title": "My map key"
-  },
   "tileLayers": {
     "base-tiles": {
       "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",

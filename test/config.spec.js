@@ -36,4 +36,18 @@ describe('Config', () => {
     })
   })
 
+  describe('#getKey', () => {
+    it('should return key config object', () => {
+      //Given
+
+      //When
+      var key = config.getKey()
+
+      //Then
+      key.should.be.an('object')
+      key.title.should.be.a('string')
+      key.domElementId.should.be.a('string')
+    })
+  })
+
 })

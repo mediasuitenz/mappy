@@ -1,13 +1,15 @@
-[
-  {
-    "layer": "Layer 1"
-  },
-  {
-    "group": "Group One",
-    "layers": [
-      "Layer 2",
-      "Layer 3",
-      "Layer 4"
-    ]
-  }
-]
+{
+  "domElementId": "key",
+  "title": "My map key",
+  "layers": [
+    "Layer 1",
+    {
+      "group": "Group One",
+      "layers": [
+        "Layer 2",
+        "Layer 3",
+        "Layer 4"
+      ]
+    }
+  ]
+}
