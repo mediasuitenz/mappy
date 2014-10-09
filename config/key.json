@@ -8,32 +8,23 @@
       "checked": true
     },
     {
-      "group": "Group One",
+      "group": "group-one",
+      "description": "This is a group",
       "layers": [
         {
-          "name": "Layer 2",
+          "name": "layer-2",
           "description": "My Other Layer",
           "checked": true
         },
         {
-          "name": "Layer 3",
+          "name": "layer-3",
           "description": "My Other Layer",
           "checked": false
-        },
-        {
-          "group": "Nested Group",
-          "layers": [
-            {
-              "name": "Layer 4",
-              "description": "My Deeply Nested Layer",
-              "checked": true
-            }
-          ]
         }
       ]
     },
     {
-      "name": "Layer 5",
+      "name": "layer-5",
       "description": "My Other Other Layer",
       "checked": true
     }
