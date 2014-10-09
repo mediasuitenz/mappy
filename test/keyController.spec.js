@@ -31,14 +31,20 @@ describe('the keyController module', () => {
     })
   })
 
-  describe('the addKey, getKeyVisibility and setKeyVisibility methods', () => {
+  describe('the addKeyFromConfig, getKeyVisibility and setKeyVisibility methods', () => {
     var factory, mkController, config
 
     Given('the keyController module', () => factory = keyController)
     Given('keyController config', () => config = { map: new Map(), key: new Key() })
 
     When('a map controller object is created', () => mkController = factory(config))
-    And('a key `mykey` is added', () => mkController.addKey('mykey', '', false))
+    And('a key `mykey` is added', () => {
+      mkController.addKeyFromConfig({
+        name: 'mykey',
+        description: 'My description',
+        checked: false
+      })
+    })
 
     context('straight after `mykey` is added', () => {
       Then('the #getKeyVisibility method should return false', () => {

@@ -38,7 +38,7 @@ describe('the mapKey module', () => {
   })
 
 
-  describe('adding and removing items', () => {
+  describe('adding items', () => {
     var text, id, result, checked
 
     Given('an item id', () => id = 'item1')
@@ -51,11 +51,6 @@ describe('the mapKey module', () => {
       Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
       And('keys.id property should be `item1`', () => key.items[0].key.should.equal('item1'))
       And('keys.id property should be `item1`', () => key.items[0].checked.should.equal(true))
-
-      describe('calling #removeItem', () => {
-        When('calling `removeItem` with id', () => result = key.removeItem(id))
-        Then('keys item array should be empty', () => key.items.length.should.equal(0))
-      })
     })
   })
 
