@@ -8,6 +8,11 @@ var keyController = require('../lib/keyController')
 
 class Map {}
 class Key {
+  constructor() {
+    this.config = {
+      layers: []
+    }
+  }
   on() {}
   addItem() {}
 }
