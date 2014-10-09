@@ -59,6 +59,14 @@ describe('the mapKey module', () => {
     })
   })
 
+  describe('adding groups', () => {
+    var group
+
+    Given('a group', () => group = { group: 'My Group', description: 'asdf', layers: [] })
+    When('calling `addGroup` with a group', () => result = key.addGroup(group))
+    Then('result', () => result.should.be.an('object'))
+  })
+
   describe('throwing user click events', () => {
     var callback, result, item, key
 
