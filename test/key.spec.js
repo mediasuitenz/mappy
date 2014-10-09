@@ -4,13 +4,13 @@ require('mocha-given')
 require('chai').should()
 
 var rewire = require('rewire')
-var mapKey = rewire('../lib/mapKey')
+var mapKey = rewire('../lib/key')
 mapKey.__set__('domWrapper', require('./mocks/dom.mock.js'))
 
 describe('the mapKey module', () => {
   var mod, key, config
 
-  Given('config', () => config = { domElement: 'map'})
+  Given('config', () => config = { domElementId: 'map'})
   Given('the mapKey module', () => mod = mapKey)
   When('mapKey is initialized', () => key = mod(config))
 

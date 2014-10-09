@@ -4,33 +4,33 @@ require('mocha-given')
 var expect  = require('chai').expect
 var context = describe
 
-var mapKeyController = require('../lib/mapKeyController')
+var keyController = require('../lib/keyController')
 
 class Map {}
-class MapKey {
+class Key {
   on() {}
   addItem() {}
 }
 
-describe('the mapKeyController module', () => {
-  describe('creating a mapKeyController', () => {
-    var factory, map, mapKey, mkController, config
+describe('the keyController module', () => {
+  describe('creating a keyController', () => {
+    var factory, mkController, config
 
-    Given('the mapKeyController module', () => factory = mapKeyController)
-    Given('mapKeyController config', () => config = { map: new Map(), mapKey: new MapKey() })
+    Given('the keyController module', () => factory = keyController)
+    Given('keyController config', () => config = { map: new Map(), key: new Key() })
 
     When('a map controller object is created', () => mkController = factory(config))
 
     Then('a map key controller should have been created', () => {
-      expect(mkController.constructor.name).to.equal('MapKeyController')
+      expect(mkController.constructor.name).to.equal('KeyController')
     })
   })
 
   describe('the addKey, getKeyVisibility and setKeyVisibility methods', () => {
-    var factory, map, mapKey, mkController, config
+    var factory, mkController, config
 
-    Given('the mapKeyController module', () => factory = mapKeyController)
-    Given('mapKeyController config', () => config = { map: new Map(), mapKey: new MapKey() })
+    Given('the keyController module', () => factory = keyController)
+    Given('keyController config', () => config = { map: new Map(), key: new Key() })
 
     When('a map controller object is created', () => mkController = factory(config))
     And('a key `mykey` is added', () => mkController.addKey('mykey', '', false))

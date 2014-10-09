@@ -3,7 +3,7 @@
   "title": "My map key",
   "layers": [
     {
-      "name": "Layer 1",
+      "name": "layer1",
       "description": "My Layer",
       "checked": true
     },
