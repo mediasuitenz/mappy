@@ -1,9 +1,8 @@
 [
   {
     "name": "layer1",
-    "description": "This is layer 1",
     "type": "geojson",
-    "startVisible": true,
+    "enabled": true,
     "filter": {
       "geometry": ["Point", "LineString"],
       "properties": {
@@ -66,16 +65,12 @@
       "url": "http://localhost:3000/geojson.json",
       "type": "longPoll",
       "refresh": 10000
-    },
-    "showInKey": true
+    }
   },
   {
     "name": "click-layer",
     "type": "click",
-    "description": "This layer defines clicks",
-    "startVisible": true,
-    "sortOrder": 2,
-    "showInKey": false,
+    "enabled": true,
     "styles": {
       "layer": {
         "general": {

@@ -4,25 +4,29 @@
   "layers": [
     {
       "name": "Layer 1",
-      "description": "My Layer"
+      "description": "My Layer",
+      "checked": true
     },
     {
       "group": "Group One",
       "layers": [
         {
           "name": "Layer 2",
-          "description": "My Other Layer"
+          "description": "My Other Layer",
+          "checked": true
         },
         {
           "name": "Layer 3",
-          "description": "My Other Layer"
+          "description": "My Other Layer",
+          "checked": false
         },
         {
           "group": "Nested Group",
           "layers": [
             {
               "name": "Layer 4",
-              "description": "My Deeply Nested Layer"
+              "description": "My Deeply Nested Layer",
+              "checked": true
             }
           ]
         }
@@ -30,7 +34,8 @@
     },
     {
       "name": "Layer 5",
-      "description": "My Other Other Layer"
+      "description": "My Other Other Layer",
+      "checked": true
     }
   ]
 }
