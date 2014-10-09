@@ -2,14 +2,35 @@
   "domElementId": "key",
   "title": "My map key",
   "layers": [
-    "Layer 1",
+    {
+      "name": "Layer 1",
+      "description": "My Layer"
+    },
     {
       "group": "Group One",
       "layers": [
-        "Layer 2",
-        "Layer 3",
-        "Layer 4"
+        {
+          "name": "Layer 2",
+          "description": "My Other Layer"
+        },
+        {
+          "name": "Layer 3",
+          "description": "My Other Layer"
+        },
+        {
+          "group": "Nested Group",
+          "layers": [
+            {
+              "name": "Layer 4",
+              "description": "My Deeply Nested Layer"
+            }
+          ]
+        }
       ]
+    },
+    {
+      "name": "Layer 5",
+      "description": "My Other Other Layer"
     }
   ]
 }
