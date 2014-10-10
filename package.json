@@ -33,6 +33,7 @@
   },
   "homepage": "",
   "devDependencies": {
+    "catch-error": "0.0.1",
     "chai": "^1.9.1",
     "geojson-is-valid": "0.0.3",
     "geojsonhint": "^0.3.4",

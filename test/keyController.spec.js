@@ -3,6 +3,7 @@
 require('mocha-given')
 var expect  = require('chai').expect
 var context = describe
+var catchError = require('catch-error')
 
 var keyController = require('../lib/keyController')
 
@@ -92,18 +93,21 @@ describe('the keyController module', () => {
     })
 
     context('valid layer name in key config', () => {
-      var error
+      var error, keyLayer
+
+      Given('`mykey` is defined', () => {
+        keyLayer = {
+          name: 'mykey',
+          description: 'My description',
+          checked: false
+        }
+      })
 
       And('a valid key `mykey` is added', () => {
-        try {
-          mkController.addKeyFromConfig({
-            name: 'mykey',
-            description: 'My description',
-            checked: false
-          })
-        } catch(e) {
-          error = e
-        }
+        console.error(keyLayer)
+        console.error(mkController.addKeyFromConfig(keyLayer))
+        // console.error(catchError(mkController.addKeyFromConfig, keyLayer))
+        // error = catchError(mkController.addKeyFromConfig, keyLayer)
       })
       Then('an error should not be thrown', () => expect(error).to.equal(undefined))
     })
