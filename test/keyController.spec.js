@@ -10,19 +10,20 @@ class Map {}
 class Key {
   constructor() {
     this.config = {
-      layers: []
+      layers: [{ name: 'layer1'}]
     }
   }
   on() {}
   addItem() {}
 }
+var definedLayers = ['layer1', 'mykey']
 
 describe('the keyController module', () => {
   describe('creating a keyController', () => {
     var factory, mkController, config
 
     Given('the keyController module', () => factory = keyController)
-    Given('keyController config', () => config = { map: new Map(), key: new Key() })
+    Given('keyController config', () => config = { map: new Map(), key: new Key(), layerNames: definedLayers })
 
     When('a map controller object is created', () => mkController = factory(config))
 
@@ -31,14 +32,14 @@ describe('the keyController module', () => {
     })
   })
 
-  describe('the addKeyFromConfig, getKeyVisibility and setKeyVisibility methods', () => {
+  describe('the getKeyVisibility and setKeyVisibility methods', () => {
     var factory, mkController, config
 
     Given('the keyController module', () => factory = keyController)
-    Given('keyController config', () => config = { map: new Map(), key: new Key() })
-
+    Given('keyController config', () => config = { map: new Map(), key: new Key(), layerNames: definedLayers })
     When('a map controller object is created', () => mkController = factory(config))
-    And('a key `mykey` is added', () => {
+
+    And('a valid key `mykey` is added', () => {
       mkController.addKeyFromConfig({
         name: 'mykey',
         description: 'My description',
@@ -64,6 +65,47 @@ describe('the keyController module', () => {
       Then('the #getKeyVisibility method should return false', () => {
         expect(mkController.getKeyVisibility('mykey')).to.equal(false)
       })
+    })
+  })
+
+  describe('the addKeyFromConfig method', () => {
+    var factory, mkController, config
+
+    Given('the keyController module', () => factory = keyController)
+    Given('keyController config', () => config = { map: new Map(), key: new Key(), layerNames: definedLayers })
+    When('a map controller object is created', () => mkController = factory(config))
+
+    context('invalid layer name in key config', () => {
+      var error
+
+      And('a key `blah` is added that does not relate to a known layer', () => {
+        try {
+          mkController.addKeyFromConfig({ name: 'blah'})
+        } catch(e) {
+          error = e
+        }
+      })
+      Then('an error should be thrown', () => expect(error).to.be.an.instanceof(Error))
+      And('it should have a relevant message', () => {
+        expect(error.message).to.equal('key.json layer reference `blah` does not match any entry layers.json')
+      })
+    })
+
+    context('valid layer name in key config', () => {
+      var error
+
+      And('a valid key `mykey` is added', () => {
+        try {
+          mkController.addKeyFromConfig({
+            name: 'mykey',
+            description: 'My description',
+            checked: false
+          })
+        } catch(e) {
+          error = e
+        }
+      })
+      Then('an error should not be thrown', () => expect(error).to.equal(undefined))
     })
   })
 })
