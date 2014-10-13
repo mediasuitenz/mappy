@@ -44,10 +44,10 @@ describe('the tileLayerController module', () => {
       var spy
 
       Given('a sinon spy', () => spy = sinon.spy())
-      Given('that map.setTileLayer is a dirty spy', () => map.removeTileLayer = spy)
+      Given('that map.removeTileLayer is a dirty spy', () => map.removeTileLayer = spy)
 
       When('a tileLayerController is created', () => controller = tileLayerController(config))
-      When('add is emitted', () => manager.emit('remove'))
+      When('remove is emitted', () => manager.emit('remove'))
 
       Then('our sneaky spy should have been called', () => expect(spy).to.have.been.calledOnce)
     })
