@@ -6,27 +6,6 @@
       "name": "layer1",
       "description": "My Layer",
       "checked": true
-    },
-    {
-      "group": "group-one",
-      "description": "This is a group",
-      "layers": [
-        {
-          "name": "layer-2",
-          "description": "My Other Layer",
-          "checked": true
-        },
-        {
-          "name": "layer-3",
-          "description": "My Other Layer",
-          "checked": false
-        }
-      ]
-    },
-    {
-      "name": "layer-5",
-      "description": "My Other Other Layer",
-      "checked": true
     }
   ]
 }
