@@ -106,5 +106,22 @@ describe('geojsonLayerController', () => {
     Then('a layer should have been added to the map', () => expect(spy).to.have.been.calledOnce)
   })
 
+  describe('adding a layer with minimal configuration', () => {
+    context('it should handle undefined config keys gracefully', () => {
+      var caughtErrors, config, gjLayerController
 
+      Given('some controller config', () => config = configBuilder())
+      Given('a valid geojsonLayerController', () => {
+        gjLayerController = gjLayerControllerFactory(config)
+      })
+      When('addLayersFromConfig is called with config', () => {
+        try {
+          gjLayerController.addLayersFromConfig([{}])
+        } catch (e) {
+          caughtErrors = true
+        }
+      })
+      Then('there should have been no errors thrown', () => expect(caughtErrors).to.equal(undefined))
+    })
+  })
 })

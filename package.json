@@ -60,6 +60,7 @@
     "hyperquest": "^0.3.0",
     "insert-css": "^0.2.0",
     "moment": "^2.8.3",
+    "nevernull": "0.0.9",
     "object-merge": "^2.5.1",
     "persuasion": "^1.0.1",
     "supervisor": "^0.6.0",
