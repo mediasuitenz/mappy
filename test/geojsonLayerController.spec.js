@@ -1,21 +1,34 @@
 'use strict';
 
 require('mocha-given')
-var assert     = require('assert')
-var chai       = require('chai')
-var expect     = chai.expect
-var context    = describe
-var catchError = require('catch-error')
-var sinon      = require('sinon')
-var sinonChai  = require('sinon-chai')
+var assert       = require('assert')
+var chai         = require('chai')
+var expect       = chai.expect
+var context      = describe
+var catchError   = require('catch-error')
+var sinon        = require('sinon')
+var sinonChai    = require('sinon-chai')
 chai.use(sinonChai)
+var EventEmitter = require('events').EventEmitter
 
 var gjLayerControllerFactory = require('../lib/geojsonLayerController')
 
-class Map {}
-class KeyController {}
+class Map {
+  setGeojsonLayer() {}
+}
+class KeyController {
+  getKeyVisibility() {
+    return true
+  }
+}
+var dataService
+class DataService extends EventEmitter {
+  getData() {}
+  start() {}
+}
 var dataServiceFactory = () => {
-  return {}
+  dataService = new DataService()
+  return dataService
 }
 var popupPresenterFactory = () => {
   return {}
@@ -43,7 +56,12 @@ var layerBuilder = (n) => {
 
   var layer = {
     name: 'layer',
-    type: 'geojson'
+    type: 'geojson',
+    styles: {
+      popup: {
+        filter: {}
+      }
+    }
   }
   var layers = []
 
@@ -71,20 +89,21 @@ describe('geojsonLayerController', () => {
   })
 
   describe('adding layers from config', () => {
-    var layerConfig, gjLayerController
+    var layerConfig, config, gjLayerController, spy
 
+    Given('some controller config', () => config = configBuilder())
+    Given('the map.setGeojsonLayer method is a spy', () => {
+      spy = config.map.showGeojsonLayer = sinon.spy()
+    })
     Given('a valid geojsonLayerController', () => {
-      gjLayerController = gjLayerControllerFactory(configBuilder())
+      gjLayerController = gjLayerControllerFactory(config)
     })
-    Given('some layer config', () => {
-      layerConfig = layerBuilder(2)
-    })
+    Given('some layer config', () => layerConfig = layerBuilder(2))
     When('#addLayersFromConfig', () => {
-      gjLayerController(layerConfig)
+      gjLayerController.addLayersFromConfig(layerConfig)
     })
-    Then('the module should be an object', () => {
-      expect(gjLayerController).to.be.an('object')
-    })
+    When('a data event is triggered', () => dataService.emit('data'))
+    Then('a layer should have been added', () => expect(spy).to.have.been.calledOnce)
   })
 
 
