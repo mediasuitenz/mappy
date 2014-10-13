@@ -74,21 +74,25 @@ describe('the keyController module', () => {
 
     Given('the keyController module', () => factory = keyController)
     Given('keyController config', () => config = { map: new Map(), key: new Key(), layerNames: definedLayers })
-    When('a map controller object is created', () => mkController = factory(config))
 
     context('invalid layer name in key config', () => {
-      var error
+      var error, keyLayer
+
+      Given('`blah` is undefined', () => {
+        keyLayer = {
+          name: 'blah',
+          description: 'My description',
+          checked: false
+        }
+      })
+      When('a map controller object is created', () => mkController = factory(config))
 
       And('a key `blah` is added that does not relate to a known layer', () => {
-        try {
-          mkController.addKeyFromConfig({ name: 'blah'})
-        } catch(e) {
-          error = e
-        }
+        error = catchError({ func: mkController.addKeyFromConfig, args: [keyLayer], context: mkController })
       })
       Then('an error should be thrown', () => expect(error).to.be.an.instanceof(Error))
       And('it should have a relevant message', () => {
-        expect(error.message).to.equal('key.json layer reference `blah` does not match any entry layers.json')
+        expect(error.message).to.equal('key.json layer reference `blah` does not match any entry in layers.json')
       })
     })
 
@@ -102,12 +106,10 @@ describe('the keyController module', () => {
           checked: false
         }
       })
+      When('a map controller object is created', () => mkController = factory(config))
 
       And('a valid key `mykey` is added', () => {
-        console.error(keyLayer)
-        console.error(mkController.addKeyFromConfig(keyLayer))
-        // console.error(catchError(mkController.addKeyFromConfig, keyLayer))
-        // error = catchError(mkController.addKeyFromConfig, keyLayer)
+        error = catchError({ func: mkController.addKeyFromConfig, args: [keyLayer], context: mkController })
       })
       Then('an error should not be thrown', () => expect(error).to.equal(undefined))
     })
