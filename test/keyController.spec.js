@@ -78,7 +78,7 @@ describe('the keyController module', () => {
     context('invalid layer name in key config', () => {
       var error, keyLayer
 
-      Given('`blah` is undefined', () => {
+      Given('layer `blah` is undefined in layers.json, but is in key.json', () => {
         keyLayer = {
           name: 'blah',
           description: 'My description',
@@ -99,7 +99,7 @@ describe('the keyController module', () => {
     context('valid layer name in key config', () => {
       var error, keyLayer
 
-      Given('`mykey` is defined', () => {
+      Given('`mykey` is defined in layers.json and in key.json', () => {
         keyLayer = {
           name: 'mykey',
           description: 'My description',
