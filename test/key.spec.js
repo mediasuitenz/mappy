@@ -4,13 +4,13 @@ require('mocha-given')
 require('chai').should()
 
 var rewire = require('rewire')
-var mapKey = rewire('../lib/mapKey')
+var mapKey = rewire('../lib/key')
 mapKey.__set__('domWrapper', require('./mocks/dom.mock.js'))
 
 describe('the mapKey module', () => {
   var mod, key, config
 
-  Given('config', () => config = { domElement: 'map'})
+  Given('config', () => config = { domElementId: 'map'})
   Given('the mapKey module', () => mod = mapKey)
   When('mapKey is initialized', () => key = mod(config))
 
@@ -37,8 +37,7 @@ describe('the mapKey module', () => {
     })
   })
 
-
-  describe('adding and removing items', () => {
+  describe('adding items', () => {
     var text, id, result, checked
 
     Given('an item id', () => id = 'item1')
@@ -51,12 +50,17 @@ describe('the mapKey module', () => {
       Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
       And('keys.id property should be `item1`', () => key.items[0].key.should.equal('item1'))
       And('keys.id property should be `item1`', () => key.items[0].checked.should.equal(true))
-
-      describe('calling #removeItem', () => {
-        When('calling `removeItem` with id', () => result = key.removeItem(id))
-        Then('keys item array should be empty', () => key.items.length.should.equal(0))
-      })
     })
+  })
+
+  describe('adding groups', () => {
+    var id, text
+
+    Given('an id', () => id = 'group-one')
+    Given('some text', () => text = 'group description')
+
+    When('calling `createGroup` with id and text', () => key.createGroup(id, text))
+    Then('result', () => key.groups[id].should.be.an('object'))
   })
 
   describe('throwing user click events', () => {
