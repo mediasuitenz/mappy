@@ -26,19 +26,23 @@ var filterFactory = () => {
   return {}
 }
 
+var configBuilder = () => {
+  return {
+    map: new Map(),
+    keyController: new KeyController(),
+    dataServiceFactory: dataServiceFactory,
+    popupPresenterFactory: popupPresenterFactory,
+    stylePresenterFactory: stylePresenterFactory,
+    filterFactory: filterFactory
+  }
+}
+
 describe('geojsonLayerController', () => {
   describe('creating a geojsonLayerController', () => {
     var config, gjLayerController
 
     Given('some config', () => {
-      config = {
-        map: new Map(),
-        keyController: new KeyController(),
-        dataServiceFactory: dataServiceFactory,
-        popupPresenterFactory: popupPresenterFactory,
-        stylePresenterFactory: stylePresenterFactory,
-        filterFactory: filterFactory
-      }
+      config = configBuilder()
     })
     When('the module is called with config', () => {
       gjLayerController = gjLayerControllerFactory(config)
@@ -47,4 +51,6 @@ describe('geojsonLayerController', () => {
       expect(gjLayerController).to.be.an('object')
     })
   })
+
+
 })
