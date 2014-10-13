@@ -62,7 +62,7 @@
       }
     },
     "dataSource": {
-      "url": "http://localhost:3000/geojson.json",
+      "url": "http://geojson-spew.msapp.co.nz",
       "type": "longPoll",
       "refresh": 10000
     }

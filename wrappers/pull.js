@@ -12,7 +12,9 @@ module.exports = (url, cb) => {
 
   var data = ''
 
-  var req = hyperquest.get(url)
+  var req = hyperquest.get(url, {
+    withCredentials: false
+  })
 
   req.on('data', (chunk) => {
     data += chunk
