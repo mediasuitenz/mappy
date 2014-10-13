@@ -99,11 +99,11 @@ describe('geojsonLayerController', () => {
       gjLayerController = gjLayerControllerFactory(config)
     })
     Given('some layer config', () => layerConfig = layerBuilder(2))
-    When('#addLayersFromConfig', () => {
+    When('addLayersFromConfig is called with config', () => {
       gjLayerController.addLayersFromConfig(layerConfig)
     })
-    When('a data event is triggered', () => dataService.emit('data'))
-    Then('a layer should have been added', () => expect(spy).to.have.been.calledOnce)
+    And('a data event is triggered', () => dataService.emit('data'))
+    Then('a layer should have been added to the map', () => expect(spy).to.have.been.calledOnce)
   })
 
 
