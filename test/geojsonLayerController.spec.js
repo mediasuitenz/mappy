@@ -1,6 +1,7 @@
 'use strict';
 
 require('mocha-given')
+var assert     = require('assert')
 var chai       = require('chai')
 var expect     = chai.expect
 var context    = describe
@@ -37,6 +38,23 @@ var configBuilder = () => {
   }
 }
 
+var layerBuilder = (n) => {
+  assert(!!n && n > 0, 'layerBuilder requires a number greater than 0')
+
+  var layer = {
+    name: 'layer',
+    type: 'geojson'
+  }
+  var layers = []
+
+  while (n > 0) {
+    n--
+    layers.push(layer)
+  }
+
+  return layers
+}
+
 describe('geojsonLayerController', () => {
   describe('creating a geojsonLayerController', () => {
     var config, gjLayerController
@@ -46,6 +64,23 @@ describe('geojsonLayerController', () => {
     })
     When('the module is called with config', () => {
       gjLayerController = gjLayerControllerFactory(config)
+    })
+    Then('the module should be an object', () => {
+      expect(gjLayerController).to.be.an('object')
+    })
+  })
+
+  describe('adding layers from config', () => {
+    var layerConfig, gjLayerController
+
+    Given('a valid geojsonLayerController', () => {
+      gjLayerController = gjLayerControllerFactory(configBuilder())
+    })
+    Given('some layer config', () => {
+      layerConfig = layerBuilder(2)
+    })
+    When('#addLayersFromConfig', () => {
+      gjLayerController(layerConfig)
     })
     Then('the module should be an object', () => {
       expect(gjLayerController).to.be.an('object')
