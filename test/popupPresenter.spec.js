@@ -7,7 +7,7 @@ var popupPresenter = rewire('../lib/popupPresenter')
 
 popupPresenter.__set__('assetManager', {
   assets: {
-    templates: {
+    html: {
       'myTemplate.html': '<h1>{{title}}</h1>'
     },
     css: {
