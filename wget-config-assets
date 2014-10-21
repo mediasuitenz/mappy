@@ -27,10 +27,11 @@ assert.ok((program.source || process.env.CONFIG_URL),
 assert.ok(program.dest, 'flag `-d, --dest` must be defined')
 
 function cutDirs(command, pathname) {
-  pathname = pathname.replace(/\/*$/, '')
-  var occurances = (pathname.match(/\//g) || []).length
-  if (occurances > 0)
-    command = [command, ' --cut-dirs', occurances].join(' ')
+  if (pathname) {
+    pathname = pathname.replace(/\/*$/, '')
+    var occurances = (pathname.match(/\//g) || []).length
+    if (occurances > 0) command = [command, ' --cut-dirs', occurances].join(' ')
+  }
 
   return command
 }
