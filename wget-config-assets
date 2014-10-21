@@ -11,6 +11,7 @@ var cwd            = process.cwd()
 var chalk          = require('chalk')
 var assert         = require('assert')
 var fs             = require('fs')
+var url            = require('url')
 
 program
   .version('0.0.1')
@@ -25,12 +26,41 @@ assert.ok((program.source || process.env.CONFIG_URL),
   'flag -s, --source or env var `CONFIG_URL` must be defined')
 assert.ok(program.dest, 'flag `-d, --dest` must be defined')
 
-function buildCommand(baseCommand, program) {
-  var command = baseCommand + ' ' + path.join(process.cwd(), program.dest || '')
-  if (program.reject) command = command + ' -R ' + program.reject
-  command = command + ' ' + (program.source || process.env.CONFIG_URL)
+function cutDirs(command, pathname) {
+  pathname = pathname.replace(/\/*$/, '')
+  var occurances = (pathname.match(/\//g) || []).length
+  if (occurances > 0)
+    command = [command, ' --cut-dirs', occurances].join(' ')
 
   return command
+}
+
+function reject(command, rejects) {
+  if (rejects)
+    command = [command, '-R', rejects].join(' ')
+
+  return command
+}
+
+function source(command, src) {
+  src = src.match(/\/$/) ? src : src + '/'
+  return [command, src].join(' ')
+}
+
+function destination(command, dest) {
+  return [command, path.join(process.cwd(), dest || '')].join(' ')
+}
+
+function buildCommand(baseCommand, program) {
+  var src = program.source || process.env.CONFIG_URL
+  var parsedUrl = url.parse(src)
+
+  var cmd = destination(baseCommand, program.dest)
+  cmd = reject(cmd, program.reject)
+  cmd = cutDirs(cmd, parsedUrl.pathname)
+  cmd = source(cmd, src)
+
+  return cmd
 }
 
 function handleError(error) {
