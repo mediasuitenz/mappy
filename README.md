@@ -51,8 +51,9 @@ To work on the project:
 
 - clone the repo
 - `npm install`
-- export CONFIG_URL=<url to config files> (suggest serving up config-example folder)
-- In one terminal run `npm test` to start the test runner
+- In a term run `npm run start:configserver` to start a local config server (serves up config-example folder)
+- export CONFIG_URL=http://127.0.0.1:3002
+- In another terminal run `npm test` to start the test runner
 - In another terminal run `npm run start:dev` to serve the dist dir, bundle files and
 watch for file changes. Visit `localhost:3000` to see the map
 
