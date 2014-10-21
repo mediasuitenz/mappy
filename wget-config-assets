@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var util           = require('util')
+var path           = require('path')
+var exec           = require('child_process').exec
+var command        = 'wget -r --no-parent -nH -P'
+var program        = require('commander')
+var cwd            = process.cwd()
+var chalk          = require('chalk')
+var assert         = require('assert')
+var fs             = require('fs')
+
+program
+  .version('0.0.1')
+  .usage('./wget-config-assets')
+  .option('-s, --source [source]', 'specify the source url to read config files from')
+  .option('-d, --dest [dest]', 'specify the destination folder to place config files in locally')
+  .option('-r, --reject [files]', 'specify files/patterns to ignore')
+  .parse(process.argv)
+
+//asset that user has specified required args
+assert.ok((program.source || process.env.CONFIG_URL),
+  'flag -s, --source or env var `CONFIG_URL` must be defined')
+assert.ok(program.dest, 'flag `-d, --dest` must be defined')
+
+function buildCommand(baseCommand, program) {
+  var command = baseCommand + ' ' + path.join(process.cwd(), program.dest || '')
+  if (program.reject) command = command + ' -R ' + program.reject
+  command = command + ' ' + (program.source || process.env.CONFIG_URL)
+
+  return command
+}
+
+function handleError(error) {
+  if (error) {
+    console.log(chalk.red(error.message))
+    process.exit(1)
+  }
+}
+
+function commandOutput(error, stdout, stderr) {
+  console.log(stdout)
+  console.log(stderr)
+  handleError(error)
+}
+
+//get the files
+exec(buildCommand(command, program),
+  function (error, stdout, stderr) {
+    commandOutput(error, stdout, stderr)
+  }
+)
