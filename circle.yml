@@ -5,7 +5,7 @@ machine:
     CONFIG_URL: http://127.0.0.1:3002
 dependencies:
   post:
-    - npm run start:configserver
+    - npm run start:configserver:
         background: true
     - sleep 5
 test:
