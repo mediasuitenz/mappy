@@ -18,6 +18,7 @@
     "build:all": "npm run build:fetchconfig && npm run build:assets && npm run build:dev && npm run build:prod",
     "build": "npm run build:all",
     "jshint": "jshint .",
+    "start:configserver": "http-server -p 3002 ./config-example",
     "start:dev": "npm run build:fetchconfig && npm run build:assets && npm run build:watch",
     "start": "supervisor -- node_modules/.bin/http-server -p 5000 dist",
     "postinstall": "npm run build"
