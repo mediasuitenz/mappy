@@ -6,7 +6,7 @@ machine:
 dependencies:
   post:
     - npm run start:configserver
-      background: true
+        background: true
     - sleep 5
 test:
   override:
