@@ -1,7 +1,63 @@
 TFC MAP
 =======
 
-## Feature list
+## Installation
+
+You can use this project to build various javascript map bundles from config.
+
+### Quickstart
+
+- clone the repo
+- `npm install`
+- `export CONFIG_URL=<url location of config>`
+- `npm run build`
+- use resulting `dist/bundle.js` and `dist/bundle.min.js` files
+
+### Config in detail
+
+Configuration is a collection of json files, html templates and css files
+
+#### Required files
+
+##### key.json
+
+Defines the map key
+
+##### layers.json
+
+Defines an array of layers to plot on the map. Currently types `geojson` and
+`click` are supported.
+
+- Type `geojson` can be used to render a geojson feature collection on the map
+- Type `click` can be used to wire up user clicks to external services
+
+##### map.json
+
+Defines details about the map such as tilelayers
+
+#### assets
+
+In the aforementioned config files, there are situations where templates and css
+can be defined. Such files should be placed in `config/assets/templates` and
+`config/assets/css`
+
+#### More information
+
+See the `config-example` folder for examples of config and template files
+
+## Development
+
+To work on the project:
+
+- clone the repo
+- `npm install`
+- export CONFIG_URL=<url to config files> (suggest serving up config-example folder)
+- In one terminal run `npm test` to start the test runner
+- In another terminal run `npm run start:dev` to serve the dist dir, bundle files and
+watch for file changes. Visit `localhost:3000` to see the map
+
+## Ongoing development notes
+
 ### Client
 * store user preferences (basemap/layers on)
 * make use of config as much as possible
