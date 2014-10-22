@@ -8,6 +8,7 @@ dependencies:
     - npm run start:configserver:
         background: true
     - sleep 5
+    - npm run build
 test:
   override:
     - npm run test:ci
