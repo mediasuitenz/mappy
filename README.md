@@ -1,6 +1,19 @@
 TFC MAP
 =======
 
+# Creating a map using mappy
+
+- Clone this repo
+- run `npm install`
+- Rename config-example to config as a starting point
+- Customise the files in the config folder
+- run `npm run build:assets` to bundle up the config directory into a single .json file
+- run `npm run build:dev` to produce a non minified map bundle file
+- and/or run `npm run build:prod` to produce a minified map bundle file.
+- Profit???
+
+# Developing mappy
+
 ## Installation
 
 You can use this project to build various javascript map bundles from config.
