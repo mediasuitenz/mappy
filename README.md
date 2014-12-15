@@ -211,8 +211,6 @@ You can also specify a 'mapType' to display (see the [Google API](https://develo
   "tileLayers": {
     "base-tiles": {
       "type": "google",
-      "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": "",
       "maxZoom": 18,
       "zIndex": 10,
       "mapType": "SATELLITE"
