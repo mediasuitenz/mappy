@@ -200,3 +200,28 @@ watch for file changes. Visit `localhost:3000` to see the map
     }
 ]
 ```
+
+## Google
+To generate a Google tile base layer specify the 'google' type on the map.json tileLayers config.
+Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`. 
+You can also specify a 'mapType' to display (see the [Google API](https://developers.google.com/maps/documentation/javascript/maptypes) for different map types). This will default to ROADMAP.
+```json
+{
+  "domElementId": "map",
+  "tileLayers": {
+    "base-tiles": {
+      "type": "google",
+      "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": "",
+      "maxZoom": 18,
+      "zIndex": 10,
+      "mapType": "SATELLITE"
+    }
+  },
+  "bounds": [
+    [-43.577988,172.515934],
+    [-43.461397,172.749529]
+  ]
+}
+
+```

@@ -2,6 +2,7 @@
 
 var L            = require('../vendor/leaflet.js')
 var EventEmitter = require('events').EventEmitter
+var mapTileLayer = require('./tilelayer')
 
 L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
 
@@ -21,7 +22,7 @@ class Map extends EventEmitter {
    * Adds a tile layer to the map with given config
    */
   setTileLayer(name, config) {
-    this.tileLayers[name] = L.tileLayer(config.url, config)
+    this.tileLayers[name] = mapTileLayer(config.url, config)
     this.tileLayers[name].addTo(this.map)
   }
 
