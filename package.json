@@ -36,7 +36,6 @@
   "devDependencies": {
     "catch-error": "^1.0.0",
     "chai": "^1.9.1",
-    "geojson-is-valid": "0.0.3",
     "geojsonhint": "^0.3.4",
     "jshint": "^2.5.5",
     "mocha": "^1.21.4",
@@ -50,7 +49,7 @@
   "dependencies": {
     "brfs": "^1.2.0",
     "browserify": "^5.11.2",
-    "buildbro": "0.0.9",
+    "buildbro": "^0.0.10",
     "chalk": "^0.5.1",
     "commander": "^2.3.0",
     "es6ify": "^1.3.0",
@@ -59,7 +58,6 @@
     "geojson-is-valid": "0.0.4",
     "handlebars": "^2.0.0",
     "http-server": "^0.7.1",
-    "hyperquest": "^0.3.0",
     "insert-css": "^0.2.0",
     "jabu": "0.0.2",
     "moment": "^2.8.3",
@@ -69,6 +67,7 @@
     "supervisor": "^0.6.0",
     "traceur": "^0.0.60",
     "uglifyify": "^2.5.0",
-    "watchify": "^1.0.2"
+    "watchify": "^1.0.2",
+    "xhr": "^2.0.0"
   }
 }
