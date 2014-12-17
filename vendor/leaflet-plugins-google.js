@@ -1,6 +1,6 @@
 'use strict';
 
-var L = require('../vendor/leaflet.js')
+var L = require('../vendor/leaflet.js');
 
 /*
  * Google layer using Google Maps API, see https://github.com/shramov/leaflet-plugins
@@ -32,7 +32,10 @@ L.Google = L.Layer.extend({
 		L.Util.setOptions(this, options);
 
 		this._ready = google.maps.Map !== undefined;
-		if (!this._ready) L.Google.asyncWait.push(this);
+
+		if (!this._ready) {
+			L.Google.asyncWait.push(this);
+		}
 
 		this._type = type || 'SATELLITE';
 	},
@@ -41,25 +44,25 @@ L.Google = L.Layer.extend({
 		this._map = map;
 		this._insertAtTheBottom = insertAtTheBottom;
 
-		// Make the zom level the same as the Leaflet map's zoom level
-		this._zoomLevel = this._map.getZoom();
-
 		// create a container div for tiles
 		this._initContainer();
 		this._initMapObject();
 
-		// set up events
 		map.on('viewreset', this._resetCallback, this);
 
-		map.on('move', this._update, this);
-
 		map.on('zoomanim', this._handleZoomAnim, this);
+
+		// Move is triggered by moving the map on x, y, and z axis.
+		// When triggered by zooming, the event happens AFTER the zoomanim event.
+		map.on('move', this._handleMove, this);
 
 		//20px instead of 1em to avoid a slight overlap with google's attribution
 		map._controlCorners.bottomright.style.marginBottom = '20px';
 
 		this._reset();
-		this._update();
+
+		this._resize();
+		this._center();
 	},
 
 	onRemove: function(map) {
@@ -67,7 +70,7 @@ L.Google = L.Layer.extend({
 
 		map.off('viewreset', this._resetCallback, this);
 
-		map.off('move', this._update, this);
+		map.off('move', this._handleMove, this);
 
 		map.off('zoomanim', this._handleZoomAnim, this);
 
@@ -106,8 +109,6 @@ L.Google = L.Layer.extend({
 		this.setElementSize(this._container, this._map.getSize());
 	},
 
-	_zoomLevel: 0,
-
 	_initMapObject: function() {
 		var self = this;
 
@@ -117,7 +118,7 @@ L.Google = L.Layer.extend({
 
 		this._google = new google.maps.Map(this._container, {
 		    center: new google.maps.LatLng(0, 0),
-		    zoom: this._zoomLevel,
+		    zoom: this._map.getZoom(),
 		    tilt: 0,
 		    mapTypeId: google.maps.MapTypeId[this._type],
 		    disableDefaultUI: true,
@@ -140,66 +141,53 @@ L.Google = L.Layer.extend({
 		this._reset(e.hard);
 	},
 
-	_reset: function(clearOldContainer) {
+	_reset: function() {
 		this._initContainer();
 	},
 
-	_update: function(e) {
-		var leafletZoomLevel, center;
-
-		if (!this._google) {
-			return;
-		}
-
-		leafletZoomLevel = this._map.getZoom();
-		center = this._map.getCenter();
-
-		this._resize();
+	_center: function () {
+		var center = this._map.getCenter();
 
 		this._google.setCenter(new google.maps.LatLng(center.lat, center.lng));
-
-		// Update the zoom level if the google map layer's zoom level
-		// doesn't math the zoom level of the Leaflet map.
-		if (this._zoomLevel !== leafletZoomLevel) {
-			this._zoomLevel = leafletZoomLevel;
-			this._google.setZoom(Math.round(this._zoomLevel));
-		}
 	},
 
 	_resize: function() {
 		var size = this._map.getSize();
-		if (this._container.style.width === size.x &&
-		    this._container.style.height === size.y)
+
+		if (this._container.style.width === size.x && this._container.style.height === size.y) {
 			return;
+		}
+
 		this.setElementSize(this._container, size);
 		this.onReposition();
 	},
 
+	_handleMove: function () {
+		this._resize();
+		this._center();
+	},
 
 	_handleZoomAnim: function (e) {
-		var center = e.center;
-		var _center = new google.maps.LatLng(center.lat, center.lng);
-
-		this._google.setCenter(_center);
 		this._google.setZoom(Math.round(e.zoom));
 	},
 
-
 	onReposition: function() {
-		if (!this._google) return;
+		if (!this._google) {
+			return;
+		}
+
 		google.maps.event.trigger(this._google, 'resize');
 	}
 });
 
 L.Google.asyncWait = [];
 L.Google.asyncInitialize = function() {
-	var i;
-	for (i = 0; i < L.Google.asyncWait.length; i++) {
-		var o = L.Google.asyncWait[i];
+	var i, o;
+	for (i = 0; i < L.Google.asyncWait.length; i+= 1) {
+		o = L.Google.asyncWait[i];
 		o._ready = true;
 		if (o._container) {
 			o._initMapObject();
-			o._update();
 		}
 	}
 	L.Google.asyncWait = [];
