@@ -41,6 +41,9 @@ L.Google = L.Layer.extend({
 		this._map = map;
 		this._insertAtTheBottom = insertAtTheBottom;
 
+		// Make the zom level the same as the Leaflet map's zoom level
+		this._zoomLevel = this._map.getZoom();
+
 		// create a container div for tiles
 		this._initContainer();
 		this._initMapObject();
@@ -48,7 +51,6 @@ L.Google = L.Layer.extend({
 		// set up events
 		map.on('viewreset', this._resetCallback, this);
 
-		this._limitedUpdate = L.Util.throttle(this._update, 150, this);
 		map.on('move', this._update, this);
 
 		map.on('zoomanim', this._handleZoomAnim, this);
@@ -104,12 +106,18 @@ L.Google = L.Layer.extend({
 		this.setElementSize(this._container, this._map.getSize());
 	},
 
+	_zoomLevel: 0,
+
 	_initMapObject: function() {
-		if (!this._ready) return;
-		this._google_center = new google.maps.LatLng(0, 0);
-		var map = new google.maps.Map(this._container, {
-		    center: this._google_center,
-		    zoom: 0,
+		var self = this;
+
+		if (!this._ready) {
+			return;
+		}
+
+		this._google = new google.maps.Map(this._container, {
+		    center: new google.maps.LatLng(0, 0),
+		    zoom: this._zoomLevel,
 		    tilt: 0,
 		    mapTypeId: google.maps.MapTypeId[this._type],
 		    disableDefaultUI: true,
@@ -122,25 +130,12 @@ L.Google = L.Layer.extend({
 		    backgroundColor: this.options.mapOptions.backgroundColor
 		});
 
-		var _this = this;
-		this._reposition = google.maps.event.addListenerOnce(map, 'center_changed',
-			function() { _this.onReposition(); });
-		this._google = map;
+		this._reposition = google.maps.event.addListenerOnce(this._google, 'center_changed', function() { self.onReposition(); });
 
-		google.maps.event.addListenerOnce(map, 'idle',
-			function() { _this._checkZoomLevels(); });
+		google.maps.event.addListenerOnce(this._google, 'idle', function() { self._checkZoomLevels(); });
+
 		//Reporting that map-object was initialized.
-		this.fire('MapObjectInitialized', { mapObject: map });
-	},
-
-	_checkZoomLevels: function() {
-		//setting the zoom level on the Google map may result in a different zoom level than the one requested
-		//(it won't go beyond the level for which they have data).
-		// verify and make sure the zoom levels on both Leaflet and Google maps are consistent
-		if (this._google.getZoom() !== this._map.getZoom()) {
-			//zoom levels are out of sync. Set the leaflet zoom level to match the google one
-			this._map.setZoom( this._google.getZoom() );
-		}
+		this.fire('MapObjectInitialized', { mapObject: this._google });
 	},
 
 	_resetCallback: function(e) {
@@ -152,16 +147,25 @@ L.Google = L.Layer.extend({
 	},
 
 	_update: function(e) {
-		if (!this._google) return;
+		var leafletZoomLevel, center;
+
+		if (!this._google) {
+			return;
+		}
+
+		leafletZoomLevel = this._map.getZoom();
+		center = this._map.getCenter();
+
 		this._resize();
 
-		var center = this._map.getCenter();
-		var _center = new google.maps.LatLng(center.lat, center.lng);
+		this._google.setCenter(new google.maps.LatLng(center.lat, center.lng));
 
-		this._google.setCenter(_center);
-		this._google.setZoom(Math.round(this._map.getZoom()));
-
-		this._checkZoomLevels();
+		// Update the zoom level if the google map layer's zoom level
+		// doesn't math the zoom level of the Leaflet map.
+		if (this._zoomLevel !== leafletZoomLevel) {
+			this._zoomLevel = leafletZoomLevel;
+			this._google.setZoom(Math.round(this._zoomLevel));
+		}
 	},
 
 	_resize: function() {
