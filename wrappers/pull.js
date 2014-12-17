@@ -1,7 +1,6 @@
 'use strict';
 
-var fs         = require('fs')
-var hyperquest = require('hyperquest')
+var xhr = require('xhr')
 
 /**
  * Wraps server fetching
@@ -10,23 +9,18 @@ var hyperquest = require('hyperquest')
  */
 module.exports = (url, cb) => {
 
-  var data = ''
-
-  var req = hyperquest.get(url, {
-    withCredentials: false
-  })
-
-  req.on('data', (chunk) => {
-    data += chunk
-  })
-
-  req.on('end', () => {
-    try {
-      cb(null, JSON.parse(data))
-    } catch (err) {
-      cb(null, data)
+  xhr({
+    url: url,
+    useXDR: true
+  }, function (err, resp, body) {
+    if (err) {
+      cb(err)
+    } else {
+      try {
+        cb(null, JSON.parse(body))
+      } catch (err) {
+        cb(err)
+      }
     }
   })
-
-  req.on('error', cb)
 }
