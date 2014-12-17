@@ -83,6 +83,17 @@ watch for file changes. Visit `localhost:3000` to see the map
 * possibility to send updates to the client
 * adaptors for feeds to node service which can then diff for changes and send server sent events (sse's) to connected clients
 
+### Testing
+* Set up automated cross-browser testing
+
+## Browser Compatibility
+*WIP, see 'Ongoing development notes' above*
+Manually tested in:
+- IE 9, 10, 11
+- Chrome 39
+- Firefox 33
+- Safari 8
+
 ## Config details
 
 ### Map
@@ -203,7 +214,7 @@ watch for file changes. Visit `localhost:3000` to see the map
 
 ## Google
 To generate a Google tile base layer specify the 'google' type on the map.json tileLayers config.
-Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`. 
+Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`.
 You can also specify a 'mapType' to display (see the [Google API](https://developers.google.com/maps/documentation/javascript/maptypes) for different map types). This will default to ROADMAP.
 ```json
 {
@@ -221,5 +232,4 @@ You can also specify a 'mapType' to display (see the [Google API](https://develo
     [-43.461397,172.749529]
   ]
 }
-
 ```

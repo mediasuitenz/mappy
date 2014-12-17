@@ -3,7 +3,7 @@
   "engines": {
     "node": "0.10.32"
   },
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -68,7 +68,6 @@
     "traceur": "^0.0.60",
     "uglifyify": "^2.5.0",
     "watchify": "^1.0.2",
-    "xhr": "^2.0.0",
-    "rsvp": "3.0.12"
+    "xhr": "^2.0.0"
   }
 }

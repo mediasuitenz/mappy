@@ -14,13 +14,11 @@ module.exports = (url, cb) => {
     useXDR: true
   }, function (err, resp, body) {
     if (err) {
-      console.error(err)
       cb(err)
     } else {
       try {
         cb(null, JSON.parse(body))
       } catch (err) {
-        console.error(err)
         cb(err)
       }
     }
