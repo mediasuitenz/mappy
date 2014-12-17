@@ -132,8 +132,6 @@ L.Google = L.Layer.extend({
 
 		this._reposition = google.maps.event.addListenerOnce(this._google, 'center_changed', function() { self.onReposition(); });
 
-		google.maps.event.addListenerOnce(this._google, 'idle', function() { self._checkZoomLevels(); });
-
 		//Reporting that map-object was initialized.
 		this.fire('MapObjectInitialized', { mapObject: this._google });
 	},
