@@ -40,15 +40,12 @@ L.Google = L.Layer.extend({
 		this._type = type || 'SATELLITE';
 	},
 
-	onAdd: function(map, insertAtTheBottom) {
+	onAdd: function(map) {
 		this._map = map;
-		this._insertAtTheBottom = insertAtTheBottom;
 
 		// create a container div for tiles
 		this._initContainer();
 		this._initMapObject();
-
-		map.on('viewreset', this._resetCallback, this);
 
 		map.on('zoomanim', this._handleZoomAnim, this);
 
@@ -59,16 +56,12 @@ L.Google = L.Layer.extend({
 		//20px instead of 1em to avoid a slight overlap with google's attribution
 		map._controlCorners.bottomright.style.marginBottom = '20px';
 
-		this._reset();
-
 		this._resize();
 		this._center();
 	},
 
 	onRemove: function(map) {
 		map._container.removeChild(this._container);
-
-		map.off('viewreset', this._resetCallback, this);
 
 		map.off('move', this._handleMove, this);
 
@@ -110,7 +103,6 @@ L.Google = L.Layer.extend({
 	},
 
 	_initMapObject: function() {
-		var self = this;
 
 		if (!this._ready) {
 			return;
@@ -131,18 +123,8 @@ L.Google = L.Layer.extend({
 		    backgroundColor: this.options.mapOptions.backgroundColor
 		});
 
-		this._reposition = google.maps.event.addListenerOnce(this._google, 'center_changed', function() { self.onReposition(); });
-
 		//Reporting that map-object was initialized.
 		this.fire('MapObjectInitialized', { mapObject: this._google });
-	},
-
-	_resetCallback: function(e) {
-		this._reset(e.hard);
-	},
-
-	_reset: function() {
-		this._initContainer();
 	},
 
 	_center: function () {
@@ -154,12 +136,11 @@ L.Google = L.Layer.extend({
 	_resize: function() {
 		var size = this._map.getSize();
 
-		if (this._container.style.width === size.x && this._container.style.height === size.y) {
+		if (this._container.style.width === size.x + 'px' && this._container.style.height === size.y + 'px') {
 			return;
 		}
 
 		this.setElementSize(this._container, size);
-		this.onReposition();
 	},
 
 	_handleMove: function () {
@@ -169,14 +150,6 @@ L.Google = L.Layer.extend({
 
 	_handleZoomAnim: function (e) {
 		this._google.setZoom(Math.round(e.zoom));
-	},
-
-	onReposition: function() {
-		if (!this._google) {
-			return;
-		}
-
-		google.maps.event.trigger(this._google, 'resize');
 	}
 });
 
