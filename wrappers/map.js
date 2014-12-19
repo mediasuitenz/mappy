@@ -12,7 +12,7 @@ class Map extends EventEmitter {
    * Creates a map with given config
    */
   constructor(config) {
-    this.map           = L.map(config.domElementId).fitBounds(config.bounds)
+    this.map           = L.map(config.domElementId, config.options).fitBounds(config.bounds)
     this.tileLayers    = {}
     this.geojsonLayers = {}
     this.map.on('click', (event) => this.emit('click', event))
