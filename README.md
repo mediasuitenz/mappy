@@ -123,7 +123,10 @@ Manually tested in:
   "bounds": [
     [-43.577988,172.515934],
     [-43.461397,172.749529]
-  ]
+  ],
+  "_leafletOptions": {
+    maxZoom: 19
+  }
 }
 ```
 
