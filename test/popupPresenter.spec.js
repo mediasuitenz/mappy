@@ -37,4 +37,21 @@ describe('PopupPresenter', () => {
     })
   })
 
+  describe('custom template function', () => {
+
+    var customConfig = {
+      template: 'here is some <<<template>>>',
+      templateFunction: function (template, data) {
+        return template.replace('<<<template>>>', data.title)
+      }
+    }
+
+    var customPresenter = popupPresenter(customConfig)
+
+    it('should use the custom templating function', () => {
+      var template3 = customPresenter.present({ title: 'woahdude' })
+      template3.should.contain('woahdude')
+    })
+  })
+
 })
