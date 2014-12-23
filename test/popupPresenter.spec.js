@@ -3,41 +3,19 @@
 require('chai').should()
 
 var rewire = require('rewire')
-var popupPresenter = rewire('../lib/popupPresenter')
-
-popupPresenter.__set__('assetManager', {
-  assets: {
-    html: {
-      'myTemplate.html': '<h1>{{title}}</h1>'
-    },
-    css: {
-      'myCss.css': 'h1 { display: none; }'
-    }
-  }
-})
-
-var injected
-popupPresenter.__set__('cssInjector', (css) => {
-  injected = css
-})
+var popupPresenter = require('../lib/popupPresenter')
 
 var config = {
-  'css': 'myCss.css',
-  'template': 'myTemplate.html'
+  template: '<h1>{{title}}</h1>'
 }
 
 describe('PopupPresenter', () => {
 
 // Given some layer config
-// And template/css files
 // And some feature properties
 // Then generate popup content
 
   var presenter = popupPresenter(config)
-
-  it('should inject css into the dom', () => {
-    injected.should.contain('display')
-  })
 
   it('should return an object', () => {
     presenter.should.be.an('object')
