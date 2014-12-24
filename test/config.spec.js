@@ -6,7 +6,33 @@ config
 */
 require('chai').should()
 
-var config = require('../lib/config')()
+var ConfigParser = require('../lib/config')
+
+var configObject = {
+  map: {
+    domElementId: 'id',
+    tileLayers: {
+      layer: {
+      }
+    },
+    bounds: [[1,1],[1,1]]
+  },
+  layers: [
+    {
+      name: 'name',
+      type: 'type',
+      dataSource: 'dataSource'
+    }
+  ],
+  key: {
+    title: 'title',
+    domElementId: 'id',
+    layers: [
+    ]
+  }
+}
+
+var config = new ConfigParser(configObject)
 
 describe('Config', () => {
 

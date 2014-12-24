@@ -11,7 +11,26 @@ if (!window) {
 
 //any files included will be compiled using traceur es6 compiler
 // eg. require('lib/app.js')
-require('./patch/functionName')
-require('./lib/main')
+require('./patch/functionName');
 
+(function (window, document, undefined) {
+var oldMappy = window.Mappy
+var Mappy = require('./lib/main')
 
+//Node style module export
+if (typeof module === 'object' && typeof module.exports === 'object') {
+  module.exports = Mappy;
+}
+
+/**
+ * Resets the window.Mappy variable to its original state and returns
+ * the Mappy object
+ */
+Mappy.noConflict = function () {
+  window.Mappy = oldMappy;
+  return this;
+};
+
+window.Mappy = Mappy;
+
+})(window, document)
