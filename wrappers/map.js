@@ -40,7 +40,10 @@ class Map extends EventEmitter {
     if (config.popup) {
       options.onEachFeature = (feature, layer) => {
         if (!config.popupFilter || config.popupFilter(feature))
-          layer.bindPopup(config.popup(feature.properties))
+          // don't bind the feature popup if it isn't defined in config
+          if (config.popup(feature.properties) !== undefined) {
+            layer.bindPopup(config.popup(feature.properties))
+          }
       }
     }
     if (config.icon)
