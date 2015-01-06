@@ -206,6 +206,11 @@ Manually tested in:
         "postProcess": {
             "laneSplit": true // true happens on load,
                               // string key or array of keys 'onzoom', ['onzoom', 'onpan']
+        },
+        "filter": {
+          "validateJSON": true // Whether GeoJSON data is validated on the client.
+                             // Turn off for known correct formats (e.g. self-hosted),
+                             // in order to increase client performance.
         }
     }
 ]

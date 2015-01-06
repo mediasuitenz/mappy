@@ -9,7 +9,7 @@ var geojsonFeatureFilterer = rewire('../lib/geojsonFeatureFilterer')
 var factory
 
 describe('the geojsonFeatureFilterer', () => {
-  var filterer, point, linestring, linestring2
+  var filterer, point, invalidPoint, linestring, linestring2
 
   Given('the geojsonFeatureFiltererFactory', () => factory = geojsonFeatureFilterer)
   Given('a valid geojson point object', () => {
@@ -20,6 +20,17 @@ describe('the geojsonFeatureFilterer', () => {
       geometry: {
         type: 'Point',
         coordinates: [172.6325585, -43.4448338]
+      }
+    }
+  })
+  Given('an invalid geojson point object', () => {
+    invalidPoint = {
+      type: 'Feature',
+      id: 'id-1',
+      properties: { show: true },
+      geometry: {
+        type: 'Point',
+        coordinates: [172.6325585] // missing latitude
       }
     }
   })
@@ -85,6 +96,35 @@ describe('the geojsonFeatureFilterer', () => {
         Given('an empty config object', () => conf = null)
         When('a filterer is created using config', () => filterer = factory(conf))
         And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
+        Then('result should be true', () => result.should.equal(true))
+      })
+    })
+
+    describe('GeoJSON validation', () => {
+      scenario('providing a valid GeoJSON object', () => {
+        var conf, filterer, result
+
+        Given('an empty config object', () => conf = {})
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with an valid geojson point feature', () => result = filterer.filter(point))
+        Then('result should be true', () => result.should.equal(true))
+      })
+
+      scenario('providing a invalid GeoJSON object with validation enabled', () => {
+        var conf, filterer, result
+
+        Given('an empty config object', () => conf = {})
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with an invalid geojson point feature', () => result = filterer.filter(invalidPoint))
+        Then('result should be false', () => result.should.equal(false))
+      })
+
+      scenario('providing a invalid GeoJSON object with validation disabled', () => {
+        var conf, filterer, result
+
+        Given('a config object with validateJSON=false', () => conf = {validateJSON:false})
+        When('a filterer is created using config', () => filterer = factory(conf))
+        And('filterer.filter is called with an invalid geojson point feature', () => result = filterer.filter(invalidPoint))
         Then('result should be true', () => result.should.equal(true))
       })
     })
