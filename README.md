@@ -275,7 +275,9 @@ Manually tested in:
         "dataSource": {
             "url": "...",
             "type": "longPoll",
-            "refresh": 10000
+            "refresh": 10000,
+            "useXDR": true || false // see https://github.com/Raynos/xhr#optionsusexdr for usage
+                                    // if undefined will default to true
         }
         "postProcess": {
             "laneSplit": true // true happens on load,
