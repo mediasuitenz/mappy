@@ -38,6 +38,7 @@ class Map extends EventEmitter {
   setGeojsonLayer(name, config) {
     var options = {}
     var map = this
+
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
     if (config.listens) {
@@ -47,6 +48,10 @@ class Map extends EventEmitter {
     }
     if (config.popup || config.notifies) {
       options.onEachFeature = (feature, layer) => {
+        layer.on('click', function () {
+          map.map.fire('mappy.marker.click', feature)
+        })
+
         if (!config.popupFilter || config.popupFilter(feature)) {
 
           // don't bind the feature popup if it isn't defined in config
