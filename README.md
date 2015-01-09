@@ -1,6 +1,8 @@
 TFC MAP
 =======
 
+[![Build Status](https://travis-ci.org/mediasuitenz/mappy.svg?branch=add%2Ftravis_ci)](https://travis-ci.org/mediasuitenz/mappy)
+
 # Creating a map using mappy
 
 - Clone this repo
