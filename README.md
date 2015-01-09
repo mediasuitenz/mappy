@@ -5,14 +5,13 @@ TFC MAP
 
 - Clone this repo
 - run `npm install`
-- Rename config-example to config as a starting point
-- Customise the files in the config folder
-- run `npm run build:assets` to bundle up the config directory into a single .json file
-- run `npm run build:dev` to produce a non minified map bundle file
-- and/or run `npm run build:prod` to produce a minified map bundle file.
-- Profit???
+- Rename dist/example-config.js to config.js
+- Customise properties of the config object in config.js
 
 # Developing mappy
+
+- run `npm run build:dev` to produce a non minified map bundle file
+- and/or run `npm run build:prod` to produce a minified map bundle file.
 
 ## Installation
 
@@ -22,21 +21,18 @@ You can use this project to build various javascript map bundles from config.
 
 - clone the repo
 - `npm install`
-- `export CONFIG_URL=<url location of config>`
 - `npm run build`
 - use resulting `dist/bundle.js` and `dist/bundle.min.js` files
 
 ### Config in detail
 
-Configuration is a collection of json files, html templates and css files
+Configuration is a javascript object with three properties: map, layers and key
 
-#### Required files
+##### key
 
-##### key.json
+Defines the map key (optional)
 
-Defines the map key
-
-##### layers.json
+##### layers
 
 Defines an array of layers to plot on the map. Currently types `geojson` and
 `click` are supported.
@@ -44,19 +40,22 @@ Defines an array of layers to plot on the map. Currently types `geojson` and
 - Type `geojson` can be used to render a geojson feature collection on the map
 - Type `click` can be used to wire up user clicks to external services
 
-##### map.json
+##### map
 
 Defines details about the map such as tilelayers
 
 #### assets
 
-In the aforementioned config files, there are situations where templates and css
-can be defined. Such files should be placed in `config/assets/templates` and
-`config/assets/css`
+Templates for popups are defined as string properties in the config object. You can
+also optionally define a templateFunction property that accepts a template string
+and data object. If the templateFunction property is not present Handlebars will be
+used as the templating engine
+
+CSS for your templates must be included separately.
 
 #### More information
 
-See the `config-example` folder for examples of config and template files
+See dist/example-config.js for existing features
 
 ## Development
 
@@ -64,9 +63,7 @@ To work on the project:
 
 - clone the repo
 - `npm install`
-- In a term run `npm run start:configserver` to start a local config server (serves up config-example folder)
-- export CONFIG_URL=http://127.0.0.1:3002
-- In another terminal run `npm test` to start the test runner
+- run `npm test` to start the test runner
 - In another terminal run `npm run start:dev` to serve the dist dir, bundle files and
 watch for file changes. Visit `localhost:3000` to see the map
 
@@ -213,23 +210,25 @@ Manually tested in:
 ```
 
 ## Google
-To generate a Google tile base layer specify the 'google' type on the map.json tileLayers config.
+To generate a Google tile base layer specify the 'google' type on the map property tileLayers config.
 Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`.
 You can also specify a 'mapType' to display (see the [Google API](https://developers.google.com/maps/documentation/javascript/maptypes) for different map types). This will default to ROADMAP.
-```json
-{
-  "domElementId": "map",
-  "tileLayers": {
-    "base-tiles": {
-      "type": "google",
-      "maxZoom": 18,
-      "zIndex": 10,
-      "mapType": "SATELLITE"
-    }
-  },
-  "bounds": [
-    [-43.577988,172.515934],
-    [-43.461397,172.749529]
-  ]
+```
+var config = {
+  map: {
+    "domElementId": "map",
+    "tileLayers": {
+      "base-tiles": {
+        "type": "google",
+        "maxZoom": 18,
+        "zIndex": 10,
+        "mapType": "SATELLITE"
+      }
+    },
+    "bounds": [
+      [-43.577988,172.515934],
+      [-43.461397,172.749529]
+    ]
+  }
 }
 ```
