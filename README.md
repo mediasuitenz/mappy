@@ -1,5 +1,8 @@
-TFC MAP
-=======
+MAPPY
+=====
+
+WARNING: This library is under heavy development and should be considered ALPHA
+We don't recommend using in production at this time.
 
 # Creating a map using mappy
 
