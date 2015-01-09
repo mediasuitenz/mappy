@@ -4,7 +4,7 @@
     "node": "0.10.32"
   },
   "version": "0.0.2",
-  "description": "",
+  "description": "A configurable map engine",
   "main": "index.js",
   "scripts": {
     "test:ci": "npm run jshint && mocha -u mocha-given -R spec --compilers js:mocha-traceur test/**/*.spec.js",
@@ -24,12 +24,12 @@
     "url": ""
   },
   "keywords": [],
-  "author": "",
-  "license": "",
+  "author": "Richard Walker <digitalsadhu@gmail.com>",
+  "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/mediasuitenz/mappy/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/mediasuitenz/mappy",
   "devDependencies": {
     "catch-error": "^1.0.0",
     "chai": "^1.9.1",
