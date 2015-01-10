@@ -1,5 +1,8 @@
-TFC MAP
-=======
+MAPPY
+=====
+
+WARNING: This library is under heavy development and should be considered ALPHA
+We don't recommend using in production at this time.
 
 [![Build Status](https://travis-ci.org/mediasuitenz/mappy.svg?branch=add%2Ftravis_ci)](https://travis-ci.org/mediasuitenz/mappy)
 
