@@ -7,11 +7,11 @@ var xhr = require('xhr')
  * @param {string} url
  * @param {function} cb
  */
-module.exports = (url, cb) => {
+module.exports = (config, cb) => {
 
   xhr({
-    url: url,
-    useXDR: true
+    url: config.url,
+    useXDR: config.useXDR === undefined ? true : config.useXDR
   }, function (err, resp, body) {
     if (err) {
       cb(err)
