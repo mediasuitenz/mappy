@@ -298,6 +298,28 @@ Manually tested in:
 ]
 ```
 
+### Key
+```json
+{
+  "domElementId": "key", // The dom element used to render the key.
+  "title": "My map key",
+  "template": "key.html", // Handlebars template used to render the key wrapper.
+  "itemTemplate": "keyItem.html", // Handlebars template used to render the key items.
+  "listWrapperClass": ".items", // Dom element in 'template' key wrapper used to render the key items.
+  "layers": [
+    {
+      "name": "layer1",
+      "description": "My Layer",
+      "checked": true,
+      "templateData": { // optional data to pass through to the 'itemTemplate'
+                        // eg. can be referenced with 'templateData.example1'
+        "example1": "test"
+      }
+    }
+  ]
+}
+```
+
 ## Clustering
 
 Enable clustering on a layer by setting the "cluster" property on layer icon config to 'true', alternatively you can pass through options to override the default cluster settings.
