@@ -1,6 +1,7 @@
 'use strict';
 
 var xhr = require('xhr')
+var merge = require('merge')
 
 /**
  * Wraps server fetching
@@ -9,10 +10,10 @@ var xhr = require('xhr')
  */
 module.exports = (config, cb) => {
 
-  xhr({
-    url: config.url,
-    useXDR: config.useXDR === undefined ? true : config.useXDR
-  }, function (err, resp, body) {
+  var xhrOptions = { useXDR: true }
+  xhrOptions = merge(xhrOptions, config)
+
+  xhr(xhrOptions, function (err, resp, body) {
     if (err) {
       cb(err)
     } else {
