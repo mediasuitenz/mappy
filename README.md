@@ -200,11 +200,11 @@ Manually tested in:
             }
         ],
         "dataSource": {
-            "url": "...",
+            "request": {
+                "url": "..."
+            },
             "type": "longPoll",
-            "refresh": 10000,
-            "useXDR": true || false // see https://github.com/Raynos/xhr#optionsusexdr for usage
-                                    // if undefined will default to true
+            "refresh": 10000
         }
         "postProcess": {
             "laneSplit": true // true happens on load,
