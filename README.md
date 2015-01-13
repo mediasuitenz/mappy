@@ -124,7 +124,7 @@ Manually tested in:
     [-43.577988,172.515934],
     [-43.461397,172.749529]
   ],
-  "_leafletOptions": {
+  "mapOptions": {
     maxZoom: 19
   }
 }
