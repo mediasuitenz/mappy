@@ -41,7 +41,7 @@ class Map extends EventEmitter {
       options.onEachFeature = (feature, layer) => {
         if (!config.popupFilter || config.popupFilter(feature))
           // don't bind the feature popup if it isn't defined in config
-          if (config.popup(feature.properties) !== undefined) {
+          if (typeof config.popup(feature.properties) !== 'undefined') {
             layer.bindPopup(config.popup(feature.properties))
           }
       }
