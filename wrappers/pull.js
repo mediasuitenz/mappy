@@ -11,7 +11,7 @@ var merge = require('merge')
 module.exports = (config, cb) => {
 
   var xhrOptions = { useXDR: true }
-  xhrOptions = merge(xhrOptions, config)
+  xhrOptions = merge(xhrOptions, config.request)
 
   xhr(xhrOptions, function (err, resp, body) {
     if (err) {
