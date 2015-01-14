@@ -18,6 +18,7 @@ class Map extends EventEmitter {
     this.map           = L.map(config.domElementId, config.mapOptions).fitBounds(config.bounds)
     this.tileLayers    = {}
     this.geojsonLayers = {}
+    this.key = {}
     this.map.on('click', (event) => this.emit('click', event))
     this.mediator      = mediator()
   }
