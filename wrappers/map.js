@@ -41,7 +41,7 @@ class Map extends EventEmitter {
     if (config.popup) {
       options.onEachFeature = (feature, layer) => {
         layer.on('click', function () {
-          self.map.fire('mappy.marker.click', feature)
+          self.emit('marker.click', feature)
         })
 
         if (!config.popupFilter || config.popupFilter(feature))
