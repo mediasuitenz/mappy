@@ -1,3 +1,5 @@
+'use strict';
+
 var config = {
   map: {
     'domElementId': 'map',
@@ -33,10 +35,19 @@ var config = {
       'name': 'layer1',
       'type': 'geojson',
       'enabled': true,
+      'listens': [
+        {
+          listensTo: 'layer2',
+          type: 'click',
+          handler: function (feature, map) {
+            map.hideGeojsonLayer('layer1')
+          }
+        }
+      ],
       'filter': {
         'geometry': ['Point', 'LineString'],
         'properties': {
-          'highway': ['trunk', 'motorway', 'traffic_signals', 'crossing']
+          'highway': ['traffic_signals']
         }
       },
       'styles': {
@@ -97,6 +108,74 @@ var config = {
       }
     },
     {
+      'name': 'layer2',
+      'type': 'geojson',
+      'enabled': true,
+      'notifies': ['click'],
+      'filter': {
+        'geometry': ['Point', 'LineString'],
+        'properties': {
+          'highway': ['trunk']
+        }
+      },
+      'styles': {
+        'popup': {
+          'template': '<h1>{{highway}}</h1>{{junction}}<br>{{lanes}}<br>{{maxspeed}}<br>{{oneway}}<br>{{id}}<br>',
+          'filter': {
+            'geometry': ['LineString'],
+            'properties': {
+              'highway': ['trunk']
+            }
+          }
+        },
+        'layer': {
+          'general': {
+            'stroke': true,
+            'weight': 15,
+            'opacity': 0.8
+          },
+          'properties': {
+            'highway': {
+              'trunk': {
+                'color': 'blue',
+                'weight': 5,
+                'opacity': 0.2
+              },
+              'motorway': {
+                'color': 'orange'
+              }
+            }
+          }
+        },
+        'icon': {
+          'general': {
+            'iconUrl': '/icons/leaf-green.png',
+            'shadowUrl': '/icons/leaf-shadow.png',
+            'iconSize': [38, 95],
+            'shadowSize': [50, 64],
+            'iconAnchor': [22, 94],
+            'shadowAnchor': [4, 62],
+            'popupAnchor': [-3, -76]
+          },
+          'properties': {
+            'highway': {
+              'traffic_signals': {
+                'iconUrl': '/icons/leaf-red.png'
+              },
+              'crossing': {
+                'iconUrl': '/icons/leaf-orange.png'
+              }
+            }
+          }
+        }
+      },
+      'dataSource': {
+        'url': '//geojson-spew.msapp.co.nz',
+        'type': 'longPoll',
+        'refresh': 10000
+      }
+    },
+    {
       'name': 'click-layer',
       'type': 'click',
       'enabled': true,
@@ -124,9 +203,14 @@ var config = {
         'name': 'layer1',
         'description': 'My Layer',
         'checked': true
+      },
+      {
+        'name': 'layer2',
+        'description': 'My Other Layer',
+        'checked': true
       }
     ]
   }
 };
 
-Mappy.create(config);
+var map = Mappy.create(config);
