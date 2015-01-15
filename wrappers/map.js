@@ -1,6 +1,7 @@
 'use strict';
 
 var L            = require('../vendor/leaflet.js')
+require('../vendor/Leaflet.markercluster/dist/leaflet.markercluster-src.js')(L)
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 
@@ -52,8 +53,11 @@ class Map extends EventEmitter {
       this.geojsonLayers[name].removeFrom(this.map)
       delete this.geojsonLayers[name]
     }
+    
+    var markers = new L.MarkerClusterGroup();
+    markers.addLayer(L.geoJson(config.geojson, options));
 
-    this.geojsonLayers[name] = L.geoJson(config.geojson, options)
+    this.geojsonLayers[name] = markers
   }
 
   showGeojsonLayer(name) {
