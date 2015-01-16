@@ -47,6 +47,72 @@ Defines an array of layers to plot on the map. Currently types `geojson` and
 - Type `geojson` can be used to render a geojson feature collection on the map
 - Type `click` can be used to wire up user clicks to external services
 
+###### Geojson layers
+
+The main way that layers are loaded into mappy is via geojson.
+A geojson layer can be added defining a layer of type = geojson in the layers
+array of the config object
+
+```js
+{
+  layers: [
+    {
+      name: 'my-first-layer',
+      type: 'geojson',
+      enabled: true,
+      dataSource: {
+        url: '/path/to/some/geojson/endpoint',
+        type: 'SinglePoll'
+      }
+    }
+  ]
+}
+```
+
+Assuming that valid geojson was returned, a layer of data should be plotted on
+the map.
+
+###### Geojson layer relationships
+
+If you have multiple layers defined for you map and you would like some layers
+to react to user interactions on another layer you can define pub/sub like
+relationships between layers.
+
+On one layer we specify that any user actions of the specified type(s) performed on
+the layer should be 'emitted' to any other interested layers
+
+```js
+{
+  name: 'my-first-layer',
+  type: 'geojson',
+  notifies: ['click'],
+  //...
+}
+```
+
+Then, on another layer we specify that we are interested in and user clicks on
+'my-first-layer', registering a handler like so:
+
+```js
+{
+  name: 'my-second-layer',
+  type: 'geojson',
+  listens: [
+    {
+      listensTo: 'layer2',
+      type: 'click',
+      handler: function (feature, map) {
+        map.hideGeojsonLayer('layer1')
+      }
+    }
+  ],
+  //...
+}
+```
+
+the registered handler function gets passed the feature that the user clicked on
+as the first parameter and the map object as the second
+
 ##### map
 
 Defines details about the map such as tilelayers
