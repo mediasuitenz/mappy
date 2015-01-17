@@ -34,11 +34,16 @@ class Map extends EventEmitter {
    * Add a geojson layer to the map with given config
    */
   setGeojsonLayer(name, config) {
-    var options = {}
+    var self = this,
+      options = {}
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
     if (config.popup) {
       options.onEachFeature = (feature, layer) => {
+        layer.on('click', function () {
+          self.emit('marker.click', feature)
+        })
+
         if (!config.popupFilter || config.popupFilter(feature))
           // don't bind the feature popup if it isn't defined in config
           if (typeof config.popup(feature.properties) !== 'undefined') {
