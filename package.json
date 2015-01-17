@@ -44,19 +44,19 @@
     "testem": "^0.6.19"
   },
   "dependencies": {
-    "6to5ify": "^3.1.2",
-    "brfs": "^1.2.0",
-    "buildbro": "^0.0.10",
-    "commander": "^2.3.0",
-    "events": "^1.0.2",
-    "foreach": "^2.0.5",
-    "handlebars": "^2.0.0",
-    "merge": "^1.2.0",
-    "moment": "^2.8.3",
+    "6to5ify": "3.1.2",
+    "brfs": "1.2.0",
+    "buildbro": "0.0.10",
+    "commander": "2.3.0",
+    "events": "1.0.2",
+    "foreach": "2.0.5",
+    "handlebars": "2.0.0",
+    "merge": "1.2.0",
+    "moment": "2.8.3",
     "nevernull": "0.0.9",
-    "object-merge": "^2.5.1",
-    "persuasion": "^1.0.1",
-    "xhr": "^2.0.0"
+    "object-merge": "2.5.1",
+    "persuasion": "1.0.1",
+    "xhr": "2.0.0"
   },
   "browserify": {
     "transform": [
