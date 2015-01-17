@@ -1,6 +1,8 @@
 MAPPY
 =====
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mediasuitenz/mappy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 WARNING: This library is under heavy development and should be considered ALPHA
 We don't recommend using in production at this time.
 
