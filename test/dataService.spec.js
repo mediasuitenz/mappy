@@ -43,7 +43,9 @@ var validGeojson = {
 }
 
 var validConfig = {
-  url: '...',
+  request: {
+    url: '...'
+  },
   type: 'longPoll',
   refresh: 10000
 }
@@ -110,7 +112,9 @@ describe('DataService', () => {
 
         //Given a data service
         var dataService = dataServiceFactory({
-          url: '...',
+          request: {
+            url: '...'
+          },
           type: 'singlePoll'
         })
         //Given a listener attached to the data service
