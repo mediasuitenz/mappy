@@ -3,6 +3,7 @@
 var L            = require('../vendor/leaflet.js')
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
+var mediator     = require('../lib/mediator')
 
 L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
 
@@ -16,6 +17,7 @@ class Map extends EventEmitter {
     this.tileLayers    = {}
     this.geojsonLayers = {}
     this.map.on('click', (event) => this.emit('click', event))
+    this.mediator      = mediator()
   }
 
   /**
@@ -35,15 +37,29 @@ class Map extends EventEmitter {
    */
   setGeojsonLayer(name, config) {
     var options = {}
+    var map = this
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
-    if (config.popup) {
+    if (config.listens) {
+      config.listens.forEach((listenerConfig) => {
+        map.mediator.register(listenerConfig)
+      })
+    }
+    if (config.popup || config.notifies) {
       options.onEachFeature = (feature, layer) => {
-        if (!config.popupFilter || config.popupFilter(feature))
+        if (!config.popupFilter || config.popupFilter(feature)) {
+
           // don't bind the feature popup if it isn't defined in config
           if (typeof config.popup(feature.properties) !== 'undefined') {
             layer.bindPopup(config.popup(feature.properties))
           }
+        }
+
+        if (config.notifies) {
+          config.notifies.forEach((eventType) => {
+            layer.on(eventType, () => map.mediator.notify(eventType, name, feature, map))
+          })
+        }
       }
     }
     if (config.icon)
