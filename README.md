@@ -74,12 +74,12 @@ the map.
 
 ###### Geojson layer relationships
 
-If you have multiple layers defined for you map and you would like some layers
+If you have multiple layers defined for your map and you would like some layers
 to react to user interactions on another layer you can define pub/sub like
 relationships between layers.
 
 On one layer we specify that any user actions of the specified type(s) performed on
-the layer should be 'emitted' to any other interested layers
+the layer should be 'notified' to any other interested layers
 
 ```js
 {
@@ -90,7 +90,7 @@ the layer should be 'emitted' to any other interested layers
 }
 ```
 
-Then, on another layer we specify that we are interested in and user clicks on
+Then, on another layer we specify that we are interested in any user clicks on
 'my-first-layer', registering a handler like so:
 
 ```js
@@ -99,10 +99,10 @@ Then, on another layer we specify that we are interested in and user clicks on
   type: 'geojson',
   listens: [
     {
-      listensTo: 'layer2',
+      listensTo: 'my-first-layer',
       type: 'click',
       handler: function (feature, map) {
-        map.hideGeojsonLayer('layer1')
+        map.hideGeojsonLayer('my-second-layer')
       }
     }
   ],
