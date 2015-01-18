@@ -15,6 +15,7 @@ var gjLayerControllerFactory = require('../lib/geojsonLayerController')
 
 class Map {
   setGeojsonLayer() {}
+  emit() {}
 }
 class KeyController {
   getKeyVisibility() {
