@@ -171,19 +171,19 @@ Manually tested in:
 ### Map
 ```js
 {
-  domElementId: "map",
+  domElementId: 'map',
   key: {
-    domElementId: "key",
-    title: "My map key"
+    domElementId: 'key',
+    title: 'My map key'
   },
   tileLayers: {
     base-tiles: {
-      url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      attribution: "",
+      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '',
       maxZoom: 18,
       time: {
-        on: "8:00",
-        off: "11:00"
+        on: '8:00',
+        off: '11:00'
       },
       //any other leaflet tile layer options eg.
       zIndex: 100,
@@ -204,12 +204,12 @@ Manually tested in:
 ```js
 [
     {
-        name: "Major Roadworks",
-        description: "This is layer 1",
+        name: 'Major Roadworks',
+        description: 'This is layer 1',
         styles: {
             popup: {
-                css: "myPopupCssFile.css",
-                template: "myTemplate.html"
+                css: 'myPopupCssFile.css',
+                template: 'myTemplate.html'
             },
             layer: {
                 general: { // Roughly following leaflet dsl
@@ -227,18 +227,18 @@ Manually tested in:
                     },
                     lane: {
                         left: {
-                            colour: "green"
+                            colour: 'green'
                         },
                         *: {
-                            colour: "black"
+                            colour: 'black'
                         }
                     }
                 }
             },
             icon: {
               general: {
-                iconUrl: "/icons/leaf-green.png",
-                shadowUrl: "/icons/leaf-shadow.png",
+                iconUrl: '/icons/leaf-green.png',
+                shadowUrl: '/icons/leaf-shadow.png',
                 iconSize: [38, 95],
                 shadowSize: [50, 64],
                 iconAnchor: [22, 94],
@@ -248,10 +248,10 @@ Manually tested in:
               properties: {
                 highway: {
                   traffic_signals: {
-                    iconUrl: "/icons/leaf-red.png"
+                    iconUrl: '/icons/leaf-red.png'
                   },
                   crossing: {
-                    iconUrl: "/icons/leaf-orange.png"
+                    iconUrl: '/icons/leaf-orange.png'
                   }
                 }
               }
@@ -259,26 +259,26 @@ Manually tested in:
         },
         sortOrder: 1, // used to order in key and map layer zindex
         startVisible: true // whether to display the layer on map load
-        defaultLayerType: false || "default", // false would mean this layer is off if the zoom level is outside
-                                                // the levels defined in the "zoom" config
-                                                // "default", "heatmap", "cluster", etc
+        defaultLayerType: false || 'default', // false would mean this layer is off if the zoom level is outside
+                                                // the levels defined in the 'zoom' config
+                                                // 'default', 'heatmap', 'cluster', etc
         zoom: [
             {
                 min: 4,
                 max: 8,
-                type: "heatmap"
+                type: 'heatmap'
             },
             {
                 min: 9,
                 max: 16,
-                type: "cluster"
+                type: 'cluster'
             }
         ],
         dataSource: {
             request: {
-                url: "..."
+                url: '...'
             },
-            type: "longPoll",
+            type: 'longPoll',
             refresh: 10000
         }
         postProcess: {
@@ -296,13 +296,13 @@ You can also specify a 'mapType' to display (see the [Google API](https://develo
 ```js
 var config = {
   map: {
-    domElementId: "map",
+    domElementId: 'map',
     tileLayers: {
       base-tiles: {
-        type: "google",
+        type: 'google',
         maxZoom: 18,
         zIndex: 10,
-        mapType: "SATELLITE"
+        mapType: 'SATELLITE'
       }
     },
     bounds: [
