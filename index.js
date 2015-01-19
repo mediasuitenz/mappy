@@ -1,7 +1,5 @@
 'use strict';
 
-require('./patch/functionName');
-
 (function (window, document, undefined) {
 var oldMappy = window.Mappy
 var Mappy = require('./lib/main')
