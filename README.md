@@ -61,7 +61,9 @@ array of the config object
       type: 'geojson',
       enabled: true,
       dataSource: {
-        url: '/path/to/some/geojson/endpoint',
+        request: {
+          url: '/path/to/some/geojson/endpoint'
+        },
         type: 'SinglePoll'
       }
     }
