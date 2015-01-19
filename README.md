@@ -293,7 +293,7 @@ Manually tested in:
 To generate a Google tile base layer specify the 'google' type on the map property tileLayers config.
 Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`.
 You can also specify a 'mapType' to display (see the [Google API](https://developers.google.com/maps/documentation/javascript/maptypes) for different map types). This will default to ROADMAP.
-```
+```js
 var config = {
   map: {
     domElementId: "map",
