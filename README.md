@@ -169,120 +169,120 @@ Manually tested in:
 ## Config details
 
 ### Map
-```json
+```js
 {
-  "domElementId": "map",
-  "key": {
-    "domElementId": "key",
-    "title": "My map key"
+  domElementId: 'map',
+  key: {
+    domElementId: 'key',
+    title: 'My map key'
   },
-  "tileLayers": {
-    "base-tiles": {
-      "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": "",
-      "maxZoom": 18,
-      "time": {
-        "on": "8:00",
-        "off": "11:00"
+  tileLayers: {
+    base-tiles: {
+      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '',
+      maxZoom: 18,
+      time: {
+        on: '8:00',
+        off: '11:00'
       },
       //any other leaflet tile layer options eg.
-      "zIndex": 100,
-      "opacity": 0.5
+      zIndex: 100,
+      opacity: 0.5
     }
   },
-  "bounds": [
+  bounds: [
     [-43.577988,172.515934],
     [-43.461397,172.749529]
   ],
-  "mapOptions": {
+  mapOptions: {
     maxZoom: 19
   }
 }
 ```
 
 ### Layers
-```json
+```js
 [
     {
-        "name": "Major Roadworks",
-        "description": "This is layer 1",
-        "styles": {
-            "popup": {
-                "css": "myPopupCssFile.css",
-                "template": "myTemplate.html"
+        name: 'Major Roadworks',
+        description: 'This is layer 1',
+        styles: {
+            popup: {
+                css: 'myPopupCssFile.css',
+                template: 'myTemplate.html'
             },
-            "layer": {
-                "general": { // Roughly following leaflet dsl
-                    "stroke": true,
-                    "weight": 5
+            layer: {
+                general: { // Roughly following leaflet dsl
+                    stroke: true,
+                    weight: 5
                 },
-                "properties": {
-                    "weighting": {
-                        "2": {
-                            "stroke": true
+                properties: {
+                    weighting: {
+                        2: {
+                            stroke: true
                         },
-                        "5": {
-                            "stroke": false
+                        5: {
+                            stroke: false
                         }
                     },
-                    "lane": {
-                        "left": {
-                            "colour": "green"
+                    lane: {
+                        left: {
+                            colour: 'green'
                         },
-                        "*": {
-                            "colour": "black"
+                        *: {
+                            colour: 'black'
                         }
                     }
                 }
             },
-            "icon": {
-              "general": {
-                "iconUrl": "/icons/leaf-green.png",
-                "shadowUrl": "/icons/leaf-shadow.png",
-                "iconSize": [38, 95],
-                "shadowSize": [50, 64],
-                "iconAnchor": [22, 94],
-                "shadowAnchor": [4, 62],
-                "popupAnchor": [-3, -76]
+            icon: {
+              general: {
+                iconUrl: '/icons/leaf-green.png',
+                shadowUrl: '/icons/leaf-shadow.png',
+                iconSize: [38, 95],
+                shadowSize: [50, 64],
+                iconAnchor: [22, 94],
+                shadowAnchor: [4, 62],
+                popupAnchor: [-3, -76]
               },
-              "properties": {
-                "highway": {
-                  "traffic_signals": {
-                    "iconUrl": "/icons/leaf-red.png"
+              properties: {
+                highway: {
+                  traffic_signals: {
+                    iconUrl: '/icons/leaf-red.png'
                   },
-                  "crossing": {
-                    "iconUrl": "/icons/leaf-orange.png"
+                  crossing: {
+                    iconUrl: '/icons/leaf-orange.png'
                   }
                 }
               }
             }
         },
-        "sortOrder": 1, // used to order in key and map layer zindex
-        "startVisible": true // whether to display the layer on map load
-        "defaultLayerType": false || "default", // false would mean this layer is off if the zoom level is outside
-                                                // the levels defined in the "zoom" config
-                                                // "default", "heatmap", "cluster", etc
-        "zoom": [
+        sortOrder: 1, // used to order in key and map layer zindex
+        startVisible: true // whether to display the layer on map load
+        defaultLayerType: false || 'default', // false would mean this layer is off if the zoom level is outside
+                                                // the levels defined in the 'zoom' config
+                                                // 'default', 'heatmap', 'cluster', etc
+        zoom: [
             {
-                "min": 4,
-                "max": 8,
-                "type": "heatmap"
+                min: 4,
+                max: 8,
+                type: 'heatmap'
             },
             {
-                "min": 9,
-                "max": 16,
-                "type": "cluster"
+                min: 9,
+                max: 16,
+                type: 'cluster'
             }
         ],
-        "dataSource": {
-            "request": {
-                "url": "..."
+        dataSource: {
+            request: {
+                url: '...'
             },
-            "type": "longPoll",
-            "refresh": 10000
+            type: 'longPoll',
+            refresh: 10000
         }
-        "postProcess": {
-            "laneSplit": true // true happens on load,
+        postProcess: {
+            laneSplit: true // true happens on load,
                               // string key or array of keys 'onzoom', ['onzoom', 'onpan']
         }
     }
@@ -293,19 +293,19 @@ Manually tested in:
 To generate a Google tile base layer specify the 'google' type on the map property tileLayers config.
 Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`.
 You can also specify a 'mapType' to display (see the [Google API](https://developers.google.com/maps/documentation/javascript/maptypes) for different map types). This will default to ROADMAP.
-```
+```js
 var config = {
   map: {
-    "domElementId": "map",
-    "tileLayers": {
-      "base-tiles": {
-        "type": "google",
-        "maxZoom": 18,
-        "zIndex": 10,
-        "mapType": "SATELLITE"
+    domElementId: 'map',
+    tileLayers: {
+      base-tiles: {
+        type: 'google',
+        maxZoom: 18,
+        zIndex: 10,
+        mapType: 'SATELLITE'
       }
     },
-    "bounds": [
+    bounds: [
       [-43.577988,172.515934],
       [-43.461397,172.749529]
     ]
