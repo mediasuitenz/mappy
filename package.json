@@ -7,7 +7,7 @@
   "description": "A configurable map engine",
   "main": "index.js",
   "scripts": {
-    "test:ci": "npm run jshint && mocha -u mocha-given -R spec --compilers js:mocha-traceur test/**/*.spec.js",
+    "test:ci": "npm run jshint && mocha -u mocha-given -R spec --compilers js:6to5/register test/**/*.spec.js",
     "test:dev": "testem -g",
     "test": "npm run test:dev",
     "build:prod": "buildbro --es6 --minify --brfs --jshint ./index.js ./dist/bundle-min.js",
@@ -16,8 +16,7 @@
     "build:all": "npm run build:dev && npm run build:prod",
     "build": "npm run build:all",
     "jshint": "jshint .",
-    "start:dev": "npm run build:watch",
-    "start": "supervisor -- node_modules/.bin/http-server -p 5000 dist"
+    "start": "npm run build:watch"
   },
   "repository": {
     "type": "git",
@@ -31,40 +30,39 @@
   },
   "homepage": "https://github.com/mediasuitenz/mappy",
   "devDependencies": {
-    "catch-error": "^1.0.0",
-    "chai": "^1.9.1",
-    "geojsonhint": "^0.3.4",
-    "jshint": "^2.5.5",
-    "mocha": "^1.21.4",
-    "mocha-given": "^0.1.3",
-    "mocha-traceur": "mediasuitenz/mocha-traceur",
-    "rewire": "^2.1.0",
-    "sinon": "^1.10.3",
-    "sinon-chai": "^2.5.0",
-    "testem": "^0.6.19"
+    "6to5": "2.12.6",
+    "catch-error": "1.0.0",
+    "chai": "1.9.1",
+    "geojson-is-valid": "0.0.4",
+    "geojsonhint": "0.3.4",
+    "jshint": "2.5.5",
+    "mocha": "1.21.4",
+    "mocha-given": "0.1.3",
+    "rewire": "2.1.0",
+    "sinon": "1.10.3",
+    "sinon-chai": "2.5.0",
+    "testem": "0.6.19"
   },
   "dependencies": {
-    "brfs": "^1.2.0",
-    "browserify": "^5.11.2",
-    "buildbro": "^0.0.10",
-    "chalk": "^0.5.1",
-    "commander": "^2.3.0",
-    "es6ify": "^1.3.0",
-    "events": "^1.0.2",
-    "foreach": "^2.0.5",
-    "handlebars": "^2.0.0",
-    "http-server": "^0.7.1",
-    "insert-css": "^0.2.0",
-    "jabu": "0.0.2",
-    "merge": "^1.2.0",
-    "moment": "^2.8.3",
+    "6to5ify": "3.1.2",
+    "brfs": "1.2.0",
+    "buildbro": "0.1.0",
+    "commander": "2.3.0",
+    "events": "1.0.2",
+    "foreach": "2.0.5",
+    "handlebars": "2.0.0",
+    "insert-css": "0.2.0",
+    "merge": "1.2.0",
+    "moment": "2.8.3",
     "nevernull": "0.0.9",
-    "object-merge": "^2.5.1",
-    "persuasion": "^1.0.1",
-    "supervisor": "^0.6.0",
-    "traceur": "^0.0.60",
-    "uglifyify": "^2.5.0",
-    "watchify": "^1.0.2",
-    "xhr": "^2.0.0"
+    "object-merge": "2.5.1",
+    "persuasion": "1.0.1",
+    "xhr": "2.0.0"
+  },
+  "browserify": {
+    "transform": [
+      "6to5ify",
+      "brfs"
+    ]
   }
 }

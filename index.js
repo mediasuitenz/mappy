@@ -1,16 +1,5 @@
 'use strict';
 
-if (!window) {
-  //Make Ecmascript 6 features available via transpilation
-  var traceur = require('traceur');
-  traceur.require.makeDefault(function(filename) {
-    // don't transpile our dependencies, just our app
-    return filename.indexOf('node_modules') === -1
-  })
-}
-
-//any files included will be compiled using traceur es6 compiler
-// eg. require('lib/app.js')
 require('./patch/functionName');
 
 (function (window, document, undefined) {
