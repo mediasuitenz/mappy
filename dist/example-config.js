@@ -102,7 +102,9 @@ var config = {
         }
       },
       dataSource: {
-        url: '//geojson-spew.msapp.co.nz',
+        request: {
+          url: '//geojson-spew.msapp.co.nz'
+        },
         type: 'longPoll',
         refresh: 10000
       }
@@ -170,7 +172,9 @@ var config = {
         }
       },
       dataSource: {
-        url: '//geojson-spew.msapp.co.nz',
+        request: {
+          url: '//geojson-spew.msapp.co.nz'
+        },
         type: 'longPoll',
         refresh: 10000
       }
@@ -190,8 +194,10 @@ var config = {
         }
       },
       dataSource: {
-        type: 'singlePoll',
-        url: '//parsnip.msapp.co.nz/{x}/{y}'
+        request: {
+          url: '//parsnip.msapp.co.nz/{x}/{y}'
+        },
+        type: 'singlePoll'
       }
     }
   ],
