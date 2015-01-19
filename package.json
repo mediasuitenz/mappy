@@ -10,7 +10,7 @@
     "test:ci": "npm run jshint && mocha -u mocha-given -R spec --compilers js:6to5/register test/**/*.spec.js",
     "test:dev": "testem -g",
     "test": "npm run test:dev",
-    "build:prod": "buildbro --es6 --minify --brfs --jshint ./index.js ./dist/bundle-min.js",
+    "build:prod": "buildbro --es6 --minifyglobal --brfs --jshint ./index.js ./dist/bundle-min.js",
     "build:dev": "buildbro --es6 --debug --brfs --jshint ./index.js ./dist/bundle.js",
     "build:watch": "buildbro -w -e -d -b -s dist -p 3000 -j ./index.js ./dist/bundle.js",
     "build:all": "npm run build:dev && npm run build:prod",
@@ -46,7 +46,7 @@
   "dependencies": {
     "6to5ify": "3.1.2",
     "brfs": "1.2.0",
-    "buildbro": "0.1.0",
+    "buildbro": "0.1.1",
     "commander": "2.3.0",
     "events": "1.0.2",
     "foreach": "2.0.5",
