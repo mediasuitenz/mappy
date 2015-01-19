@@ -169,7 +169,7 @@ Manually tested in:
 ## Config details
 
 ### Map
-```json
+```js
 {
   "domElementId": "map",
   "key": {
@@ -201,7 +201,7 @@ Manually tested in:
 ```
 
 ### Layers
-```json
+```js
 [
     {
         "name": "Major Roadworks",
