@@ -29,7 +29,7 @@ describe('the keyController module', () => {
     When('a map controller object is created', () => mkController = factory(config))
 
     Then('a map key controller should have been created', () => {
-      expect(mkController.constructor.name).to.equal('KeyController')
+      expect(mkController).to.be.an('object');
     })
   })
 
