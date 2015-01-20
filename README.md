@@ -181,6 +181,12 @@ Manually tested in:
                     "iconUrl": "/icons/leaf-orange.png"
                   }
                 }
+              },
+              "cluster": {
+                "enabled": true,
+                "options": {
+                  "showCoverageOnHover": false
+                }
               }
             }
         },
