@@ -183,10 +183,7 @@ Manually tested in:
                 }
               },
               "cluster": {
-                "enabled": true,
-                "options": {
-                  "showCoverageOnHover": false
-                }
+                "showCoverageOnHover": false
               }
             }
         },
