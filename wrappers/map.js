@@ -36,6 +36,7 @@ class Map extends EventEmitter {
    */
   setGeojsonLayer(name, config) {
     var options = {}
+    var layer
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
     if (config.popup) {
@@ -54,10 +55,20 @@ class Map extends EventEmitter {
       delete this.geojsonLayers[name]
     }
     
-    var markers = new L.MarkerClusterGroup();
-    markers.addLayer(L.geoJson(config.geojson, options));
+    // if clustering is defined then add a marker cluster layer
+    // else add a geoJson layer
+    if (typeof config.cluster !== 'undefined' 
+      && typeof config.cluster.enabled !== 'undefined'
+      && config.cluster.enabled) {
+      
+      layer = new L.MarkerClusterGroup(config.cluster.options);
+      layer.addLayer(L.geoJson(config.geojson, options));
 
-    this.geojsonLayers[name] = markers
+    } else {
+      layer = L.geoJson(config.geojson, options)
+    }
+
+    this.geojsonLayers[name] = layer
   }
 
   showGeojsonLayer(name) {
