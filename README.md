@@ -292,6 +292,30 @@ Manually tested in:
 ]
 ```
 
+## Clustering
+Enable clustering on a layer by setting the "cluster" property on layer icon config to 'true', alternatively you can pass through options to override the default cluster settings. 
+You can refer to the [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) module documentation for configuration options.
+```json
+{
+  "layers": [
+    {
+      "name": "layer1",
+      ...
+      "styles": {
+        "icon": {
+          "cluster": {
+            "showCoverageOnHover": false,
+            "iconCreateFunction": function(cluster) {
+              return new L.DivIcon({html: '<b>' + cluster.getChildCount() + '</b>'});
+            }
+          }
+        }
+      }
+    } 
+  ]
+}
+```
+
 ## Google
 To generate a Google tile base layer specify the 'google' type on the map property tileLayers config.
 Include the Google javascript api to your project html `<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>`.

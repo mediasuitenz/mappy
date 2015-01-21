@@ -81,7 +81,7 @@ class Map extends EventEmitter {
     
     // if clustering is defined then add a marker cluster layer
     // else add a geoJson layer
-    if (typeof config.cluster !== 'undefined') {
+    if (typeof config.cluster !== 'undefined' && config.cluster) {
       layer = new L.MarkerClusterGroup(config.cluster);
       layer.addLayer(L.geoJson(config.geojson, options));
     } else {
