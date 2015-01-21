@@ -15,20 +15,28 @@ var gjLayerControllerFactory = require('../lib/geojsonLayerController')
 
 class Map {
   setGeojsonLayer() {}
+  hideGeojsonLayer() {}
   emit() {}
 }
 class KeyController {
-  getKeyVisibility() {
-    return true
+  constructor() {
+    this.layers = {}
+  }
+  getKeyVisibility(name) {
+    return !!this.layers[name]
+  }
+  hasLayer(name) {
+    return !!this.layers[name]
   }
 }
-var dataService
+var dataServices = []
 class DataService extends EventEmitter {
   getData() {}
   start() {}
 }
 var dataServiceFactory = () => {
-  dataService = new DataService()
+  var dataService = new DataService()
+  dataServices.push(dataService)
   return dataService
 }
 var popupPresenterFactory = () => {
@@ -103,8 +111,10 @@ describe('geojsonLayerController', () => {
     When('addLayersFromConfig is called with config', () => {
       gjLayerController.addLayersFromConfig(layerConfig)
     })
-    And('a data event is triggered', () => dataService.emit('data'))
-    Then('a layer should have been added to the map', () => expect(spy).to.have.been.calledOnce)
+    And('a data event is triggered', () => {
+      dataServices.forEach((ds) => ds.emit('data'))
+    })
+    Then('two layers should have been added to the map', () => expect(spy).to.have.been.calledTwice)
   })
 
   describe('adding a layer with minimal configuration', () => {
@@ -124,5 +134,26 @@ describe('geojsonLayerController', () => {
       })
       Then('there should have been no errors thrown', () => expect(caughtErrors).to.equal(undefined))
     })
+  })
+
+  describe('adding layers from config with key', () => {
+    var layerConfig, config, gjLayerController, spy
+
+    Given('some controller config', () => config = configBuilder())
+    Given('the map.setGeojsonLayer method is a spy', () => {
+      spy = config.map.showGeojsonLayer = sinon.spy()
+    })
+    Given('a valid geojsonLayerController', () => {
+      gjLayerController = gjLayerControllerFactory(config)
+    })
+    Given('some layer config', () => layerConfig = layerBuilder(2))
+    Given('one layer is in the key', () => config.keyController.layers[layerConfig[0].name] = true)
+    When('addLayersFromConfig is called with config', () => {
+      gjLayerController.addLayersFromConfig(layerConfig)
+    })
+    And('a data event is triggered', () => {
+      dataServices.forEach((ds) => ds.emit('data'))
+    })
+    Then('two layers should have been added to the map', () => expect(spy).to.have.been.calledTwice)
   })
 })
