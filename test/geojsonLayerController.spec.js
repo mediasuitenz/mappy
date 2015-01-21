@@ -5,7 +5,6 @@ var assert       = require('assert')
 var chai         = require('chai')
 var expect       = chai.expect
 var context      = describe
-var catchError   = require('catch-error')
 var sinon        = require('sinon')
 var sinonChai    = require('sinon-chai')
 chai.use(sinonChai)
