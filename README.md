@@ -294,10 +294,6 @@ Manually tested in:
             }
         ],
         dataSource: 'name-of-defined-dataSource'
-        postProcess: {
-            laneSplit: true // true happens on load,
-                            // string key or array of keys 'onzoom', ['onzoom', 'onpan']
-        }
     }
 ]
 ```
