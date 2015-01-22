@@ -30,9 +30,7 @@ var configObject = {
     {
       name: 'name',
       type: 'type',
-      dataSource: {
-        name: 'dataSource1'
-      }
+      dataSource: 'dataSource1'
     }
   ],
   key: {
@@ -57,6 +55,7 @@ describe('Config', () => {
       //Then
       layers.should.be.an('array')
       layers[0].name.should.be.a('string')
+      layers[0].dataSource.should.be.a('string')
     })
   })
 
