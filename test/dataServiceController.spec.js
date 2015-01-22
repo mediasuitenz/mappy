@@ -26,7 +26,18 @@ describe('The DataService Controller', () => {
 
     Given(() => firstService = dataServiceController.dataServices[dataServicesConfig[0].name])
     Then(() => expect(firstService).to.be.an('object'))
-    And(() => expect(firstService.config).to.be.an('object'))
-    And(() => expect(firstService.dataService).to.be.an('object'))
+  })
+
+  scenario('Getting a DataService for a layer', () => {
+    var dataService
+    var layerConfig
+
+    Given(() => {
+      layerConfig = {
+        dataSource: 'dataSource1'
+      }
+    })
+    When(() => dataService = dataServiceController.getDataServiceForLayer(layerConfig))
+    Then(() => expect(dataService).to.be.an('object'))
   })
 })
