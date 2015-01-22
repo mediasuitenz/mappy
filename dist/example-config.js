@@ -102,13 +102,7 @@ var config = {
           cluster: true
         }
       },
-      dataSource: {
-        request: {
-          url: '//geojson-spew.msapp.co.nz'
-        },
-        type: 'longPoll',
-        refresh: 10000
-      }
+      dataSource: 'geojson-spew'
     },
     {
       name: 'layer2',
@@ -172,13 +166,7 @@ var config = {
           }
         }
       },
-      dataSource: {
-        request: {
-          url: '//geojson-spew.msapp.co.nz'
-        },
-        type: 'longPoll',
-        refresh: 10000
-      }
+      dataSource: 'geojson-spew'
     },
     {
       name: 'click-layer',
@@ -194,12 +182,24 @@ var config = {
           }
         }
       },
-      dataSource: {
-        request: {
-          url: '//parsnip.msapp.co.nz/{x}/{y}'
-        },
-        type: 'singlePoll'
-      }
+      dataSource: 'parsnip'
+    }
+  ],
+  dataSources: [
+    {
+      name: 'geojson-spew',
+      request: {
+        url: '//geojson-spew.msapp.co.nz'
+      },
+      type: 'longPoll',
+      refresh: 10000
+    },
+    {
+      name: 'parsnip',
+      request: {
+        url: '//parsnip.msapp.co.nz/{x}/{y}'
+      },
+      type: 'singlePoll'
     }
   ],
   key: {
