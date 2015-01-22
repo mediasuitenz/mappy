@@ -1,6 +1,7 @@
 'use strict';
 
 var L            = require('../vendor/leaflet.js')
+require('../vendor/leaflet.markercluster-src.js')(L)
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
@@ -38,6 +39,7 @@ class Map extends EventEmitter {
   setGeojsonLayer(name, config) {
     var options = {}
     var map = this
+    var layer
 
     if (config.style)
       options.style = (feature) => config.style(feature.properties)
@@ -76,8 +78,17 @@ class Map extends EventEmitter {
       this.geojsonLayers[name].removeFrom(this.map)
       delete this.geojsonLayers[name]
     }
+    
+    // if clustering is defined then add a marker cluster layer
+    // else add a geoJson layer
+    if (typeof config.cluster !== 'undefined' && config.cluster) {
+      layer = new L.MarkerClusterGroup(config.cluster);
+      layer.addLayer(L.geoJson(config.geojson, options));
+    } else {
+      layer = L.geoJson(config.geojson, options)
+    }
 
-    this.geojsonLayers[name] = L.geoJson(config.geojson, options)
+    this.geojsonLayers[name] = layer
   }
 
   showGeojsonLayer(name) {

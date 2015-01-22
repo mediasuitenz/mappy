@@ -98,7 +98,8 @@ var config = {
                 iconUrl: '/icons/leaf-orange.png'
               }
             }
-          }
+          },
+          cluster: true
         }
       },
       dataSource: {

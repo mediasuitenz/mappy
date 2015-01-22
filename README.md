@@ -254,6 +254,9 @@ Manually tested in:
                     iconUrl: '/icons/leaf-orange.png'
                   }
                 }
+              },
+              "cluster": {
+                "showCoverageOnHover": false
               }
             }
         },
@@ -287,6 +290,55 @@ Manually tested in:
         }
     }
 ]
+```
+
+## Clustering
+
+Enable clustering on a layer by setting the "cluster" property on layer icon config to 'true', alternatively you can pass through options to override the default cluster settings.
+You can refer to the [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) module documentation for configuration options.
+
+### Possible values
+
+To enable clustering
+```js
+cluster: true //default options
+cluster: { ... } //overide default options
+```
+The following will disable clustering
+```
+cluster: false
+cluster: null
+cluster: undefined
+```
+
+**Note:** If you want to use clustering with the default styling you will need to include
+the default marker clusterer stylesheet. eg.
+
+```html
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
+```
+
+### Clustering example
+
+```js
+{
+  layers: [
+    {
+      name: 'layer1',
+      ...
+      styles: {
+        icon: {
+          cluster: {
+            showCoverageOnHover: false,
+            iconCreateFunction: function(cluster) {
+              return new L.DivIcon({html: '<b>' + cluster.getChildCount() + '</b>'});
+            }
+          }
+        }
+      }
+    }
+  ]
+}
 ```
 
 ## Google
