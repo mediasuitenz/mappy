@@ -79,5 +79,35 @@ describe('the mapKey module', () => {
     And('the result should have item properties', () => result.key.should.equal('item1'))
   })
 
+  describe('adding custom template', () => {
+    var result, item, key, customConfig, context
+
+    customConfig = {
+      domElementId: "key",
+      title: "traffic map key",
+      template: '<h1>{{title}}</h1><ul class="items"><ul/>',
+      layers: [
+        {
+          name: 'layer1',
+          description: 'My Layer',
+          checked: true
+        }
+      ]
+    };
+
+    Given('an initialized map key', () => key = mod(customConfig))
+    Given('a key item', () => item = { name: 'item1', description: 'My item', checked: false })
+    Given('that the key modules item array is empty', () => key.items = [])
+    Given('a context of', () => context = { title: key.title, items: key.items })
+    When('the key item is added to the key', () => result = key.addItem(item))
+    
+    describe('#addItem has been called', () => {
+      Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
+      And('key.template property should be `<h1>traffic map key</h1><ul class="items"><ul/>`', () => {
+        key.template(context).should.equal('<h1>traffic map key</h1><ul class="items"><ul/>')
+      })
+    })
+  })
+
 })
 
