@@ -7,7 +7,11 @@ var element = {
   querySelector: () => {
     return {
       appendChild: () => {},
-      setAttribute: () => {}
+      setAttribute: () => {},
+      insertAdjacentHTML: () => {},
+      querySelector: () => {
+        return {}
+      }
     }
   },
   querySelectorAll: () => {

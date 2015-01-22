@@ -38,14 +38,14 @@ describe('the mapKey module', () => {
   })
 
   describe('adding items', () => {
-    var text, id, result, checked
+    var keyConfig = {}, result
 
-    Given('an item id', () => id = 'item1')
-    Given('an items checked state', () => checked = true)
-    Given('an items text', () => text = 'my item')
+    Given('an item name', () => keyConfig['name'] = 'item1')
+    Given('an item checked state', () => keyConfig['checked'] = true)
+    Given('an item description', () => keyConfig['description'] = 'my item')
     Given('that the key modules item array is empty', () => key.items = [])
-    When('calling `addItem` with id and text and checked state', () => result = key.addItem(id, text, checked))
-
+    When('calling `addItem` with name and description and checked state', () => result = key.addItem(keyConfig))
+    
     describe('#addItem has been called', () => {
       Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
       And('keys.id property should be `item1`', () => key.items[0].key.should.equal('item1'))
@@ -69,9 +69,9 @@ describe('the mapKey module', () => {
     Given('an initialized map key', () => key = mod(config))
     Given('a callback', () => { callback = (event) => { result = event } })
     Given('the callback has not been called', () => result = null)
-    Given('a key item', () => item = { key: 'item1', text: 'My item', checked: false })
+    Given('a key item', () => item = { name: 'item1', description: 'My item', checked: false })
 
-    When('the key item is added to the key', () => key.addItem(item.key, item.text, item.checked))
+    When('the key item is added to the key', () => key.addItem(item))
     And('the callback is attached as a listener to a map key', () => key.on('layerToggle', callback))
     And('a key item is clicked', () => key.items[0].click())
 
