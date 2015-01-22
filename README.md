@@ -299,25 +299,40 @@ Manually tested in:
 ```
 
 ### Key
-```json
+You can either use the default, or define custom html to render the layer key template. Custom templates are parsed through the [handlebars](http://handlebarsjs.com/) templating engine, refer to the handlebar docs for further details.
+```js
+// default
 {
-  "domElementId": "key", // The dom element used to render the key.
-  "title": "My map key",
-  "template": "key.html", // Handlebars template used to render the key wrapper.
-  "itemTemplate": "keyItem.html", // Handlebars template used to render the key items.
-  "listWrapperClass": ".items", // Dom element in 'template' key wrapper used to render the key items.
-  "layers": [
+  domElementId: 'key', // The dom element used to render the key.
+  title: 'My map key',
+  layers: [
     {
-      "name": "layer1",
-      "description": "My Layer",
-      "checked": true,
-      "templateData": { // optional data to pass through to the 'itemTemplate'
-                        // eg. can be referenced with 'templateData.example1'
-        "example1": "test"
+      name: 'layer1',
+      description: 'My Layer',
+      checked: true
+    }
+  ]
+}
+
+// custom template
+{
+  domElementId: 'key', // The dom element used to render the key.
+  title: 'My map key',
+  template: '<ul class="items"><ul/>', // Handlebars template used to render the key wrapper.
+  itemTemplate: '<li><label for="{{key}}">{{#if text}}<span>{{text}}</span>{{/if}}<input type="checkbox" id="{{key}}" {{#if checked}}checked="checked"{{/if}}></label></li>', // Handlebars template used to render the key items.
+  listWrapperClass: '.items', // Dom element in 'template' key wrapper used to render the key items.
+  layers: [
+    {
+      name: 'layer1',
+      description: 'My Layer',
+      checked: true,
+      templateData: { // optional data to pass through to the 'itemTemplate'
+        example1: 'test' // can be referenced thrigh the 'itemTemplate' with 'templateData.example1'
       }
     }
   ]
 }
+
 ```
 
 ## Clustering
