@@ -39,6 +39,28 @@ Configuration is a javascript object with three properties: map, layers and key
 
 Defines the map key (optional)
 
+##### dataSources
+
+Defines the data sources that the layers can use.
+
+Data source definitions should be in format:
+```js
+{
+  dataSources: [
+    {
+      name: 'my-api',
+      type: 'longPoll' // longPoll or singlePoll
+      refresh: 10000   // Interval to refresh the data from the endpoint, only required for longPoll
+      request: {
+        url: '/path/to/some/geojson/endpoint'
+        // other options for xhr module (https://github.com/Raynos/xhr) can be passed in here
+      }
+    }
+  ]
+}
+
+```
+
 ##### layers
 
 Defines an array of layers to plot on the map. Currently types `geojson` and
@@ -59,13 +81,7 @@ array of the config object
     {
       name: 'my-first-layer',
       type: 'geojson',
-      enabled: true,
-      dataSource: {
-        request: {
-          url: '/path/to/some/geojson/endpoint'
-        },
-        type: 'SinglePoll'
-      }
+      dataSource: 'my-api'
     }
   ]
 }
@@ -277,16 +293,10 @@ Manually tested in:
                 type: 'cluster'
             }
         ],
-        dataSource: {
-            request: {
-                url: '...'
-            },
-            type: 'longPoll',
-            refresh: 10000
-        }
+        dataSource: 'name-of-defined-dataSource'
         postProcess: {
             laneSplit: true // true happens on load,
-                              // string key or array of keys 'onzoom', ['onzoom', 'onpan']
+                            // string key or array of keys 'onzoom', ['onzoom', 'onpan']
         }
     }
 ]
