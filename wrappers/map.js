@@ -5,6 +5,7 @@ require('../vendor/leaflet.markercluster-src.js')(L)
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
+var nn           = require('nevernull')
 
 L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
 
@@ -81,12 +82,12 @@ class Map extends EventEmitter {
 
     // if clustering is defined then add a marker cluster layer
     // else add a geoJson layer
-    if (typeof config.cluster !== 'undefined' && config.cluster) {
+    if (nn(config)('cluster').val) {
 
       // if an icon is supplied use it
       // unless showClusterCount is also specified, then show a DivIcon with supplied config
-      if (typeof config.cluster.icon !== 'undefined' && config.cluster.icon) {
-        if (typeof config.cluster.icon.showClusterCount !== 'undefined' && config.cluster.icon.showClusterCount) {
+      if (nn(config)('cluster.icon').val) {
+        if (nn(config)('cluster.icon.showClusterCount').val) {
           config.cluster.iconCreateFunction = function (cluster) {
             var iconClass = config.cluster.icon.iconClass !== 'undefined' ? config.cluster.icon.iconClass : 'cluster-icon'
 
