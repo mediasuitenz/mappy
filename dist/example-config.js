@@ -99,7 +99,16 @@ var config = {
               }
             }
           },
-          cluster: true
+          cluster: {
+            showCoverageOnHover: false,
+            icon: {
+              showClusterCount: true,
+              iconClass: 'leafy-background',
+              iconSize: [38, 95],
+              iconAnchor: [22, 94],
+              popupAnchor: [-3, -76]
+            }
+          }
         }
       },
       dataSource: 'geojson-spew'

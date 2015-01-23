@@ -5,6 +5,7 @@ require('../vendor/leaflet.markercluster-src.js')(L)
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
+var nn           = require('nevernull')
 
 L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
 
@@ -78,12 +79,30 @@ class Map extends EventEmitter {
       this.geojsonLayers[name].removeFrom(this.map)
       delete this.geojsonLayers[name]
     }
-    
+
     // if clustering is defined then add a marker cluster layer
     // else add a geoJson layer
-    if (typeof config.cluster !== 'undefined' && config.cluster) {
-      layer = new L.MarkerClusterGroup(config.cluster);
-      layer.addLayer(L.geoJson(config.geojson, options));
+    if (nn(config)('cluster').val) {
+
+      // if an icon is supplied use it
+      // unless showClusterCount is also specified, then show a DivIcon with supplied config
+      if (nn(config)('cluster.icon').val) {
+        if (nn(config)('cluster.icon.showClusterCount').val) {
+          config.cluster.iconCreateFunction = function (cluster) {
+            var iconClass = config.cluster.icon.iconClass !== 'undefined' ? config.cluster.icon.iconClass : 'cluster-icon'
+
+            config.cluster.icon.html = '<div class="' + iconClass + '"><div class="cluster-count">' + cluster.getChildCount() + '</div></div>'
+            return L.divIcon(config.cluster.icon)
+          }
+        } else {
+          config.cluster.iconCreateFunction = function () {
+            return L.icon(config.cluster.icon)
+          }
+        }
+      }
+
+      layer = new L.MarkerClusterGroup(config.cluster)
+      layer.addLayer(L.geoJson(config.geojson, options))
     } else {
       layer = L.geoJson(config.geojson, options)
     }
