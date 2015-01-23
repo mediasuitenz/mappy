@@ -28,16 +28,22 @@ class KeyController {
     return !!this.layers[name]
   }
 }
-var dataServices = []
 class DataService extends EventEmitter {
   getData() {}
   start() {}
 }
-var dataServiceFactory = () => {
-  var dataService = new DataService()
-  dataServices.push(dataService)
-  return dataService
+class DataServiceController {
+  constructor() {
+    this.dataServices = []
+  }
+
+  getDataServiceForLayer() {
+    var dataService = new DataService()
+    this.dataServices.push(dataService)
+    return dataService
+  }
 }
+
 var popupPresenterFactory = () => {
   return {}
 }
@@ -52,7 +58,7 @@ var configBuilder = () => {
   return {
     map: new Map(),
     keyController: new KeyController(),
-    dataServiceFactory: dataServiceFactory,
+    dataServiceController: new DataServiceController(),
     popupPresenterFactory: popupPresenterFactory,
     stylePresenterFactory: stylePresenterFactory,
     filterFactory: filterFactory
@@ -111,7 +117,7 @@ describe('geojsonLayerController', () => {
       gjLayerController.addLayersFromConfig(layerConfig)
     })
     And('a data event is triggered', () => {
-      dataServices.forEach((ds) => ds.emit('data'))
+      config.dataServiceController.dataServices.forEach((ds) => ds.emit('data'))
     })
     Then('two layers should have been added to the map', () => expect(spy).to.have.been.calledTwice)
   })
@@ -151,7 +157,7 @@ describe('geojsonLayerController', () => {
       gjLayerController.addLayersFromConfig(layerConfig)
     })
     And('a data event is triggered', () => {
-      dataServices.forEach((ds) => ds.emit('data'))
+      config.dataServiceController.dataServices.forEach((ds) => ds.emit('data'))
     })
     Then('two layers should have been added to the map', () => expect(spy).to.have.been.calledTwice)
   })
