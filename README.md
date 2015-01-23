@@ -338,7 +338,7 @@ the default marker clusterer stylesheet. eg.
           cluster: {
             showCoverageOnHover: false,
             icon: {
-              showClusterCount: true,
+              showClusterCount: true, // if false, specify normal icon options e.g. iconUrl
               iconClass: 'leafy-background',
               iconSize: [38, 95],
               iconAnchor: [22, 94],
