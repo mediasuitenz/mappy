@@ -78,12 +78,30 @@ class Map extends EventEmitter {
       this.geojsonLayers[name].removeFrom(this.map)
       delete this.geojsonLayers[name]
     }
-    
+
     // if clustering is defined then add a marker cluster layer
     // else add a geoJson layer
     if (typeof config.cluster !== 'undefined' && config.cluster) {
-      layer = new L.MarkerClusterGroup(config.cluster);
-      layer.addLayer(L.geoJson(config.geojson, options));
+
+      // if an icon is supplied use it
+      // unless showClusterCount is also specified, then show a DivIcon with supplied config
+      if (typeof config.cluster.icon !== 'undefined' && config.cluster.icon) {
+        if (typeof config.cluster.icon.showClusterCount !== 'undefined' && config.cluster.icon.showClusterCount) {
+          config.cluster.iconCreateFunction = function (cluster) {
+            var iconClass = config.cluster.icon.iconClass !== 'undefined' ? config.cluster.icon.iconClass : 'cluster-icon'
+
+            config.cluster.icon.html = '<div class="' + iconClass + '"><div class="cluster-count">' + cluster.getChildCount() + '</div></div>'
+            return L.divIcon(config.cluster.icon)
+          }
+        } else {
+          config.cluster.iconCreateFunction = function () {
+            return L.icon(config.cluster.icon)
+          }
+        }
+      }
+
+      layer = new L.MarkerClusterGroup(config.cluster)
+      layer.addLayer(L.geoJson(config.geojson, options))
     } else {
       layer = L.geoJson(config.geojson, options)
     }

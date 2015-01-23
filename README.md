@@ -316,6 +316,7 @@ cluster: false
 cluster: null
 cluster: undefined
 ```
+If you specify an icon it will override `iconCreateFunction` to create the icon with the given config. If `showClusterCount` is also truthy then it will render div's instead, with the cluster count inside. See the example below, with css to show an image AND cluster count.
 
 **Note:** If you want to use clustering with the default styling you will need to include
 the default marker clusterer stylesheet. eg.
@@ -336,14 +337,34 @@ the default marker clusterer stylesheet. eg.
         icon: {
           cluster: {
             showCoverageOnHover: false,
-            iconCreateFunction: function(cluster) {
-              return new L.DivIcon({html: '<b>' + cluster.getChildCount() + '</b>'});
+            icon: {
+              showClusterCount: true,
+              iconClass: 'leafy-background',
+              iconSize: [38, 95],
+              iconAnchor: [22, 94],
+              popupAnchor: [-3, -76]
             }
           }
         }
       }
     }
   ]
+}
+```
+with CSS for the cluster count icon
+```css
+.leaflet-div-icon {
+  background-color: transparent;
+  border: none;
+}
+.leafy-background {
+  background-image: url(/icons/leaf-green.png);
+  width: 100%;
+  height: 100%;
+}
+.leafy-background .cluster-count {
+  text-align: center;
+  padding-top: 15px;
 }
 ```
 
