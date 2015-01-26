@@ -40,9 +40,9 @@ describe('the mapKey module', () => {
   describe('adding items', () => {
     var keyConfig = {}, result
 
-    Given('an item name', () => keyConfig['name'] = 'item1')
-    Given('an item checked state', () => keyConfig['checked'] = true)
-    Given('an item description', () => keyConfig['description'] = 'my item')
+    Given('an item name', () => keyConfig.name = 'item1')
+    Given('an item checked state', () => keyConfig.checked = true)
+    Given('an item description', () => keyConfig.description = 'my item')
     Given('that the key modules item array is empty', () => key.items = [])
     When('calling `addItem` with name and description and checked state', () => result = key.addItem(keyConfig))
     
@@ -83,8 +83,8 @@ describe('the mapKey module', () => {
     var result, item, key, customConfig, context
 
     customConfig = {
-      domElementId: "key",
-      title: "traffic map key",
+      domElementId: 'key',
+      title: 'traffic map key',
       template: '<h1>{{title}}</h1><ul class="items"><ul/>',
       layers: [
         {
