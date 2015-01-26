@@ -38,14 +38,14 @@ describe('the mapKey module', () => {
   })
 
   describe('adding items', () => {
-    var text, id, result, checked
+    var keyConfig = {}, result
 
-    Given('an item id', () => id = 'item1')
-    Given('an items checked state', () => checked = true)
-    Given('an items text', () => text = 'my item')
+    Given('an item name', () => keyConfig.name = 'item1')
+    Given('an item checked state', () => keyConfig.checked = true)
+    Given('an item description', () => keyConfig.description = 'my item')
     Given('that the key modules item array is empty', () => key.items = [])
-    When('calling `addItem` with id and text and checked state', () => result = key.addItem(id, text, checked))
-
+    When('calling `addItem` with name and description and checked state', () => result = key.addItem(keyConfig))
+    
     describe('#addItem has been called', () => {
       Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
       And('keys.id property should be `item1`', () => key.items[0].key.should.equal('item1'))
@@ -69,14 +69,44 @@ describe('the mapKey module', () => {
     Given('an initialized map key', () => key = mod(config))
     Given('a callback', () => { callback = (event) => { result = event } })
     Given('the callback has not been called', () => result = null)
-    Given('a key item', () => item = { key: 'item1', text: 'My item', checked: false })
+    Given('a key item', () => item = { name: 'item1', description: 'My item', checked: false })
 
-    When('the key item is added to the key', () => key.addItem(item.key, item.text, item.checked))
+    When('the key item is added to the key', () => key.addItem(item))
     And('the callback is attached as a listener to a map key', () => key.on('layerToggle', callback))
     And('a key item is clicked', () => key.items[0].click())
 
     Then('the attached callback should be called', () => result.should.be.an('object'))
     And('the result should have item properties', () => result.key.should.equal('item1'))
+  })
+
+  describe('adding custom template', () => {
+    var result, item, key, customConfig, context
+
+    customConfig = {
+      domElementId: 'key',
+      title: 'traffic map key',
+      template: '<h1>{{title}}</h1><ul class="items"><ul/>',
+      layers: [
+        {
+          name: 'layer1',
+          description: 'My Layer',
+          checked: true
+        }
+      ]
+    };
+
+    Given('an initialized map key', () => key = mod(customConfig))
+    Given('a key item', () => item = { name: 'item1', description: 'My item', checked: false })
+    Given('that the key modules item array is empty', () => key.items = [])
+    Given('a context of', () => context = { title: key.title, items: key.items })
+    When('the key item is added to the key', () => result = key.addItem(item))
+    
+    describe('#addItem has been called', () => {
+      Then('keys item array should have 1 item', () => key.items.length.should.equal(1))
+      And('key.template property should be `<h1>traffic map key</h1><ul class="items"><ul/>`', () => {
+        key.template(context).should.equal('<h1>traffic map key</h1><ul class="items"><ul/>')
+      })
+    })
   })
 
 })
