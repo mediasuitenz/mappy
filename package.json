@@ -22,7 +22,11 @@
     "type": "git",
     "url": ""
   },
-  "keywords": [],
+  "keywords": [
+    "map engine",
+    "mappy",
+    "geojson"
+  ],
   "author": "Richard Walker <digitalsadhu@gmail.com>",
   "license": "MIT",
   "bugs": {
