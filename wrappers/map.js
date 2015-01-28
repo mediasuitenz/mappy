@@ -71,8 +71,17 @@ class Map extends EventEmitter {
         }
       }
     }
-    if (config.icon)
-      options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.icon(feature.properties)) })
+    if (config.icon) {
+      options.pointToLayer = (feature, latLng) => {
+
+        // apply marker style if defined, otherwise use leaflet default
+        if (typeof config.icon(feature.properties) !== 'undefined') {
+          return L.marker(latLng, { icon: L.icon(config.icon(feature.properties)) })
+        } else {
+          return L.marker(latLng)
+        }
+      }
+    }
     if (config.filter)
       options.filter = (feature) => config.filter(feature)
 
