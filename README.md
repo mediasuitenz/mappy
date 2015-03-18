@@ -11,9 +11,12 @@ We don't recommend using in production at this time.
 # Creating a map using mappy
 
 - Clone this repo
-- run `npm install`
+- `npm install`
 - Rename dist/example-config.js to config.js
-- Customise properties of the config object in config.js
+- Customise properties of the config object (see 'Config in detail') in config.js
+- `npm run build`
+- use resulting `dist/bundle.js` and `dist/bundle.min.js` files
+
 
 # Developing mappy
 
@@ -147,6 +150,27 @@ CSS for your templates must be included separately.
 #### More information
 
 See dist/example-config.js for existing features
+
+## External API
+*Currently this API is fluid and should be considered unstable, though we will attempt to adhere to semver guidelines during ongoing development*
+
+When creating an instance of Mappy from config, the return value is an object with a defined interface
+
+Current API:
+```js
+showGeojsonLayer('layerName')
+hideGeojsonLayer('layerName')
+
+stopDataService('dataServiceName')
+startDataService('dataServiceName')
+```
+
+Example:
+```js
+var map = window.Mappy.create(config);
+
+map.hideGeojsonLayer('layerName') // assuming there was a layer called 'layerName' defined in config
+```
 
 ## Development
 
