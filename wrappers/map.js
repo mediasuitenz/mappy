@@ -114,19 +114,23 @@ class Map extends EventEmitter {
   }
 
   showGeojsonLayer(name) {
-    this.geojsonLayers[name].addTo(this.map)
+    if (this.geojsonLayers[name])
+      this.geojsonLayers[name].addTo(this.map)
   }
 
   hideGeojsonLayer(name) {
-    this.geojsonLayers[name].removeFrom(this.map)
+    if (this.geojsonLayers[name])
+      this.geojsonLayers[name].removeFrom(this.map)
   }
 
   stopDataService(name) {
-    this.dataServices[name].stop()
+    if (this.dataServices[name])
+      this.dataServices[name].stop()
   }
 
   startDataService(name) {
-    this.dataServices[name].start()
+    if (this.dataServices[name])
+      this.dataServices[name].start()
   }
 }
 
