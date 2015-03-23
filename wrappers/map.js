@@ -46,7 +46,7 @@ class Map extends EventEmitter {
     var layer
 
     if (config.layerStyle)
-      options.layerStyle = (feature) => config.layerStyle(feature.properties)
+      options.style = (feature) => config.layerStyle(feature.properties)
     if (config.listens) {
       config.listens.forEach((listenerConfig) => {
         map.mediator.register(listenerConfig)
