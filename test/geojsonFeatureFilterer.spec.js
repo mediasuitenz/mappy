@@ -1,7 +1,7 @@
 'use strict';
 
 require('mocha-given')
-require('chai').should()
+var should = require('chai').should()
 var scenario = describe
 
 var rewire = require('rewire')
@@ -55,9 +55,17 @@ describe('the geojsonFeatureFilterer', () => {
   })
 
   describe('creating a geojsonFeatureFilterer', () => {
-    When('geojsonFeatureFiltererFactory() is called', () => filterer = factory({geometry:[]}))
-    Then('a new geojsonFeatureFilterer should be returned', () => filterer.should.be.an('object'))
-  })
+    scenario('without config', () => {
+      var invalidFilterer
+      When('geojsonFeatureFiltererFactory() is called', () => invalidFilterer = factory())
+      Then('a new geojsonFeatureFilterer should be returned', () => should.not.exist(invalidFilterer))
+    })
+
+    scenario('with config', () => {
+      When('geojsonFeatureFiltererFactory() is called', () => filterer = factory({geometry:[]}))
+      Then('a new geojsonFeatureFilterer should be returned', () => filterer.should.be.an('object'))
+    })
+})
 
   describe('#filter method', () => {
     describe('no filtering', () => {
@@ -65,24 +73,6 @@ describe('the geojsonFeatureFilterer', () => {
         var conf, filterer, result
 
         Given('an empty config object', () => conf = {})
-        When('a filterer is created using config', () => filterer = factory(conf))
-        And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
-        Then('result should be true', () => result.should.equal(true))
-      })
-
-      scenario('providing an undefined config object', () => {
-        var conf, filterer, result
-
-        Given('an undefined config object', () => conf = undefined)
-        When('a filterer is created using config', () => filterer = factory(conf))
-        And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
-        Then('result should be true', () => result.should.equal(true))
-      })
-
-      scenario('providing a null config object', () => {
-        var conf, filterer, result
-
-        Given('an empty config object', () => conf = null)
         When('a filterer is created using config', () => filterer = factory(conf))
         And('filterer.filter is called with a geojson point feature', () => result = filterer.filter(point))
         Then('result should be true', () => result.should.equal(true))

@@ -1,11 +1,12 @@
 'use strict';
 
 require('mocha-given')
-require('chai').should()
+var should = require('chai').should()
 
 var rewire = require('rewire')
 var popupPresenter = rewire('../lib/layerStylePresenter')
 var factory
+var scenario = describe
 
 describe('the layerStylePresenter', () => {
   var presenter
@@ -13,8 +14,15 @@ describe('the layerStylePresenter', () => {
   Given('the layerStylePresenterFactory', () => factory = popupPresenter)
 
   describe('creating a layerStylePresenter', () => {
-    When('layerStylePresenterFactory() is called', () => presenter = factory({general:{}}))
-    Then('a new layerStylePresenter should be returned', () => presenter.should.be.an('object'))
+    scenario('with no config', () => {
+      When('layerStylePresenterFactory() is called', () => presenter = factory())
+      Then('no new layerStylePresenter should be created', () => should.not.exist(presenter))
+    })
+
+    scenario('with valid config', () => {
+      When('layerStylePresenterFactory() is called', () => presenter = factory({general:{}}))
+      Then('a new layerStylePresenter should be returned', () => presenter.should.be.an('object'))
+    })
   })
 
   describe('#present', () => {

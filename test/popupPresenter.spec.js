@@ -1,8 +1,8 @@
 'use strict';
 
-require('chai').should()
+var should = require('chai').should()
+var scenario = describe
 
-var rewire = require('rewire')
 var popupPresenter = require('../lib/popupPresenter')
 
 var config = {
@@ -15,10 +15,22 @@ describe('PopupPresenter', () => {
 // And some feature properties
 // Then generate popup content
 
-  var presenter = popupPresenter(config)
+  var presenter
 
-  it('should return an object', () => {
-    presenter.should.be.an('object')
+  describe('creating a presenter from the factory', () => {
+    scenario('with no config', () => {
+      var invalidPresenter = popupPresenter()
+      it('should not create a presenter', () => {
+        should.not.exist(invalidPresenter)
+      })
+    })
+
+    scenario('with valid config', () => {
+      presenter = popupPresenter(config)
+      it('should return an object', () => {
+        presenter.should.be.an('object')
+      })
+    })
   })
 
   describe('presenter object', () => {
