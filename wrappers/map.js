@@ -47,11 +47,13 @@ class Map extends EventEmitter {
 
     if (config.layerStyle)
       options.style = (feature) => config.layerStyle(feature.properties)
+
     if (config.listens) {
       config.listens.forEach((listenerConfig) => {
         map.mediator.register(listenerConfig)
       })
     }
+
     if (config.popupStyle || config.notifies) {
       options.onEachFeature = (feature, layer) => {
         layer.on('click', function () {
@@ -61,7 +63,7 @@ class Map extends EventEmitter {
         if (!config.popupFilter || config.popupFilter(feature)) {
 
           // don't bind the feature popup if it isn't defined in config
-          if (typeof config.popupStyle(feature.properties) !== 'undefined') {
+          if (config.popupStyle) {
             layer.bindPopup(config.popupStyle(feature.properties))
           }
         }
@@ -73,8 +75,10 @@ class Map extends EventEmitter {
         }
       }
     }
+
     if (config.iconStyle)
       options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.iconStyle(feature.properties)) })
+
     if (config.geojsonFilter)
       options.filter = (feature) => config.geojsonFilter(feature)
 
