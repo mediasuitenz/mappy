@@ -61,8 +61,6 @@ class Map extends EventEmitter {
         })
 
         if (!config.popupFilter || config.popupFilter(feature)) {
-
-          // don't bind the feature popup if it isn't defined in config
           if (config.popupStyle) {
             layer.bindPopup(config.popupStyle(feature.properties))
           }
