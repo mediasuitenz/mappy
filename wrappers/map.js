@@ -18,9 +18,11 @@ class Map extends EventEmitter {
     this.map           = L.map(config.domElementId, config.mapOptions).fitBounds(config.bounds)
     this.tileLayers    = {}
     this.geojsonLayers = {}
-    this.key = {}
-    this.map.on('click', (event) => this.emit('click', event))
+    this.key           = {}
+    this.dataServices  = {}
     this.mediator      = mediator()
+
+    this.map.on('click', (event) => this.emit('click', event))
   }
 
   /**
@@ -112,11 +114,23 @@ class Map extends EventEmitter {
   }
 
   showGeojsonLayer(name) {
-    this.geojsonLayers[name].addTo(this.map)
+    if (this.geojsonLayers[name])
+      this.geojsonLayers[name].addTo(this.map)
   }
 
   hideGeojsonLayer(name) {
-    this.geojsonLayers[name].removeFrom(this.map)
+    if (this.geojsonLayers[name])
+      this.geojsonLayers[name].removeFrom(this.map)
+  }
+
+  stopDataService(name) {
+    if (this.dataServices[name])
+      this.dataServices[name].stop()
+  }
+
+  startDataService(name) {
+    if (this.dataServices[name])
+      this.dataServices[name].start()
   }
 }
 
