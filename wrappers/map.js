@@ -45,24 +45,24 @@ class Map extends EventEmitter {
     var map = this
     var layer
 
-    if (config.style)
-      options.style = (feature) => config.style(feature.properties)
+    if (config.layerStyle)
+      options.style = (feature) => config.layerStyle(feature.properties)
+
     if (config.listens) {
       config.listens.forEach((listenerConfig) => {
         map.mediator.register(listenerConfig)
       })
     }
-    if (config.popup || config.notifies) {
+
+    if (config.popupStyle || config.notifies) {
       options.onEachFeature = (feature, layer) => {
         layer.on('click', function () {
           map.emit('marker.click', feature)
         })
 
         if (!config.popupFilter || config.popupFilter(feature)) {
-
-          // don't bind the feature popup if it isn't defined in config
-          if (typeof config.popup(feature.properties) !== 'undefined') {
-            layer.bindPopup(config.popup(feature.properties))
+          if (config.popupStyle) {
+            layer.bindPopup(config.popupStyle(feature.properties))
           }
         }
 
@@ -73,10 +73,12 @@ class Map extends EventEmitter {
         }
       }
     }
-    if (config.icon)
-      options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.icon(feature.properties)) })
-    if (config.filter)
-      options.filter = (feature) => config.filter(feature)
+
+    if (config.iconStyle)
+      options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.iconStyle(feature.properties)) })
+
+    if (config.geojsonFilter)
+      options.filter = (feature) => config.geojsonFilter(feature)
 
     if (this.geojsonLayers[name]) {
       this.geojsonLayers[name].removeFrom(this.map)
