@@ -3,7 +3,7 @@
   "engines": {
     "node": "0.10.32"
   },
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "A configurable map engine",
   "main": "index.js",
   "scripts": {
