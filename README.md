@@ -322,6 +322,14 @@ Manually tested in:
 ]
 ```
 
+#### Icon config for layer styles
+The keys in 'general' and 'properties' basically follow the leaflet dsl for the [Icon](http://leafletjs.com/reference.html#icon) class, allowing you to change the icon and its positioning as required.
+
+In the 'general' section if you specify a `type: 'divIcon'` then the [DivIcon](http://leafletjs.com/reference.html#divicon) class is used instead, allowing you to specify the html for the icon. This template will be compiled via Handlebars, so you can interpolate properties from the feature that the marker icon is related to, similar to popups.
+
+NOTE: DivIcon does not have a `iconUrl` option, so you'll need to add any images using CSS (likely background: url...)
+
+
 ### Key
 You can either use the default, or define custom html to render the layer key template. Custom templates are parsed through the [handlebars](http://handlebarsjs.com/) templating engine, refer to the handlebar docs for further details.
 ```js
