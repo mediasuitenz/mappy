@@ -74,8 +74,11 @@ class Map extends EventEmitter {
       }
     }
 
-    if (config.iconStyle)
-      options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: L.icon(config.iconStyle(feature.properties)) })
+    if (config.iconStyle) {
+      var iconType = (config.iconStyle({}).type === 'divIcon') ? L.divIcon : L.icon
+
+      options.pointToLayer = (feature, latLng) => L.marker(latLng, { icon: iconType(config.iconStyle(feature.properties)) })
+    }
 
     if (config.geojsonFilter)
       options.filter = (feature) => config.geojsonFilter(feature)
