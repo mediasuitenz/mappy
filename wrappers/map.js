@@ -119,8 +119,7 @@ class Map extends EventEmitter {
 
     map.emit('geojson.add', {
       name: name,
-      layer: layer,
-      config: config
+      layer: layer
     })
   }
 
