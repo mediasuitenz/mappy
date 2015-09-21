@@ -1,7 +1,7 @@
 'use strict';
 
-var L            = require('../vendor/leaflet.js')
-require('../vendor/leaflet.markercluster-src.js')(L)
+var L            = require('leaflet')
+require('leaflet.markercluster')
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
