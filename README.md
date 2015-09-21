@@ -311,7 +311,7 @@ Manually tested in:
               }
             }
         },
-        sortOrder: 1, // used to order in key and map layer zindex
+        sortOrder: 1, // used to order layers, higher numbers brought to front
         startVisible: true // whether to display the layer on map load
         defaultLayerType: false || 'default', // false would mean this layer is off if the zoom level is outside
                                                 // the levels defined in the 'zoom' config
