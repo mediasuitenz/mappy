@@ -34,7 +34,7 @@ class Map extends EventEmitter {
   }
 
   removeTileLayer(name) {
-    this.tileLayers[name].removeFrom(this.map)
+    this.map.removeLayer(this.tileLayers[name])
   }
 
   /**
@@ -86,7 +86,7 @@ class Map extends EventEmitter {
       options.filter = (feature) => config.geojsonFilter(feature)
 
     if (this.geojsonLayers[name]) {
-      this.geojsonLayers[name].removeFrom(this.map)
+      this.map.removeLayer(this.geojsonLayers[name])
       delete this.geojsonLayers[name]
     }
 
@@ -154,7 +154,7 @@ class Map extends EventEmitter {
 
   hideGeojsonLayer(name) {
     if (this.geojsonLayers[name])
-      this.geojsonLayers[name].removeFrom(this.map)
+      this.map.removeLayer(this.geojsonLayers[name])
   }
 
   stopDataService(name) {
