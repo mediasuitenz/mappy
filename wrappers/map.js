@@ -41,7 +41,9 @@ class Map extends EventEmitter {
    * Add a geojson layer to the map with given config
    */
   setGeojsonLayer(name, config) {
-    var options = {}
+    var options = {
+      sortOrder: config.sortOrder
+    }
     var map = this
     var layer
 
@@ -117,15 +119,37 @@ class Map extends EventEmitter {
 
     this.geojsonLayers[name] = layer
 
+    this.sortLayers()
+
     map.emit('geojson.add', {
       name: name,
       layer: layer
     })
   }
 
+  sortLayers() {
+    var sortableLayers = []
+    Object.keys(this.geojsonLayers).forEach((name) => {
+      var layer = this.geojsonLayers[name]
+      if (!isNaN(parseInt(nn(layer)('options.sortOrder').val, 10))) {
+        sortableLayers.push(layer)
+      }
+    })
+    sortableLayers.sort(function (a, b) {
+      return a.options.sortOrder - b.options.sortOrder
+    })
+    sortableLayers.forEach(function (layer) {
+      try {
+        layer.bringToFront()
+      } catch (e) {}
+    })
+  }
+
   showGeojsonLayer(name) {
-    if (this.geojsonLayers[name])
+    if (this.geojsonLayers[name]) {
       this.geojsonLayers[name].addTo(this.map)
+      this.sortLayers()
+    }
   }
 
   hideGeojsonLayer(name) {
