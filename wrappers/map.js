@@ -128,7 +128,6 @@ class Map extends EventEmitter {
   }
 
   sortLayers() {
-    var sortableLayers = []
     Object.keys(this.geojsonLayers)
       .map(key => this.geojsonLayers[key])
       .filter(layer => !isNaN(parseInt(nn(layer)('options.sortOrder').val, 10)))
