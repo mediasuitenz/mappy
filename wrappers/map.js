@@ -129,20 +129,15 @@ class Map extends EventEmitter {
 
   sortLayers() {
     var sortableLayers = []
-    Object.keys(this.geojsonLayers).forEach((name) => {
-      var layer = this.geojsonLayers[name]
-      if (!isNaN(parseInt(nn(layer)('options.sortOrder').val, 10))) {
-        sortableLayers.push(layer)
-      }
-    })
-    sortableLayers.sort(function (a, b) {
-      return a.options.sortOrder - b.options.sortOrder
-    })
-    sortableLayers.forEach(function (layer) {
-      try {
-        layer.bringToFront()
-      } catch (e) {}
-    })
+    Object.keys(this.geojsonLayers)
+      .map(key => this.geojsonLayers[key])
+      .filter(layer => !isNaN(parseInt(nn(layer)('options.sortOrder').val, 10)))
+      .sort((a, b) => a.options.sortOrder - b.options.sortOrder)
+      .forEach(function (layer) {
+        try {
+          layer.bringToFront()
+        } catch (e) {}
+      })
   }
 
   showGeojsonLayer(name) {
