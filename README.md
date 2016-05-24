@@ -44,7 +44,10 @@ Defines the map key (optional)
 
 ##### dataSources
 
-Defines the data sources that the layers can use.
+Defines the data sources that the layers can use. There are currently 3 options
+- `longPoll` for refreshing the data from a URL on an interval
+- `singlePoll` to only load the data from a URL once
+- `local` to not load any data automatically. Layer data can be added via `map.pushToDataService(dataSourceName, geojsonData)`
 
 Data source definitions should be in format:
 ```js
@@ -52,11 +55,11 @@ Data source definitions should be in format:
   dataSources: [
     {
       name: 'my-api',
-      type: 'longPoll' // longPoll or singlePoll
+      type: 'longPoll' // longPoll, singlePoll, local
       refresh: 10000   // Interval to refresh the data from the endpoint, only required for longPoll
-      request: {
+      request: { // for longPoll or singlePoll
         url: '/path/to/some/geojson/endpoint'
-        // other options for xhr module (https://github.com/Raynos/xhr) can be passed in here
+        // other options for xhr module (https://github.com/Raynos/xhr) can be passed in here e.g. headers: {}
       }
     }
   ]
@@ -163,13 +166,21 @@ hideGeojsonLayer('layerName')
 
 stopDataService('dataServiceName')
 startDataService('dataServiceName')
+
+pushToDataService('dataSourceName', geojsonData)
 ```
 
 Example:
 ```js
+// Will create map and load data from defined data sources
 var map = window.Mappy.create(config);
 
 map.hideGeojsonLayer('layerName') // assuming there was a layer called 'layerName' defined in config
+
+// Example of how to add data manually using a local data source (or can overwrite data for any data source type)
+$.getJSON(url).done(function (geojson) {
+  pushToDataService('local-example', geojson)
+})
 ```
 
 ## Development
