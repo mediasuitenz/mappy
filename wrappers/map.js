@@ -142,6 +142,11 @@ class Map extends EventEmitter {
     if (this.dataServices[name])
       this.dataServices[name].start()
   }
+
+  pushToDataService(name, data) {
+    if (this.dataServices[name])
+      this.dataServices[name].setData(data)
+  }
 }
 
 

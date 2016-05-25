@@ -194,6 +194,12 @@ window.onload = function () {
           }
         },
         dataSource: 'parsnip'
+      },
+      {
+        name: 'local-layer-example',
+        type: 'geojson',
+        enabled: true,
+        dataSource: 'local-example'
       }
     ],
     dataSources: [
@@ -211,6 +217,10 @@ window.onload = function () {
           url: '//parsnip.msapp.co.nz/{x}/{y}'
         },
         type: 'singlePoll'
+      },
+      {
+        name: 'local-example',
+        type: 'local'
       }
     ],
     key: {
