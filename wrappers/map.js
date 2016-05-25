@@ -1,7 +1,7 @@
 'use strict';
 
-var L            = require('../vendor/leaflet.js')
-require('../vendor/leaflet.markercluster-src.js')(L)
+var L            = require('leaflet')
+require('leaflet.markercluster')
 var EventEmitter = require('events').EventEmitter
 var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
@@ -34,14 +34,16 @@ class Map extends EventEmitter {
   }
 
   removeTileLayer(name) {
-    this.tileLayers[name].removeFrom(this.map)
+    this.map.removeLayer(this.tileLayers[name])
   }
 
   /**
    * Add a geojson layer to the map with given config
    */
   setGeojsonLayer(name, config) {
-    var options = {}
+    var options = {
+      sortOrder: config.sortOrder
+    }
     var map = this
     var layer
 
@@ -84,7 +86,7 @@ class Map extends EventEmitter {
       options.filter = (feature) => config.geojsonFilter(feature)
 
     if (this.geojsonLayers[name]) {
-      this.geojsonLayers[name].removeFrom(this.map)
+      this.map.removeLayer(this.geojsonLayers[name])
       delete this.geojsonLayers[name]
     }
 
@@ -117,20 +119,36 @@ class Map extends EventEmitter {
 
     this.geojsonLayers[name] = layer
 
+    this.sortLayers()
+
     map.emit('geojson.add', {
       name: name,
       layer: layer
     })
   }
 
+  sortLayers() {
+    Object.keys(this.geojsonLayers)
+      .map(key => this.geojsonLayers[key])
+      .filter(layer => !isNaN(parseInt(nn(layer)('options.sortOrder').val, 10)))
+      .sort((a, b) => a.options.sortOrder - b.options.sortOrder)
+      .forEach(function (layer) {
+        try {
+          layer.bringToFront()
+        } catch (e) {}
+      })
+  }
+
   showGeojsonLayer(name) {
-    if (this.geojsonLayers[name])
+    if (this.geojsonLayers[name]) {
       this.geojsonLayers[name].addTo(this.map)
+      this.sortLayers()
+    }
   }
 
   hideGeojsonLayer(name) {
     if (this.geojsonLayers[name])
-      this.geojsonLayers[name].removeFrom(this.map)
+      this.map.removeLayer(this.geojsonLayers[name])
   }
 
   stopDataService(name) {

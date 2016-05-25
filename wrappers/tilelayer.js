@@ -1,7 +1,7 @@
 'use strict';
 
-var L            = require('../vendor/leaflet.js')
-require('../vendor/leaflet-plugins-google')
+var L            = require('leaflet')
+require('leaflet-plugins/layer/tile/Google')
 
 /**
  * Intermediary tile layer used to generate either a Google layer, or a Leaflet tileLayer.
