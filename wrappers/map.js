@@ -30,7 +30,7 @@ class Map extends EventEmitter {
    */
   setTileLayer(name, config) {
     this.tileLayers[name] = mapTileLayer(config.url, config)
-    this.tileLayers[name].addTo(this.map)
+    this.map.addLayer(this.tileLayers[name])
   }
 
   removeTileLayer(name) {
