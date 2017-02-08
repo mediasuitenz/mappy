@@ -13,7 +13,7 @@ module.exports = function (name, config) {
   var tileLayer = null
 
   if(config.type === 'google') {
-    tileLayer = L.gridLayer.googleMutant((config.mapType ? config.mapType : 'roadmap'))
+    tileLayer = L.gridLayer.googleMutant({ type: config.mapType || 'roadmap' })
   } else {
     tileLayer = L.tileLayer(config.url, config)
   }
