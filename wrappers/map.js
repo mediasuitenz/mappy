@@ -7,7 +7,7 @@ var mapTileLayer = require('./tilelayer')
 var mediator     = require('../lib/mediator')
 var nn           = require('nevernull')
 
-L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet-0.7/images'
+L.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images'
 
 class Map extends EventEmitter {
 
