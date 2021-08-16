@@ -2,7 +2,7 @@
 
 (function (window, document, undefined) {
 var oldMappy = window.Mappy
-var Mappy = require('./lib/main')
+var Mappy = require('./lib/gmain')
 
 //Node style module export
 if (typeof module === 'object' && typeof module.exports === 'object') {
